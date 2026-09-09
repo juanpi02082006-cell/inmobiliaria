@@ -123,11 +123,20 @@ INSERT INTO ciudad (id_ciudad, nombre, departamento) VALUES
  (10,'Barranquilla','Atlantico');
 
 -- -----------------------------------------------------------------------------
--- TIPO_PROPIEDAD
+-- TIPO_PROPIEDAD  (catalogo cerrado: exactamente 5 valores)
+--
+--  El enunciado define el alcance del sistema de forma explicita:
+--  "gestione propiedades (casas, apartamentos, locales, oficinas y terrenos)".
+--  Por eso esta tabla tiene cinco filas y no diez.
+--
+--  El minimo de diez registros que pide el enunciado aplica a las tablas
+--  transaccionales (usuario, propiedad, cita, solicitud...), no a los catalogos
+--  de dominio cerrado. Agregar tipos que el proyecto no maneja solo produciria
+--  filas sin propiedades asociadas y filtros de busqueda que nunca devuelven
+--  resultados. El mismo criterio aplica a la tabla rol, con sus cuatro roles.
 -- -----------------------------------------------------------------------------
 INSERT INTO tipo_propiedad (id_tipo, nombre) VALUES
- (1,'Casa'),(2,'Apartamento'),(3,'Local'),(4,'Oficina'),(5,'Terreno'),
- (6,'Bodega'),(7,'Finca'),(8,'Apartaestudio'),(9,'Consultorio'),(10,'Penthouse');
+ (1,'Casa'),(2,'Apartamento'),(3,'Local'),(4,'Oficina'),(5,'Terreno');
 
 -- -----------------------------------------------------------------------------
 -- CARACTERISTICA
@@ -162,10 +171,10 @@ INSERT INTO propiedad
  (4,3,3,2,'MI-300-004','Apartamento vista parque','Vista abierta, conjunto con porteria','Diagonal 5 # 9-21, Giron',245000000,'ARRIENDO',82.00,2,2,1,'DISPONIBLE'),
  (5,2,2,1,'MI-300-005','Casa familiar La Florida','Casa amplia en sector residencial','Sector La Florida, Floridablanca',530000000,'VENTA',210.00,5,4,3,'DISPONIBLE'),
  (6,4,1,4,'MI-300-006','Oficina centro empresarial','Oficina con divisiones y sala de juntas','Centro Empresarial, Bucaramanga',390000000,'ARRIENDO',160.00,0,3,4,'DISPONIBLE'),
- (7,5,2,8,'MI-300-007','Apartaestudio economico','Ideal para estudiantes, amoblado','Cll 5 # 8-40, Floridablanca',95000000,'ARRIENDO',35.00,1,1,0,'DISPONIBLE'),
+ (7,5,2,2,'MI-300-007','Apartamento estudio economico','Apartamento de una alcoba, ideal para estudiantes, amoblado','Cll 5 # 8-40, Floridablanca',95000000,'ARRIENDO',35.00,1,1,0,'DISPONIBLE'),
  (8,6,3,1,'MI-300-008','Casa campestre Giron','Casa con jardin amplio y zona BBQ','Vereda Acapulco, Giron',610000000,'VENTA',260.00,4,3,2,'RESERVADA'),
  (9,7,4,5,'MI-300-009','Lote urbano Piedecuesta','Terreno plano listo para construir','Cll 6 # 9-15, Piedecuesta',180000000,'VENTA',300.00,0,0,0,'DISPONIBLE'),
- (10,8,1,10,'MI-300-010','Penthouse El Prado','Penthouse con terraza y jacuzzi','Cra 15 # 22-33, Bucaramanga',890000000,'VENTA',220.00,3,4,3,'DISPONIBLE'),
+ (10,8,1,2,'MI-300-010','Apartamento penthouse El Prado','Ultimo piso con terraza y jacuzzi','Cra 15 # 22-33, Bucaramanga',890000000,'VENTA',220.00,3,4,3,'DISPONIBLE'),
  (11,9,1,2,'MI-300-011','Apartamento Real de Minas','Apto 3 alcobas, conjunto cerrado','Cll 56 # 17-05, Bucaramanga',260000000,'VENTA',88.00,3,2,1,'VENDIDA'),
  (12,10,1,3,'MI-300-012','Local Cabecera cuarta etapa','Local esquinero con vitrina','Cra 27 # 52-18, Bucaramanga',320000000,'ARRIENDO',75.00,0,1,1,'DISPONIBLE');
 
