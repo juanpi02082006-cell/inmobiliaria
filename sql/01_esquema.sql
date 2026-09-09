@@ -19,11 +19,11 @@
 --    * cita(id_propiedad, fecha_hora)   (evita doble agenda en el mismo horario)
 -- =============================================================================
 
-DROP DATABASE IF EXISTS inmobiliaria_db;
-CREATE DATABASE inmobiliaria_db
+DROP DATABASE IF EXISTS inmobiliaria;
+CREATE DATABASE inmobiliaria
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
-USE inmobiliaria_db;
+USE inmobiliaria;
 
 SET FOREIGN_KEY_CHECKS = 0;
 

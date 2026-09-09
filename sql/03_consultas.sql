@@ -1,8 +1,8 @@
 -- =============================================================================
 --  ARCHIVO : 03_consultas.sql  ->  Consultas obligatorias (minimo 5)
---  Ejecutar sobre inmobiliaria_db con los datos de 02_datos.sql cargados.
+--  Ejecutar sobre inmobiliaria con los datos de 02_datos.sql cargados.
 -- =============================================================================
-USE inmobiliaria_db;
+USE inmobiliaria;
 
 -- -----------------------------------------------------------------------------
 -- CONSULTA 1  -  INNER JOIN entre 4 tablas

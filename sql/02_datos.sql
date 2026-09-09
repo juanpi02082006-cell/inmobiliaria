@@ -18,7 +18,7 @@
 --  NUNCA se guarda texto plano.
 -- =============================================================================
 
-USE inmobiliaria_db;
+USE inmobiliaria;
 SET FOREIGN_KEY_CHECKS = 0;
 
 TRUNCATE TABLE auditoria;

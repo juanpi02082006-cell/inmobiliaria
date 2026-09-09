@@ -1,4 +1,4 @@
-# Diccionario de datos - inmobiliaria_db
+# Diccionario de datos - inmobiliaria
 
 Motor: MySQL 8 / MariaDB (XAMPP). Codificacion `utf8mb4_unicode_ci`. Modelo en 3FN.
 
@@ -143,8 +143,8 @@ Motor: MySQL 8 / MariaDB (XAMPP). Codificacion `utf8mb4_unicode_ci`. Modelo en 3
 ```bash
 cd c:\xampp\mysql\bin
 mysql -u root -p < "c:\xampp\tomcat\webapps\inmobiliaria\sql\01_esquema.sql"
-mysql -u root -p inmobiliaria_db < "c:\xampp\tomcat\webapps\inmobiliaria\sql\02_datos.sql"
-mysql -u root -p inmobiliaria_db < "c:\xampp\tomcat\webapps\inmobiliaria\sql\03_consultas.sql"
+mysql -u root -p inmobiliaria < "c:\xampp\tomcat\webapps\inmobiliaria\sql\02_datos.sql"
+mysql -u root -p inmobiliaria < "c:\xampp\tomcat\webapps\inmobiliaria\sql\03_consultas.sql"
 ```
 
 O desde phpMyAdmin: importar los archivos en ese orden.
