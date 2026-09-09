@@ -132,8 +132,15 @@ otro rol aunque escriba la URL a mano.
 
 | Asunto | Impacto | Cuándo |
 |--------|---------|--------|
-| `index.jsp` usa Tailwind, no Bootstrap | El enunciado lista Bootstrap como tecnología obligatoria | Sprint 2 |
 | Carpeta `inmobiliaria/` duplicada y archivos repetidos | Ensucia el repositorio | Sprint 2 |
-| MER y modelo relacional como imagen/PDF | Es un entregable explícito | Sprint 2 |
+| Repositorio sin remoto en GitHub | El enunciado pide repositorio público | Sprint 2 |
+| Tablero Padlet de seguimiento | Entregable explícito de Scrum | Sprint 2 |
 | Pruebas unitarias | Entregable del Sprint 3 | Sprint 3 |
 | Despliegue en línea | Da puntos adicionales | Sprint 3 |
+
+### Cerrado durante el sprint
+
+- `index.jsp` se migró de Tailwind a Bootstrap, que es el framework que exige el enunciado.
+- Se entregaron los dos diagramas en `bd/`: el MER en notación Chen (con las relaciones
+  muchos a muchos **sin resolver**, como corresponde a un modelo conceptual) y el modelo
+  relacional exportado desde MySQL Workbench (con las tres tablas puente ya materializadas).
