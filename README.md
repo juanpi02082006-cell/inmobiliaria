@@ -12,7 +12,7 @@ Proyecto académico de **Programación Java** — Unidades Tecnológicas de Sant
 | Sprint | Alcance | Estado |
 |--------|---------|--------|
 | **1 — Cimientos y acceso** | Modelo de datos, conexión JDBC, landing, registro, login y control de acceso por rol | ✅ Completo |
-| **2 — Núcleo del negocio** | CRUD de propiedades con imágenes (1:N) y características (N:M), buscador, perfil, paneles | ⬜ Pendiente |
+| **2 — Núcleo del negocio** | CRUD de propiedades con imágenes (1:N) y características (N:M), ficha de detalle, buscador, perfil (1:1), usuarios y roles | ✅ Completo |
 | **3 — Operación y cierre** | Citas, solicitudes, documentos, favoritos, reportes, pruebas y despliegue | ⬜ Pendiente |
 
 Documentación Scrum en [docs/](docs/).
@@ -60,6 +60,19 @@ fallan con *"Only a type can be imported… resolves to a package"*.
 ### 3. Abrir
 
 <http://localhost:8080/inmobiliaria/>
+
+### Si agregó una clase nueva y la ruta devuelve 404
+
+Los servlets y el filtro se declaran con anotaciones (`@WebServlet`,
+`@WebFilter`), y Tomcat solo las lee cuando arranca el contexto. Compilar no
+basta: la clase existe en disco pero la aplicación en memoria no la conoce, así
+que la ruta responde **404** aunque el código esté bien.
+
+Fuerce la recarga tocando `web.xml` y espere unos segundos:
+
+```bat
+copy /b WEB-INF\web.xml +,, >nul
+```
 
 ### Si cambió `db.properties` y la aplicación sigue conectándose a la base vieja
 
@@ -116,17 +129,37 @@ inmobiliaria/
 ├── src/com/inmobiliaria/
 │   ├── config/      ConexionBD .......... única clase que conoce la URL
 │   ├── util/        PasswordUtil ........ cifrado PBKDF2 con salt
-│   ├── modelo/      Usuario, Perfil, Propiedad
-│   ├── dao/         UsuarioDAO, PropiedadDAO, ResumenDAO, AuditoriaDAO
-│   ├── controlador/ LoginServlet, RegistroServlet, LogoutServlet
+│   ├── modelo/      Usuario, Perfil, Propiedad, Imagen, Caracteristica
+│   ├── dao/         UsuarioDAO, PropiedadDAO, ImagenDAO, CatalogoDAO,
+│   │                ResumenDAO, AuditoriaDAO
+│   ├── controlador/ Login, Registro, Logout, Catalogo, Propiedad,
+│   │                Perfil, Usuario ..... un controlador por entidad
 │   └── filtro/      AutenticacionFilter . control de acceso por rol
 ├── WEB-INF/
 │   ├── web.xml
-│   └── jspf/        cabecera.jspf, pie.jspf
+│   ├── jspf/        cabecera.jspf, pie.jspf
+│   └── vistas/      vistas MVC, no accesibles por URL directa
 ├── panel/           admin.jsp, inmobiliaria.jsp, cliente.jsp
+├── css/             santander-raiz.css ... identidad de la marca
 ├── sql/             esquema, datos, consultas y diccionario
+├── bd/              MER y modelo relacional
 └── docs/            documentación Scrum
 ```
+
+## Rutas
+
+| Ruta | Quién entra | Qué hace |
+|------|-------------|----------|
+| `/index.jsp` | Todos | Portada con buscador y destacadas |
+| `/catalogo` | Todos | Listado con filtros |
+| `/catalogo?id=N` | Todos | Ficha de detalle con galería y características |
+| `/login`, `/registro`, `/logout` | Todos | Autenticación |
+| `/panel/perfil` | Autenticados | Datos personales y contraseña (1:1) |
+| `/panel/cliente.jsp` | CLIENTE | Su panel |
+| `/panel/inmobiliaria/propiedades` | INMOBILIARIA | CRUD, galería (1:N) y características (N:M) |
+| `/panel/admin/usuarios` | ADMIN | Roles (N:M) y estado de las cuentas |
+
+Cualquier otra combinación de rol y ruta responde **403** desde el servidor.
 
 ---
 
