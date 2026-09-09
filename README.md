@@ -61,6 +61,22 @@ fallan con *"Only a type can be imported… resolves to a package"*.
 
 <http://localhost:8080/inmobiliaria/>
 
+### Si cambió `db.properties` y la aplicación sigue conectándose a la base vieja
+
+`ConexionBD` lee el archivo en un bloque `static`, que se ejecuta **una sola
+vez** cuando Tomcat carga la clase. Como Tomcat no recarga la aplicación cuando
+solo cambia un `.properties`, el valor viejo se queda en memoria y verá un error
+del tipo *"Unknown database 'inmobiliaria_db'"* aunque el archivo en disco ya
+diga otra cosa.
+
+Para forzar la recarga del contexto basta con tocar `web.xml`:
+
+```bat
+copy /b WEB-INF\web.xml +,, >nul
+```
+
+Espere unos segundos y vuelva a abrir la aplicación.
+
 ---
 
 ## Usuarios de prueba
