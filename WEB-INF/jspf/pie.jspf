@@ -1,0 +1,16 @@
+<%--
+    pie.jspf  -  Fragmento reutilizable de cierre.
+    Cierra <main>, pinta el pie y carga el JavaScript de Bootstrap.
+--%>
+</main>
+
+<footer class="bg-dark text-white-50 py-3 mt-auto">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center small">
+        <span>Santander Raiz &middot; Proyecto academico de Programacion Java</span>
+        <span>Unidades Tecnologicas de Santander</span>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
