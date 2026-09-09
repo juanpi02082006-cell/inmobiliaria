@@ -1,0 +1,39 @@
+# --- Salida de compilacion -------------------------------------------------
+# Las clases se generan con compilar.bat; no tiene sentido versionarlas.
+WEB-INF/classes/
+*.class
+
+# --- Librerias ---------------------------------------------------------------
+# El conector de MySQL ya viene en C:\xampp\tomcat\lib
+WEB-INF/lib/*.jar
+
+# --- Sobrante de una version anterior ----------------------------------------
+# Copia vieja del sitio en HTML plano (index.html, login.html y duplicados de
+# css/img/js) dentro de un proyecto que ya se llama "inmobiliaria".
+# Queda fuera del repositorio; borrarla del disco es tarea del Sprint 2.
+/inmobiliaria/
+
+# --- Configuracion del IDE ---------------------------------------------------
+# Eclipse / JDT Language Server: es configuracion de la maquina de cada quien,
+# no del proyecto. Se regenera sola al abrir la carpeta.
+.project
+.classpath
+.settings/
+.vscode/
+.idea/
+*.iml
+
+# --- Tomcat ------------------------------------------------------------------
+work/
+logs/
+temp/
+
+# --- Sistema operativo -------------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# --- Temporales --------------------------------------------------------------
+*.log
+*.bak
+*~
