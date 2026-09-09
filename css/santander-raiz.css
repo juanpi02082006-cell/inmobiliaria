@@ -1,0 +1,160 @@
+/* ============================================================================
+   Santander Raiz - identidad visual sobre Bootstrap 5
+   ----------------------------------------------------------------------------
+   Se carga desde WEB-INF/jspf/cabecera.jspf, asi que TODAS las paginas del
+   sitio reciben los mismos colores. Antes estos estilos vivian dentro de
+   index.jsp y por eso el login se veia azul (el primary por defecto de
+   Bootstrap) mientras la portada se veia verde.
+
+   Aqui no se reescriben las reglas de Bootstrap: se redefinen las variables
+   CSS que el propio framework usa. Asi cualquier componente nuevo que se
+   agregue en los Sprints 2 y 3 sale ya con el color de la marca sin tocar
+   nada mas.
+
+   Las rutas de imagen son relativas a este archivo (css/ -> ../img/).
+   ========================================================================== */
+
+:root {
+    /* Paleta de la marca */
+    --sr-verde:        #006b2b;
+    --sr-verde-oscuro: #005320;
+    --sr-verde-claro:  #e7f1ea;
+    --sr-carbon:       #18231e;
+
+    /* Bootstrap toma su color primario de estas variables */
+    --bs-primary:             #006b2b;
+    --bs-primary-rgb:         0, 107, 43;
+    --bs-link-color:          #006b2b;
+    --bs-link-color-rgb:      0, 107, 43;
+    --bs-link-hover-color:    #005320;
+    --bs-link-hover-color-rgb: 0, 83, 32;
+}
+
+/* --- Botones -------------------------------------------------------------- */
+
+.btn-primary {
+    --bs-btn-bg:                   var(--sr-verde);
+    --bs-btn-border-color:         var(--sr-verde);
+    --bs-btn-hover-bg:             var(--sr-verde-oscuro);
+    --bs-btn-hover-border-color:   var(--sr-verde-oscuro);
+    --bs-btn-active-bg:            var(--sr-verde-oscuro);
+    --bs-btn-active-border-color:  var(--sr-verde-oscuro);
+    --bs-btn-disabled-bg:          var(--sr-verde);
+    --bs-btn-disabled-border-color: var(--sr-verde);
+    --bs-btn-focus-shadow-rgb:     0, 107, 43;
+}
+
+.btn-outline-primary {
+    --bs-btn-color:               var(--sr-verde);
+    --bs-btn-border-color:        var(--sr-verde);
+    --bs-btn-hover-bg:            var(--sr-verde);
+    --bs-btn-hover-border-color:  var(--sr-verde);
+    --bs-btn-active-bg:           var(--sr-verde-oscuro);
+    --bs-btn-active-border-color: var(--sr-verde-oscuro);
+    --bs-btn-focus-shadow-rgb:    0, 107, 43;
+}
+
+/* Alias usados en la portada; se conservan por compatibilidad. */
+.btn-sr { background-color: var(--sr-verde); border-color: var(--sr-verde); color: #fff; }
+.btn-sr:hover, .btn-sr:focus { background-color: var(--sr-verde-oscuro); border-color: var(--sr-verde-oscuro); color: #fff; }
+.texto-sr { color: var(--sr-verde) !important; }
+.fondo-sr { background-color: var(--sr-verde) !important; }
+
+/* --- Formularios ---------------------------------------------------------- */
+/* Bootstrap trae el foco azul con el color escrito a mano, no como variable,
+   asi que hay que redefinir la regla completa. */
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #61a37f;
+    box-shadow: 0 0 0 .25rem rgba(0, 107, 43, .18);
+}
+
+.form-check-input:checked {
+    background-color: var(--sr-verde);
+    border-color: var(--sr-verde);
+}
+
+.form-check-input:focus {
+    border-color: #61a37f;
+    box-shadow: 0 0 0 .25rem rgba(0, 107, 43, .18);
+}
+
+/* --- Enlaces y foco visible ----------------------------------------------- */
+
+a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+:focus-visible {
+    outline: 2px solid var(--sr-verde);
+    outline-offset: 2px;
+}
+
+/* --- Portada -------------------------------------------------------------- */
+
+.sr-hero {
+    position: relative;
+    min-height: 460px;
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, .72), rgba(0, 0, 0, .30)),
+                      url('../img/bucaramanga.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.sr-portada { height: 220px; object-fit: cover; }
+
+.sr-tarjeta { transition: transform .25s ease, box-shadow .25s ease; }
+.sr-tarjeta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .12) !important;
+}
+
+/* --- Paginas de acceso (login y registro) --------------------------------- */
+
+.sr-acceso {
+    /* Franja verde superior: identifica la tarjeta como zona de la marca. */
+    border-top: 4px solid var(--sr-verde) !important;
+}
+
+.sr-marca-icono {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--sr-verde-claro);
+    color: var(--sr-verde);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+}
+
+.sr-demo {
+    background-color: var(--sr-verde-claro);
+    border: 1px solid rgba(0, 107, 43, .18);
+}
+
+.sr-demo code {
+    color: var(--sr-verde-oscuro);
+    background-color: rgba(255, 255, 255, .65);
+    padding: .05em .35em;
+    border-radius: 3px;
+}
+
+.sr-separador {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    color: #8a9a91;
+    font-size: .8rem;
+}
+.sr-separador::before,
+.sr-separador::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #dde5e0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sr-tarjeta { transition: none; }
+    .sr-tarjeta:hover { transform: none; }
+}

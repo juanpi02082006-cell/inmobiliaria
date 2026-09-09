@@ -27,62 +27,97 @@
 %>
 <%@ include file="/WEB-INF/jspf/cabecera.jspf" %>
 
-<div class="row justify-content-center">
-    <div class="col-md-7 col-lg-5">
-        <div class="card border-0 shadow-sm">
+<div class="row justify-content-center py-lg-4">
+    <div class="col-md-8 col-lg-5 col-xl-4">
+
+        <div class="card border-0 shadow-sm sr-acceso">
             <div class="card-body p-4 p-sm-5">
 
                 <div class="text-center mb-4">
-                    <i class="bi bi-person-circle text-primary" style="font-size:2.5rem"></i>
-                    <h1 class="h4 mt-2 mb-1">Iniciar sesion</h1>
+                    <span class="sr-marca-icono mb-3">
+                        <i class="bi bi-house-lock"></i>
+                    </span>
+                    <h1 class="h4 mb-1">Iniciar sesion</h1>
                     <p class="text-secondary small mb-0">Acceda a su espacio en Santander Raiz.</p>
                 </div>
 
 <%  if (!error.isEmpty()) { %>
-                <div class="alert alert-danger d-flex align-items-center" role="alert">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                    <div><%= error %></div>
+                <div class="alert alert-danger d-flex align-items-start gap-2 py-2" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill mt-1"></i>
+                    <div class="small"><%= error %></div>
                 </div>
 <%  } %>
 
 <%  if (!aviso.isEmpty()) { %>
-                <div class="alert alert-success d-flex align-items-center" role="alert">
-                    <i class="bi bi-check-circle-fill me-2"></i>
-                    <div><%= aviso %></div>
+                <div class="alert alert-success d-flex align-items-start gap-2 py-2" role="alert">
+                    <i class="bi bi-check-circle-fill mt-1"></i>
+                    <div class="small"><%= aviso %></div>
                 </div>
 <%  } %>
 
                 <form action="<%= ctx %>/login" method="post" novalidate>
                     <div class="mb-3">
-                        <label class="form-label" for="email">Correo electronico</label>
-                        <input class="form-control" id="email" name="email" type="email"
-                               autocomplete="email" value="<%= correoPrevio %>" required>
+                        <label class="form-label small fw-semibold" for="email">Correo electronico</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-body-tertiary">
+                                <i class="bi bi-envelope text-secondary"></i>
+                            </span>
+                            <input class="form-control" id="email" name="email" type="email"
+                                   autocomplete="email" placeholder="usuario@correo.com"
+                                   value="<%= correoPrevio %>" required autofocus>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="password">Contrasena</label>
-                        <input class="form-control" id="password" name="password" type="password"
-                               autocomplete="current-password" required>
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold" for="password">Contrasena</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-body-tertiary">
+                                <i class="bi bi-key text-secondary"></i>
+                            </span>
+                            <input class="form-control" id="password" name="password" type="password"
+                                   autocomplete="current-password" placeholder="Su contrasena" required>
+                        </div>
                     </div>
 
-                    <button class="btn btn-primary w-100" type="submit">Entrar</button>
+                    <button class="btn btn-primary w-100 py-2 fw-semibold" type="submit">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Entrar
+                    </button>
                 </form>
 
-                <p class="text-center text-secondary small mt-4 mb-0">
-                    ¿No tiene cuenta?
-                    <a href="<%= ctx %>/registro.jsp">Registrese aqui</a>
-                </p>
+                <div class="sr-separador my-4">o</div>
+
+                <a class="btn btn-outline-primary w-100" href="<%= ctx %>/registro.jsp">
+                    Crear una cuenta nueva
+                </a>
             </div>
         </div>
 
-        <div class="alert alert-light border mt-3 small mb-0">
-            <strong>Usuarios de prueba</strong> (todos con la contrasena <code>password</code>):
-            <ul class="mb-0 mt-1">
-                <li><code>admin@inmobiliaria.com</code> &rarr; ADMIN</li>
-                <li><code>agente.norte@sraiz.com</code> &rarr; INMOBILIARIA</li>
-                <li><code>carlos.perez@gmail.com</code> &rarr; CLIENTE</li>
-            </ul>
+        <div class="sr-demo rounded-3 mt-3 p-3 small">
+            <div class="fw-semibold texto-sr mb-2">
+                <i class="bi bi-info-circle me-1"></i>Usuarios de prueba
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-1">
+                <code>admin@inmobiliaria.com</code>
+                <span class="badge text-bg-danger">ADMIN</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-1">
+                <code>agente.norte@sraiz.com</code>
+                <span class="badge text-bg-primary">INMOBILIARIA</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center py-1">
+                <code>carlos.perez@gmail.com</code>
+                <span class="badge text-bg-success">CLIENTE</span>
+            </div>
+            <div class="text-secondary mt-2 pt-2 border-top">
+                Todos con la contrasena <code>password</code>
+            </div>
         </div>
+
+        <p class="text-center mt-3 mb-0">
+            <a class="text-secondary small text-decoration-none" href="<%= ctx %>/index.jsp">
+                <i class="bi bi-arrow-left me-1"></i>Volver a la pagina principal
+            </a>
+        </p>
     </div>
 </div>
 

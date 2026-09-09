@@ -27,37 +27,8 @@
     boolean sesionCerrada = "cerrada".equals(request.getParameter("sesion"));
 %>
 
-<style>
-    /* Identidad de la marca sobre el tema de Bootstrap. */
-    :root {
-        --sr-verde: #006b2b;
-        --sr-verde-oscuro: #005320;
-    }
-    .btn-sr {
-        background-color: var(--sr-verde);
-        border-color: var(--sr-verde);
-        color: #fff;
-    }
-    .btn-sr:hover, .btn-sr:focus {
-        background-color: var(--sr-verde-oscuro);
-        border-color: var(--sr-verde-oscuro);
-        color: #fff;
-    }
-    .texto-sr { color: var(--sr-verde); }
-    .fondo-sr { background-color: var(--sr-verde); }
-
-    .sr-hero {
-        position: relative;
-        min-height: 460px;
-        background-image: linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.30)),
-                          url('<%= ctx %>/img/bucaramanga.jpg');
-        background-size: cover;
-        background-position: center;
-    }
-    .sr-portada { height: 220px; object-fit: cover; }
-    .sr-tarjeta { transition: transform .25s ease, box-shadow .25s ease; }
-    .sr-tarjeta:hover { transform: translateY(-4px); box-shadow: 0 .75rem 1.5rem rgba(0,0,0,.12) !important; }
-</style>
+<%-- Los estilos de la marca viven en css/santander-raiz.css, que carga la
+     cabecera. Asi el login, el registro y los paneles usan la misma paleta. --%>
 
 <%  if (sesionCerrada) { %>
 <div class="alert alert-success alert-dismissible fade show" role="alert">

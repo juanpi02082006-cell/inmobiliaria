@@ -36,12 +36,14 @@
 
 <div class="row justify-content-center">
     <div class="col-md-9 col-lg-7">
-        <div class="card border-0 shadow-sm">
+        <div class="card border-0 shadow-sm sr-acceso">
             <div class="card-body p-4 p-sm-5">
 
                 <div class="text-center mb-4">
-                    <i class="bi bi-person-plus text-primary" style="font-size:2.5rem"></i>
-                    <h1 class="h4 mt-2 mb-1">Crear cuenta</h1>
+                    <span class="sr-marca-icono mb-3">
+                        <i class="bi bi-person-plus"></i>
+                    </span>
+                    <h1 class="h4 mb-1">Crear cuenta</h1>
                     <p class="text-secondary small mb-0">Se registrara con el rol CLIENTE.</p>
                 </div>
 
