@@ -87,20 +87,21 @@
         <div class="card border-0 shadow-sm h-100">
             <div class="card-header bg-white fw-semibold">Modulos</div>
             <div class="card-body">
-                <p class="text-secondary small">
-                    Los modulos de gestion se entregan en los sprints siguientes.
-                </p>
                 <div class="d-grid gap-2 d-md-flex">
-                    <button class="btn btn-outline-secondary btn-sm" disabled>
-                        Gestionar usuarios y roles <span class="badge text-bg-light">Sprint 2</span>
-                    </button>
-                    <button class="btn btn-outline-secondary btn-sm" disabled>
-                        Catalogos <span class="badge text-bg-light">Sprint 2</span>
-                    </button>
-                    <button class="btn btn-outline-secondary btn-sm" disabled>
+                    <a class="btn btn-primary" href="<%= ctx %>/panel/admin/usuarios">
+                        <i class="bi bi-people me-1"></i>Usuarios y roles
+                    </a>
+                    <a class="btn btn-outline-primary" href="<%= ctx %>/panel/perfil">
+                        <i class="bi bi-person-gear me-1"></i>Mi perfil
+                    </a>
+                    <button class="btn btn-outline-secondary" disabled>
                         Auditoria <span class="badge text-bg-light">Sprint 3</span>
                     </button>
                 </div>
+                <p class="text-secondary small mb-0 mt-3">
+                    Desde usuarios y roles asigna permisos (relacion N:M) y activa
+                    o inactiva cuentas.
+                </p>
             </div>
         </div>
     </div>

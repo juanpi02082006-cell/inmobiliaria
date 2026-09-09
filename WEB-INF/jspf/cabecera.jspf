@@ -50,7 +50,7 @@
                     <a class="nav-link" href="<%= ctx %>/index.jsp">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= ctx %>/propiedades.jsp">Propiedades</a>
+                    <a class="nav-link" href="<%= ctx %>/catalogo">Propiedades</a>
                 </li>
 
 <%-- ---------------- Menu segun el rol ---------------- --%>

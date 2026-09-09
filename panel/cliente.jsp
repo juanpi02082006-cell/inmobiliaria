@@ -80,10 +80,13 @@
 <%  } %>
         <hr>
         <div class="d-grid gap-2 d-md-flex">
-            <button class="btn btn-outline-secondary btn-sm" disabled>
-                Editar perfil <span class="badge text-bg-light">Sprint 2</span>
-            </button>
-            <button class="btn btn-outline-secondary btn-sm" disabled>
+            <a class="btn btn-primary" href="<%= ctx %>/panel/perfil">
+                <i class="bi bi-person-gear me-1"></i>Editar mi perfil
+            </a>
+            <a class="btn btn-outline-primary" href="<%= ctx %>/catalogo">
+                <i class="bi bi-search me-1"></i>Buscar propiedades
+            </a>
+            <button class="btn btn-outline-secondary" disabled>
                 Agendar cita <span class="badge text-bg-light">Sprint 3</span>
             </button>
         </div>

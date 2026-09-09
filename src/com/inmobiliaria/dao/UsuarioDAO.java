@@ -8,7 +8,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.inmobiliaria.config.ConexionBD;
 import com.inmobiliaria.modelo.Perfil;
@@ -316,6 +318,207 @@ public class UsuarioDAO {
         }
         return new DatoDuplicadoException(null,
                 "Los datos ingresados ya existen en el sistema. Revise el correo y el documento.");
+    }
+
+    // -------------------------------------------------------------------------
+    // Perfil (relacion 1:1)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Actualiza los datos personales del usuario.
+     *
+     * Si el usuario todavia no tiene perfil se crea; de ahi el INSERT ...
+     * ON DUPLICATE KEY UPDATE, que se apoya en el UNIQUE de perfil.id_usuario,
+     * el mismo que sostiene la relacion 1:1.
+     *
+     * @throws DatoDuplicadoException si el documento ya lo tiene otra cuenta.
+     */
+    public void guardarPerfil(int idUsuario, Perfil perfil)
+            throws SQLException, DatoDuplicadoException {
+
+        String sql =
+            "INSERT INTO perfil (id_usuario, nombres, apellidos, documento, telefono, direccion) "
+          + "VALUES (?,?,?,?,?,?) "
+          + "ON DUPLICATE KEY UPDATE nombres = VALUES(nombres), apellidos = VALUES(apellidos), "
+          + "   documento = VALUES(documento), telefono = VALUES(telefono), "
+          + "   direccion = VALUES(direccion)";
+
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+
+            ps.setInt(1, idUsuario);
+            ps.setString(2, perfil.getNombres());
+            ps.setString(3, perfil.getApellidos());
+            ps.setString(4, perfil.getDocumento());
+            ps.setString(5, perfil.getTelefono());
+            ps.setString(6, perfil.getDireccion());
+            ps.executeUpdate();
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw traducirDuplicado(e);
+        }
+    }
+
+    /**
+     * Cambia la contrasena comprobando primero la actual.
+     *
+     * @return false si la contrasena actual no coincide.
+     */
+    public boolean cambiarPassword(int idUsuario, String actual, String nueva) throws SQLException {
+        Usuario u = buscarPorId(idUsuario);
+        if (u == null || !PasswordUtil.verificar(actual, u.getPasswordHash())) {
+            return false;
+        }
+
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(
+                 "UPDATE usuario SET password_hash = ? WHERE id_usuario = ?")) {
+            ps.setString(1, PasswordUtil.cifrar(nueva));
+            ps.setInt(2, idUsuario);
+            ps.executeUpdate();
+        }
+        return true;
+    }
+
+    /** Igual que buscarPorCorreo pero por id. */
+    public Usuario buscarPorId(int idUsuario) throws SQLException {
+        String sql = "SELECT id_usuario, correo, password_hash, activo FROM usuario WHERE id_usuario = ?";
+
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                Usuario u = new Usuario();
+                u.setId(rs.getInt("id_usuario"));
+                u.setCorreo(rs.getString("correo"));
+                u.setPasswordHash(rs.getString("password_hash"));
+                u.setActivo(rs.getBoolean("activo"));
+                u.setRoles(cargarRoles(cn, u.getId()));
+                u.setPerfil(cargarPerfil(cn, u.getId()));
+                return u;
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Administracion de usuarios y roles (N:M)
+    // -------------------------------------------------------------------------
+
+    /** Todos los usuarios con su perfil y sus roles, para el panel del admin. */
+    public List<Usuario> listarTodos() throws SQLException {
+        String sql = "SELECT id_usuario, correo, password_hash, activo FROM usuario ORDER BY id_usuario";
+
+        List<Usuario> lista = new ArrayList<Usuario>();
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Usuario u = new Usuario();
+                u.setId(rs.getInt("id_usuario"));
+                u.setCorreo(rs.getString("correo"));
+                u.setActivo(rs.getBoolean("activo"));
+                lista.add(u);
+            }
+        }
+
+        // Los roles y el perfil se cargan en una segunda pasada para no
+        // mantener abierto el ResultSet mientras se hacen otras consultas.
+        try (Connection cn = ConexionBD.obtener()) {
+            for (Usuario u : lista) {
+                u.setRoles(cargarRoles(cn, u.getId()));
+                u.setPerfil(cargarPerfil(cn, u.getId()));
+            }
+        }
+        return lista;
+    }
+
+    /** Catalogo de roles del sistema: id -> nombre. */
+    public Map<Integer, String> roles() throws SQLException {
+        Map<Integer, String> mapa = new LinkedHashMap<Integer, String>();
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement("SELECT id_rol, nombre FROM rol ORDER BY id_rol");
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                mapa.put(Integer.valueOf(rs.getInt("id_rol")), rs.getString("nombre"));
+            }
+        }
+        return mapa;
+    }
+
+    /**
+     * Reemplaza los roles de un usuario (relacion N:M usuario_rol).
+     *
+     * Se borran los que tenia y se insertan los nuevos en una sola
+     * transaccion, para que nunca quede sin ninguno a medio camino.
+     */
+    public void asignarRoles(int idUsuario, int[] idsRol) throws SQLException {
+        Connection cn = null;
+        try {
+            cn = ConexionBD.obtener();
+            cn.setAutoCommit(false);
+
+            try (PreparedStatement borrar = cn.prepareStatement(
+                     "DELETE FROM usuario_rol WHERE id_usuario = ?")) {
+                borrar.setInt(1, idUsuario);
+                borrar.executeUpdate();
+            }
+
+            if (idsRol != null && idsRol.length > 0) {
+                try (PreparedStatement ins = cn.prepareStatement(
+                         "INSERT INTO usuario_rol (id_usuario, id_rol) VALUES (?,?)")) {
+                    for (int idRol : idsRol) {
+                        ins.setInt(1, idUsuario);
+                        ins.setInt(2, idRol);
+                        ins.addBatch();
+                    }
+                    ins.executeBatch();
+                }
+            }
+
+            cn.commit();
+
+        } catch (SQLException e) {
+            if (cn != null) {
+                try { cn.rollback(); } catch (SQLException ignorada) { }
+            }
+            throw e;
+        } finally {
+            if (cn != null) {
+                try { cn.setAutoCommit(true); cn.close(); } catch (SQLException ignorada) { }
+            }
+        }
+    }
+
+    /** Activa o inactiva una cuenta (baja logica del usuario). */
+    public void cambiarEstado(int idUsuario, boolean activo) throws SQLException {
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(
+                 "UPDATE usuario SET activo = ?, intentos_fallidos = 0, bloqueado_hasta = NULL "
+               + " WHERE id_usuario = ?")) {
+            ps.setBoolean(1, activo);
+            ps.setInt(2, idUsuario);
+            ps.executeUpdate();
+        }
+    }
+
+    /** Cuantas cuentas activas tienen el rol indicado. */
+    public int cuantosConRol(String rol) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM usuario u "
+                   + "  JOIN usuario_rol ur ON ur.id_usuario = u.id_usuario "
+                   + "  JOIN rol r ON r.id_rol = ur.id_rol "
+                   + " WHERE r.nombre = ? AND u.activo = 1";
+
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, rol);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : 0;
+            }
+        }
     }
 
     private void deshacer(Connection cn) {

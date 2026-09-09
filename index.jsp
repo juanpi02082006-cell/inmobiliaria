@@ -53,7 +53,7 @@
 
 <%-- ===================== Buscador rapido ===================== --%>
 <section class="mx-3 mx-md-5" style="margin-top:-2.5rem;position:relative;z-index:5">
-    <form class="card border-0 shadow-lg" action="<%= ctx %>/propiedades.jsp" method="get">
+    <form class="card border-0 shadow-lg" action="<%= ctx %>/catalogo" method="get">
         <div class="card-body p-3 p-md-4">
             <div class="row g-2 align-items-end">
                 <div class="col-6 col-lg-3">
@@ -118,6 +118,7 @@
     <div class="row g-4">
 <%      for (Propiedad p : destacadas) { %>
         <div class="col-md-6 col-xl-4">
+            <a class="text-decoration-none text-reset" href="<%= ctx %>/catalogo?id=<%= p.getId() %>">
             <article class="card border-0 shadow-sm h-100 sr-tarjeta">
                 <div class="position-relative">
                     <img class="card-img-top sr-portada" src="<%= ctx %>/<%= p.getImagen() %>"
@@ -143,12 +144,13 @@
                     </ul>
                 </div>
             </article>
+            </a>
         </div>
 <%      } %>
     </div>
 
     <div class="text-center mt-4">
-        <a class="btn btn-outline-secondary" href="<%= ctx %>/propiedades.jsp">
+        <a class="btn btn-outline-secondary" href="<%= ctx %>/catalogo">
             Ver todo el catalogo <i class="bi bi-arrow-right ms-1"></i>
         </a>
     </div>

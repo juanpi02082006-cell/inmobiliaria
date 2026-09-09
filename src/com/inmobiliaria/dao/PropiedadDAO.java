@@ -126,6 +126,33 @@ public class PropiedadDAO {
         return resultado;
     }
 
+    /**
+     * Otros inmuebles parecidos para sugerir al pie de la ficha: misma ciudad
+     * o mismo tipo, disponibles, excluyendo el que se esta viendo.
+     */
+    public List<Propiedad> similares(Propiedad actual, int cuantas) throws SQLException {
+        String sql = SQL_BASE
+                   + " AND p.estado = 'DISPONIBLE' AND p.id_propiedad <> ? "
+                   + " AND (p.id_ciudad = ? OR p.id_tipo = ?) "
+                   + " ORDER BY (p.id_ciudad = ?) DESC, p.fecha_publicacion DESC LIMIT ?";
+
+        List<Propiedad> lista = new ArrayList<Propiedad>();
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, actual.getId());
+            ps.setInt(2, actual.getIdCiudad());
+            ps.setInt(3, actual.getIdTipo());
+            ps.setInt(4, actual.getIdCiudad());
+            ps.setInt(5, cuantas);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(mapear(rs));
+                }
+            }
+        }
+        return lista;
+    }
+
     /** Nombres de ciudad que tienen al menos una propiedad activa. */
     public List<String> ciudadesConPropiedades() throws SQLException {
         return listarNombres(
