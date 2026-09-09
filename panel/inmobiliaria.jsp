@@ -50,21 +50,19 @@
 <div class="card border-0 shadow-sm">
     <div class="card-header bg-white fw-semibold">Modulos</div>
     <div class="card-body">
-        <p class="text-secondary small">
-            La publicacion y edicion de propiedades llega en el Sprint 2;
-            la atencion de citas y solicitudes, en el Sprint 3.
-        </p>
         <div class="d-grid gap-2 d-md-flex">
-            <button class="btn btn-outline-secondary btn-sm" disabled>
-                Publicar propiedad <span class="badge text-bg-light">Sprint 2</span>
-            </button>
-            <button class="btn btn-outline-secondary btn-sm" disabled>
-                Galeria y caracteristicas <span class="badge text-bg-light">Sprint 2</span>
-            </button>
-            <button class="btn btn-outline-secondary btn-sm" disabled>
-                Citas y solicitudes <span class="badge text-bg-light">Sprint 3</span>
-            </button>
+            <a class="btn btn-primary" href="<%= ctx %>/panel/inmobiliaria/propiedades">
+                <i class="bi bi-houses me-1"></i>Gestionar mis propiedades
+            </a>
+            <a class="btn btn-outline-primary" href="<%= ctx %>/panel/inmobiliaria/propiedades?accion=nueva">
+                <i class="bi bi-plus-lg me-1"></i>Publicar una nueva
+            </a>
         </div>
+        <p class="text-secondary small mb-0 mt-3">
+            Desde ahi administra tambien la galeria de imagenes (1:N) y las
+            caracteristicas del inmueble (N:M). La atencion de citas y
+            solicitudes llega en el Sprint 3.
+        </p>
     </div>
 </div>
 

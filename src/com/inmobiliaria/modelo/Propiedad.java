@@ -2,6 +2,8 @@ package com.inmobiliaria.modelo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Inmueble publicado (tabla propiedad).
@@ -28,6 +30,12 @@ public class Propiedad implements Serializable {
     private int banos;
     private int parqueaderos;
     private String estado;
+    private boolean activo = true;
+
+    /** Llaves foraneas. Son las que se escriben al crear o editar. */
+    private int idInmobiliaria;
+    private int idCiudad;
+    private int idTipo;
 
     /** Datos traidos por JOIN desde ciudad, tipo_propiedad e inmobiliaria. */
     private String ciudad;
@@ -37,7 +45,38 @@ public class Propiedad implements Serializable {
     /** Imagen de portada (relacion 1:N con imagen_propiedad). */
     private String imagen;
 
+    /** Galeria completa. Solo se carga en la ficha de detalle. */
+    private List<Imagen> imagenes = new ArrayList<Imagen>();
+
+    /** Caracteristicas asignadas (relacion N:M). Solo en la ficha de detalle. */
+    private List<Caracteristica> caracteristicas = new ArrayList<Caracteristica>();
+
     public Propiedad() {
+    }
+
+    /** Cuantas fotos tiene la galeria. */
+    public int totalImagenes() {
+        return imagenes.size();
+    }
+
+    /** ¿Tiene asignada la caracteristica con ese id? Lo usa el formulario. */
+    public boolean tieneCaracteristica(int idCaracteristica) {
+        for (Caracteristica c : caracteristicas) {
+            if (c.getId() == idCaracteristica) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Cantidad asignada de una caracteristica, o 0 si no la tiene. */
+    public int cantidadDe(int idCaracteristica) {
+        for (Caracteristica c : caracteristicas) {
+            if (c.getId() == idCaracteristica) {
+                return c.getCantidad();
+            }
+        }
+        return 0;
     }
 
     /**
@@ -175,5 +214,54 @@ public class Propiedad implements Serializable {
 
     public void setInmobiliaria(String inmobiliaria) {
         this.inmobiliaria = inmobiliaria;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public int getIdInmobiliaria() {
+        return idInmobiliaria;
+    }
+
+    public void setIdInmobiliaria(int idInmobiliaria) {
+        this.idInmobiliaria = idInmobiliaria;
+    }
+
+    public int getIdCiudad() {
+        return idCiudad;
+    }
+
+    public void setIdCiudad(int idCiudad) {
+        this.idCiudad = idCiudad;
+    }
+
+    public int getIdTipo() {
+        return idTipo;
+    }
+
+    public void setIdTipo(int idTipo) {
+        this.idTipo = idTipo;
+    }
+
+    public List<Imagen> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<Imagen> imagenes) {
+        this.imagenes = (imagenes == null) ? new ArrayList<Imagen>() : imagenes;
+    }
+
+    public List<Caracteristica> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(List<Caracteristica> caracteristicas) {
+        this.caracteristicas = (caracteristicas == null)
+                ? new ArrayList<Caracteristica>() : caracteristicas;
     }
 }
