@@ -1,5 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isErrorPage="true" %>
 <%--
+    Esta pagina NO incluye cabecera.jspf, asi que necesita su propio import
+    de Html. Lo necesita de verdad: imprime la direccion solicitada, y esa la
+    escribe quien hace la peticion.
+--%>
+<%@ page import="com.inmobiliaria.util.Html" %>
+<%--
     Pagina de error generica.
 
     El enunciado pide mensajes comprensibles para el usuario final en lugar de
@@ -39,14 +45,14 @@
                     <i class="bi bi-exclamation-octagon text-warning" style="font-size:3.5rem"></i>
 
                     <h1 class="h3 mt-3">
-                        <%= (codigo == null) ? "Error" : "Error " + codigo %>
+                        <%= Html.esc((codigo == null) ? "Error" : "Error " + codigo) %>
                     </h1>
 
                     <p class="text-secondary"><%= mensaje %></p>
 
 <%  if (ruta != null) { %>
                     <p class="small text-secondary mb-0">
-                        Direccion solicitada: <code><%= ruta %></code>
+                        Direccion solicitada: <code><%= Html.esc(ruta) %></code>
                     </p>
 <%  } %>
 

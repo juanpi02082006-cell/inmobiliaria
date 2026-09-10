@@ -61,7 +61,7 @@
                     <select class="form-select" id="ciudadInicio" name="ciudad">
                         <option value="">Todas</option>
 <%  for (String c : ciudades) { %>
-                        <option value="<%= c %>"><%= c %></option>
+                        <option value="<%= Html.esc(c) %>"><%= Html.esc(c) %></option>
 <%  } %>
                     </select>
                 </div>
@@ -71,7 +71,7 @@
                     <select class="form-select" id="tipoInicio" name="tipo">
                         <option value="">Todos</option>
 <%  for (String t : tipos) { %>
-                        <option value="<%= t %>"><%= t %></option>
+                        <option value="<%= Html.esc(t) %>"><%= Html.esc(t) %></option>
 <%  } %>
                     </select>
                 </div>
@@ -122,17 +122,17 @@
             <article class="card border-0 shadow-sm h-100 sr-tarjeta">
                 <div class="position-relative">
                     <img class="card-img-top sr-portada" src="<%= ctx %>/<%= p.getImagen() %>"
-                         alt="<%= p.getTitulo() %>">
+                         alt="<%= Html.esc(p.getTitulo()) %>">
                     <span class="badge fondo-sr position-absolute top-0 start-0 m-3">
                         EN <%= p.getOperacion() %>
                     </span>
                 </div>
 
                 <div class="card-body d-flex flex-column">
-                    <p class="texto-sr text-uppercase small fw-semibold mb-1"><%= p.getTipo() %></p>
-                    <h3 class="h6 fw-bold mb-1"><%= p.getTitulo() %></h3>
+                    <p class="texto-sr text-uppercase small fw-semibold mb-1"><%= Html.esc(p.getTipo()) %></p>
+                    <h3 class="h6 fw-bold mb-1"><%= Html.esc(p.getTitulo()) %></h3>
                     <p class="text-secondary small mb-3">
-                        <i class="bi bi-geo-alt me-1"></i><%= p.getCiudad() %> &middot; <%= p.getDireccion() %>
+                        <i class="bi bi-geo-alt me-1"></i><%= Html.esc(p.getCiudad()) %> &middot; <%= Html.esc(p.getDireccion()) %>
                     </p>
 
                     <div class="fs-5 fw-bold mb-3"><%= pesos.format(p.getPrecio()) %></div>

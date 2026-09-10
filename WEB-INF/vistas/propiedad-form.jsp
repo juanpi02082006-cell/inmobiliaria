@@ -43,7 +43,7 @@
         <h1 class="h3 mb-1"><%= esEdicion ? "Editar propiedad" : "Publicar propiedad" %></h1>
         <p class="text-secondary mb-0">
 <%  if (esEdicion) { %>
-            <code><%= p.getMatricula() %></code> &middot; <%= p.getTitulo() %>
+            <code><%= Html.esc(p.getMatricula()) %></code> &middot; <%= Html.esc(p.getTitulo()) %>
 <%  } else { %>
             Los campos marcados con * son obligatorios.
 <%  } %>
@@ -116,7 +116,7 @@
                                 <option value="">Seleccione…</option>
 <%  for (Map.Entry<Integer, String> e : tipos.entrySet()) { %>
                                 <option value="<%= e.getKey() %>"<%= sel(p != null && p.getIdTipo() == e.getKey()) %>>
-                                    <%= e.getValue() %>
+                                    <%= Html.esc(e.getValue()) %>
                                 </option>
 <%  } %>
                             </select>
@@ -128,7 +128,7 @@
                                 <option value="">Seleccione…</option>
 <%  for (Map.Entry<Integer, String> e : ciudades.entrySet()) { %>
                                 <option value="<%= e.getKey() %>"<%= sel(p != null && p.getIdCiudad() == e.getKey()) %>>
-                                    <%= e.getValue() %>
+                                    <%= Html.esc(e.getValue()) %>
                                 </option>
 <%  } %>
                             </select>
@@ -222,7 +222,7 @@
                                    name="caracteristicas" value="<%= c.getId() %>"
                                    id="car<%= c.getId() %>"<%= chk(marcada) %>>
                             <label class="form-check-label small" for="car<%= c.getId() %>">
-                                <%= c.getNombre() %>
+                                <%= Html.esc(c.getNombre()) %>
                             </label>
                         </div>
                         <%-- La cantidad se ata al id de la caracteristica y no a
@@ -230,7 +230,7 @@
                              su campo numerico si, y por posicion se desalinearian. --%>
                         <input class="form-control form-control-sm" style="width:72px"
                                type="number" name="cantidad_<%= c.getId() %>" min="1" max="99"
-                               value="<%= cant %>" aria-label="Cantidad de <%= c.getNombre() %>">
+                               value="<%= cant %>" aria-label="Cantidad de <%= Html.esc(c.getNombre()) %>">
                     </div>
 <%  } %>
                     <p class="text-secondary small mb-0 mt-3">
@@ -293,7 +293,7 @@
 <%          for (Imagen img : p.getImagenes()) { %>
             <div class="col-6 col-md-4 col-xl-3">
                 <div class="card h-100 <%= img.isPortada() ? "border-primary border-2" : "" %>">
-                    <img class="card-img-top" src="<%= ctx %>/<%= img.getUrl() %>" alt=""
+                    <img class="card-img-top" src="<%= ctx %>/<%= Html.esc(img.getUrl()) %>" alt=""
                          style="height:130px;object-fit:cover">
                     <div class="card-body p-2 d-flex flex-column gap-2">
 <%              if (img.isPortada()) { %>

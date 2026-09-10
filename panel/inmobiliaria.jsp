@@ -19,8 +19,8 @@
     <div>
         <h1 class="h3 mb-1">Panel de la inmobiliaria</h1>
         <p class="text-secondary mb-0">
-            <%= (agencia == null) ? "Sin agencia asociada" : agencia %> &middot;
-            agente <strong><%= usuarioSesion.nombreVisible() %></strong>
+            <%= Html.esc((agencia == null) ? "Sin agencia asociada" : agencia) %> &middot;
+            agente <strong><%= Html.esc(usuarioSesion.nombreVisible()) %></strong>
         </p>
     </div>
     <span class="badge text-bg-primary fs-6"><i class="bi bi-house-gear me-1"></i>INMOBILIARIA</span>

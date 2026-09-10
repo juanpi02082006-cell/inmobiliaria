@@ -64,7 +64,7 @@
             <div class="card-body">
                 <dl class="row mb-0 small">
                     <dt class="col-sm-3 text-secondary">Correo</dt>
-                    <dd class="col-sm-9"><%= usuarioSesion.getCorreo() %></dd>
+                    <dd class="col-sm-9"><%= Html.esc(usuarioSesion.getCorreo()) %></dd>
 
                     <dt class="col-sm-3 text-secondary">Roles</dt>
                     <dd class="col-sm-9">

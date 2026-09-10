@@ -121,12 +121,21 @@ public class CatalogoServlet extends HttpServlet {
         }
     }
 
-    /** Acepta el precio con puntos de miles y coma decimal. */
+    /**
+     * Acepta las dos notaciones: el punto decimal que envia un input
+     * type="number" ("1500.5") y la notacion colombiana con punto de miles y
+     * coma decimal ("1.500,50"). La coma es la que distingue una de otra.
+     */
     private BigDecimal decimal(String v) {
-        String limpio = valor(v).replace(".", "").replace(",", ".");
+        String limpio = valor(v);
         if (limpio.isEmpty()) {
             return null;
         }
+
+        if (limpio.indexOf(',') >= 0) {
+            limpio = limpio.replace(".", "").replace(",", ".");
+        }
+
         try {
             return new BigDecimal(limpio);
         } catch (NumberFormatException e) {

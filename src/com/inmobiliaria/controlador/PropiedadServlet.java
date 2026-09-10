@@ -372,12 +372,30 @@ public class PropiedadServlet extends HttpServlet {
         }
     }
 
-    /** Convierte a BigDecimal aceptando puntos de miles y coma decimal. */
+    /**
+     * Convierte a BigDecimal aceptando las dos notaciones que pueden llegar.
+     *
+     * Un input type="number" siempre envia el punto como separador DECIMAL
+     * ("120.5"), mientras que alguien que escriba a mano puede usar la
+     * notacion colombiana con punto de miles y coma decimal ("1.200,50").
+     *
+     * Distinguirlas por la coma: si hay coma, ella es el separador decimal y
+     * los puntos son de miles; si no hay coma, el punto es decimal y se deja
+     * como esta.
+     *
+     * Tratar siempre el punto como separador de miles multiplicaba por diez
+     * las areas con un decimal: 120.5 se guardaba como 1205.
+     */
     private BigDecimal decimal(String v) {
-        String limpio = valor(v).replace(".", "").replace(",", ".");
+        String limpio = valor(v);
         if (limpio.isEmpty()) {
             return null;
         }
+
+        if (limpio.indexOf(',') >= 0) {
+            limpio = limpio.replace(".", "").replace(",", ".");
+        }
+
         try {
             return new BigDecimal(limpio);
         } catch (NumberFormatException e) {

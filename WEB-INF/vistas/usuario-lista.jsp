@@ -71,12 +71,12 @@
 
                     <td style="min-width:210px">
                         <div class="fw-semibold">
-                            <%= (u.getPerfil() == null) ? u.getCorreo() : u.getPerfil().nombreCompleto() %>
+                            <%= Html.esc((u.getPerfil() == null) ? u.getCorreo() : u.getPerfil().nombreCompleto()) %>
 <%      if (esYo) { %>
                             <span class="badge text-bg-info ms-1">usted</span>
 <%      } %>
                         </div>
-                        <div class="text-secondary small"><%= u.getCorreo() %></div>
+                        <div class="text-secondary small"><%= Html.esc(u.getCorreo()) %></div>
                     </td>
 
                     <%-- ---- Roles: relacion N:M ---- --%>
@@ -94,7 +94,7 @@
                                        id="r<%= u.getId() %>_<%= r.getKey() %>"
                                        <%= tiene ? "checked" : "" %>>
                                 <label class="form-check-label small" for="r<%= u.getId() %>_<%= r.getKey() %>">
-                                    <%= r.getValue() %>
+                                    <%= Html.esc(r.getValue()) %>
                                 </label>
                             </div>
 <%      } %>
@@ -109,7 +109,7 @@
 <%      if (u.isActivo()) { %>
                         <span class="badge text-bg-success me-1">ACTIVA</span>
                         <form class="d-inline" method="post" action="<%= base %>"
-                              onsubmit="return confirm('Inactivar la cuenta de <%= u.getCorreo() %>? No podra iniciar sesion.')">
+                              onsubmit="return confirm('Inactivar la cuenta de <%= Html.esc(u.getCorreo()) %>? No podra iniciar sesion.')">
                             <input type="hidden" name="accion" value="inactivar">
                             <input type="hidden" name="id" value="<%= u.getId() %>">
                             <button class="btn btn-sm btn-outline-danger" type="submit"

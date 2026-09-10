@@ -40,7 +40,7 @@
     <ol class="breadcrumb small mb-0">
         <li class="breadcrumb-item"><a href="<%= ctx %>/index.jsp">Inicio</a></li>
         <li class="breadcrumb-item"><a href="<%= ctx %>/catalogo">Propiedades</a></li>
-        <li class="breadcrumb-item active"><%= p.getCiudad() %></li>
+        <li class="breadcrumb-item active"><%= Html.esc(p.getCiudad()) %></li>
     </ol>
 </nav>
 
@@ -49,7 +49,7 @@
     <%-- ============ Galeria (relacion 1:N) ============ --%>
     <div class="col-lg-8">
 <%      if (p.getImagenes().isEmpty()) { %>
-        <img class="w-100 rounded-3" src="<%= ctx %>/<%= p.getImagen() %>" alt="<%= p.getTitulo() %>"
+        <img class="w-100 rounded-3" src="<%= ctx %>/<%= p.getImagen() %>" alt="<%= Html.esc(p.getTitulo()) %>"
              style="height:420px;object-fit:cover">
 <%      } else { %>
         <div id="galeria" class="carousel slide rounded-3 overflow-hidden" data-bs-ride="false">
@@ -67,8 +67,8 @@
 <%          int idx = 0;
             for (Imagen img : p.getImagenes()) { %>
                 <div class="carousel-item<%= idx == 0 ? " active" : "" %>">
-                    <img class="d-block w-100" src="<%= ctx %>/<%= img.getUrl() %>"
-                         alt="<%= p.getTitulo() %>" style="height:420px;object-fit:cover">
+                    <img class="d-block w-100" src="<%= ctx %>/<%= Html.esc(img.getUrl()) %>"
+                         alt="<%= Html.esc(p.getTitulo()) %>" style="height:420px;object-fit:cover">
                 </div>
 <%              idx++;
             } %>
@@ -95,9 +95,9 @@
             <div class="card-body">
                 <h2 class="h5 mb-3">Descripcion</h2>
                 <p class="mb-0 text-secondary">
-                    <%= (p.getDescripcion() == null || p.getDescripcion().isEmpty())
+                    <%= Html.esc((p.getDescripcion() == null || p.getDescripcion().isEmpty())
                         ? "Este inmueble aun no tiene una descripcion detallada."
-                        : p.getDescripcion() %>
+                        : p.getDescripcion()) %>
                 </p>
             </div>
         </div>
@@ -112,7 +112,7 @@
                 <div class="d-flex flex-wrap gap-2">
 <%          for (Caracteristica c : p.getCaracteristicas()) { %>
                     <span class="badge text-bg-light border py-2 px-3">
-                        <i class="bi bi-check2 texto-sr me-1"></i><%= c.getNombre() %>
+                        <i class="bi bi-check2 texto-sr me-1"></i><%= Html.esc(c.getNombre()) %>
 <%              if (c.getCantidad() > 1) { %>
                         <span class="text-secondary">&times;<%= c.getCantidad() %></span>
 <%              } %>
@@ -130,20 +130,20 @@
             <div class="card-body">
 
                 <div class="d-flex justify-content-between align-items-start mb-2">
-                    <span class="badge text-bg-light border"><%= p.getTipo() %></span>
+                    <span class="badge text-bg-light border"><%= Html.esc(p.getTipo()) %></span>
                     <span class="badge <%= "DISPONIBLE".equals(p.getEstado()) ? "text-bg-success" : "text-bg-secondary" %>">
                         <%= p.getEstado() %>
                     </span>
                 </div>
 
-                <h1 class="h4 mb-1"><%= p.getTitulo() %></h1>
+                <h1 class="h4 mb-1"><%= Html.esc(p.getTitulo()) %></h1>
                 <p class="text-secondary small mb-3">
-                    <i class="bi bi-geo-alt me-1"></i><%= p.getCiudad() %> &middot; <%= p.getDireccion() %>
+                    <i class="bi bi-geo-alt me-1"></i><%= Html.esc(p.getCiudad()) %> &middot; <%= Html.esc(p.getDireccion()) %>
                 </p>
 
                 <div class="h3 fw-bold texto-sr mb-1"><%= pesos.format(p.getPrecio()) %></div>
                 <p class="text-secondary small mb-3">
-                    En <%= p.getOperacion().toLowerCase() %> &middot; codigo <code><%= p.getCodigo() %></code>
+                    En <%= Html.esc(p.getOperacion().toLowerCase()) %> &middot; codigo <code><%= Html.esc(p.getCodigo()) %></code>
                 </p>
 
                 <div class="row g-2 text-center border-top border-bottom py-3 mb-3">
@@ -168,7 +168,7 @@
                 <%-- El visitante ve la agencia, pero no sus datos de contacto --%>
                 <div class="mb-3">
                     <div class="text-secondary" style="font-size:.72rem">PUBLICADO POR</div>
-                    <div class="fw-semibold"><%= p.getInmobiliaria() %></div>
+                    <div class="fw-semibold"><%= Html.esc(p.getInmobiliaria()) %></div>
                 </div>
 
 <%      if (usuarioSesion == null) { %>
@@ -205,10 +205,10 @@
                 <article class="card border-0 shadow-sm h-100 sr-tarjeta">
                     <img class="card-img-top sr-portada" src="<%= ctx %>/<%= s.getImagen() %>" alt="">
                     <div class="card-body">
-                        <p class="texto-sr text-uppercase small fw-semibold mb-1"><%= s.getTipo() %></p>
-                        <h3 class="h6 fw-bold mb-1"><%= s.getTitulo() %></h3>
+                        <p class="texto-sr text-uppercase small fw-semibold mb-1"><%= Html.esc(s.getTipo()) %></p>
+                        <h3 class="h6 fw-bold mb-1"><%= Html.esc(s.getTitulo()) %></h3>
                         <p class="text-secondary small mb-2">
-                            <i class="bi bi-geo-alt me-1"></i><%= s.getCiudad() %>
+                            <i class="bi bi-geo-alt me-1"></i><%= Html.esc(s.getCiudad()) %>
                         </p>
                         <div class="fw-bold"><%= pesos.format(s.getPrecio()) %></div>
                     </div>

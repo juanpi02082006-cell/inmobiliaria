@@ -20,7 +20,7 @@
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
     <div>
         <h1 class="h3 mb-1">Mi cuenta</h1>
-        <p class="text-secondary mb-0">Hola, <strong><%= usuarioSesion.nombreVisible() %></strong>.</p>
+        <p class="text-secondary mb-0">Hola, <strong><%= Html.esc(usuarioSesion.nombreVisible()) %></strong>.</p>
     </div>
     <span class="badge text-bg-success fs-6"><i class="bi bi-person-check me-1"></i>CLIENTE</span>
 </div>
@@ -63,19 +63,19 @@
 <%  } else { %>
         <dl class="row mb-0">
             <dt class="col-sm-3">Nombre</dt>
-            <dd class="col-sm-9"><%= miPerfil.nombreCompleto() %></dd>
+            <dd class="col-sm-9"><%= Html.esc(miPerfil.nombreCompleto()) %></dd>
 
             <dt class="col-sm-3">Documento</dt>
-            <dd class="col-sm-9"><%= miPerfil.getDocumento() %></dd>
+            <dd class="col-sm-9"><%= Html.esc(miPerfil.getDocumento()) %></dd>
 
             <dt class="col-sm-3">Correo</dt>
-            <dd class="col-sm-9"><%= usuarioSesion.getCorreo() %></dd>
+            <dd class="col-sm-9"><%= Html.esc(usuarioSesion.getCorreo()) %></dd>
 
             <dt class="col-sm-3">Telefono</dt>
-            <dd class="col-sm-9"><%= (miPerfil.getTelefono() == null) ? "-" : miPerfil.getTelefono() %></dd>
+            <dd class="col-sm-9"><%= Html.esc((miPerfil.getTelefono() == null) ? "-" : miPerfil.getTelefono()) %></dd>
 
             <dt class="col-sm-3">Direccion</dt>
-            <dd class="col-sm-9"><%= (miPerfil.getDireccion() == null) ? "-" : miPerfil.getDireccion() %></dd>
+            <dd class="col-sm-9"><%= Html.esc((miPerfil.getDireccion() == null) ? "-" : miPerfil.getDireccion()) %></dd>
         </dl>
 <%  } %>
         <hr>

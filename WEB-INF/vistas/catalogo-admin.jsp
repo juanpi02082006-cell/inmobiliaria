@@ -152,7 +152,7 @@
                                 </button>
 <%      } else { %>
                                 <form class="d-inline" method="post" action="<%= base %>"
-                                      onsubmit="return confirm('Eliminar <%= att(nombre) %>?')">
+                                      onsubmit="return confirm('Eliminar <%= Html.js(nombre) %>?')">
                                     <input type="hidden" name="accion" value="ciudad-eliminar">
                                     <input type="hidden" name="id" value="<%= id %>">
                                     <button class="btn btn-sm btn-outline-danger" type="submit" title="Eliminar">
@@ -252,7 +252,7 @@
 
                             <td class="text-end">
                                 <form class="d-inline" method="post" action="<%= base %>"
-                                      onsubmit="return confirm('<%= att(aviso) %>')">
+                                      onsubmit="return confirm('<%= Html.js(aviso) %>')">
                                     <input type="hidden" name="accion" value="caracteristica-eliminar">
                                     <input type="hidden" name="id" value="<%= id %>">
                                     <button class="btn btn-sm btn-outline-danger" type="submit" title="Eliminar">
@@ -287,7 +287,7 @@
             <div class="card-body">
                 <div class="d-flex flex-wrap gap-2 mb-3">
 <%  for (Map.Entry<Integer, String> t : tipos.entrySet()) { %>
-                    <span class="badge text-bg-light border py-2 px-3"><%= t.getValue() %></span>
+                    <span class="badge text-bg-light border py-2 px-3"><%= Html.esc(t.getValue()) %></span>
 <%  } %>
                 </div>
                 <p class="text-secondary small mb-0">

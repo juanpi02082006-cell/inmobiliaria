@@ -87,14 +87,14 @@
                     </td>
 
                     <td>
-                        <div class="fw-semibold"><%= p.getTitulo() %></div>
+                        <div class="fw-semibold"><%= Html.esc(p.getTitulo()) %></div>
                         <div class="text-secondary small">
-                            <code><%= p.getMatricula() %></code> &middot; <%= p.getTipo() %>
+                            <code><%= Html.esc(p.getMatricula()) %></code> &middot; <%= Html.esc(p.getTipo()) %>
                             &middot; <%= p.getOperacion() %>
                         </div>
                     </td>
 
-                    <td class="d-none d-md-table-cell"><%= p.getCiudad() %></td>
+                    <td class="d-none d-md-table-cell"><%= Html.esc(p.getCiudad()) %></td>
 
                     <td class="text-end fw-semibold" style="font-variant-numeric:tabular-nums">
                         <%= pesos.format(p.getPrecio()) %>

@@ -23,7 +23,7 @@
     <div>
         <h1 class="h3 mb-1">Panel del administrador</h1>
         <p class="text-secondary mb-0">
-            Bienvenido, <strong><%= usuarioSesion.nombreVisible() %></strong>.
+            Bienvenido, <strong><%= Html.esc(usuarioSesion.nombreVisible()) %></strong>.
             Acceso total al sistema.
         </p>
     </div>

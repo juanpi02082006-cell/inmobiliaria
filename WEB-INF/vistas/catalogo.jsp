@@ -47,7 +47,7 @@
                 <select class="form-select" id="tipo" name="tipo">
                     <option value="">Todos</option>
 <%  for (String t : tipos) { %>
-                    <option value="<%= t %>" <%= t.equals(fTipo) ? "selected" : "" %>><%= t %></option>
+                    <option value="<%= Html.esc(t) %>" <%= t.equals(fTipo) ? "selected" : "" %>><%= Html.esc(t) %></option>
 <%  } %>
                 </select>
             </div>
@@ -57,7 +57,7 @@
                 <select class="form-select" id="ciudad" name="ciudad">
                     <option value="">Todas</option>
 <%  for (String c : ciudades) { %>
-                    <option value="<%= c %>" <%= c.equals(fCiudad) ? "selected" : "" %>><%= c %></option>
+                    <option value="<%= Html.esc(c) %>" <%= c.equals(fCiudad) ? "selected" : "" %>><%= Html.esc(c) %></option>
 <%  } %>
                 </select>
             </div>
@@ -102,7 +102,7 @@
             <article class="card border-0 shadow-sm h-100 sr-tarjeta">
                 <div class="position-relative">
                     <img class="card-img-top sr-portada" src="<%= ctx %>/<%= p.getImagen() %>"
-                         alt="<%= p.getTitulo() %>">
+                         alt="<%= Html.esc(p.getTitulo()) %>">
                     <span class="badge fondo-sr position-absolute top-0 start-0 m-3">
                         EN <%= p.getOperacion() %>
                     </span>
@@ -110,16 +110,16 @@
 
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-start mb-2">
-                        <span class="badge text-bg-light border"><%= p.getTipo() %></span>
+                        <span class="badge text-bg-light border"><%= Html.esc(p.getTipo()) %></span>
                         <span class="badge <%= "DISPONIBLE".equals(p.getEstado()) ? "text-bg-success" : "text-bg-secondary" %>">
                             <%= p.getEstado() %>
                         </span>
                     </div>
 
-                    <h2 class="h6 fw-bold mb-1"><%= p.getTitulo() %></h2>
+                    <h2 class="h6 fw-bold mb-1"><%= Html.esc(p.getTitulo()) %></h2>
 
                     <p class="text-secondary small mb-2">
-                        <i class="bi bi-geo-alt me-1"></i><%= p.getCiudad() %> &middot; <%= p.getDireccion() %>
+                        <i class="bi bi-geo-alt me-1"></i><%= Html.esc(p.getCiudad()) %> &middot; <%= Html.esc(p.getDireccion()) %>
                     </p>
 
                     <ul class="list-inline small text-secondary mb-3">
@@ -131,7 +131,7 @@
 
                     <div class="mt-auto">
                         <div class="fs-5 fw-bold"><%= pesos.format(p.getPrecio()) %></div>
-                        <div class="text-secondary small">codigo <%= p.getCodigo() %></div>
+                        <div class="text-secondary small">codigo <%= Html.esc(p.getCodigo()) %></div>
                     </div>
                 </div>
 
