@@ -9,9 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.inmobiliaria.dao.FavoritoDAO;
 import com.inmobiliaria.dao.PropiedadDAO;
 import com.inmobiliaria.modelo.Propiedad;
+import com.inmobiliaria.modelo.Usuario;
 
 /**
  * Catalogo publico de propiedades: el listado con filtros y la ficha de
@@ -34,6 +37,7 @@ public class CatalogoServlet extends HttpServlet {
     private static final String VISTA_DETALLE = "/WEB-INF/vistas/detalle.jsp";
 
     private final PropiedadDAO propiedadDAO = new PropiedadDAO();
+    private final FavoritoDAO favoritoDAO = new FavoritoDAO();
 
     @Override
     protected void doGet(HttpServletRequest peticion, HttpServletResponse respuesta)
@@ -105,8 +109,26 @@ public class CatalogoServlet extends HttpServlet {
 
         peticion.setAttribute("propiedad", p);
         peticion.setAttribute("similares", propiedadDAO.similares(p, 3));
+        peticion.setAttribute("esFavorito", Boolean.valueOf(esFavoritoDelClienteEnSesion(peticion, p.getId())));
         peticion.setAttribute("titulo", p.getTitulo());
         peticion.getRequestDispatcher(VISTA_DETALLE).forward(peticion, respuesta);
+    }
+
+    /**
+     * ¿El cliente que tiene la sesion abierta ya guardo este inmueble como
+     * favorito? false para el visitante sin cuenta o cualquier otro rol.
+     */
+    private boolean esFavoritoDelClienteEnSesion(HttpServletRequest peticion, int idPropiedad)
+            throws SQLException {
+        HttpSession sesion = peticion.getSession(false);
+        if (sesion == null) {
+            return false;
+        }
+        Object o = sesion.getAttribute(LoginServlet.USUARIO_EN_SESION);
+        if (!(o instanceof Usuario) || !((Usuario) o).tieneRol("CLIENTE")) {
+            return false;
+        }
+        return favoritoDAO.esFavorito(((Usuario) o).getId(), idPropiedad);
     }
 
     private String valor(String v) {

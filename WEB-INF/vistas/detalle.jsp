@@ -16,6 +16,7 @@
 <%
     Propiedad p = (Propiedad) request.getAttribute("propiedad");
     List<Propiedad> similares = (List<Propiedad>) request.getAttribute("similares");
+    boolean esFavorito = Boolean.TRUE.equals(request.getAttribute("esFavorito"));
 
     NumberFormat pesos = NumberFormat.getCurrencyInstance(new Locale("es", "CO"));
     pesos.setMaximumFractionDigits(0);
@@ -190,10 +191,20 @@
                     <i class="bi bi-calendar-check me-1"></i>Ya no se puede visitar
                 </button>
 <%          } %>
-                <button class="btn btn-outline-primary w-100" disabled>
-                    <i class="bi bi-heart me-1"></i>Guardar en favoritos
-                    <span class="badge text-bg-light ms-1">Sprint 3</span>
-                </button>
+                <form method="post" action="<%= ctx %>/panel/cliente/favoritos">
+                    <input type="hidden" name="accion" value="<%= esFavorito ? "quitar" : "agregar" %>">
+                    <input type="hidden" name="idPropiedad" value="<%= p.getId() %>">
+                    <input type="hidden" name="volver" value="<%= ctx %>/catalogo?id=<%= p.getId() %>">
+<%          if (esFavorito) { %>
+                    <button class="btn btn-outline-danger w-100" type="submit">
+                        <i class="bi bi-heart-fill me-1"></i>Quitar de favoritos
+                    </button>
+<%          } else { %>
+                    <button class="btn btn-outline-primary w-100" type="submit">
+                        <i class="bi bi-heart me-1"></i>Guardar en favoritos
+                    </button>
+<%          } %>
+                </form>
 <%      } else { %>
                 <p class="text-secondary small text-center mb-0">
                     Las acciones sobre el inmueble (agendar visita, favoritos) son

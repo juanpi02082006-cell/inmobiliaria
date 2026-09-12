@@ -37,12 +37,14 @@
         </a>
     </div>
     <div class="col-4">
+        <a class="text-decoration-none text-reset" href="<%= ctx %>/panel/cliente/favoritos">
         <div class="card border-0 shadow-sm h-100 text-center">
             <div class="card-body">
                 <div class="text-secondary small text-uppercase">Favoritos</div>
                 <div class="display-6 fw-bold"><%= misFavoritos %></div>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-4">
         <div class="card border-0 shadow-sm h-100 text-center">
@@ -90,6 +92,9 @@
             </a>
             <a class="btn btn-outline-primary" href="<%= ctx %>/panel/cliente/citas">
                 <i class="bi bi-calendar-check me-1"></i>Mis citas
+            </a>
+            <a class="btn btn-outline-primary" href="<%= ctx %>/panel/cliente/favoritos">
+                <i class="bi bi-heart me-1"></i>Mis favoritos
             </a>
         </div>
     </div>
