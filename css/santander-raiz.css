@@ -154,7 +154,90 @@ a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
     background-color: #dde5e0;
 }
 
+/* --- Paneles (admin, agente, cliente) --------------------------------------
+   Los tres paneles comparten el mismo lenguaje visual: un encabezado con
+   icono de marca, tarjetas de cifras con icono (en rojo cuando el numero
+   pide atencion, como "citas pendientes"), y los modulos como tarjetas
+   clicables en vez de una fila de botones que se amontona en el celular. */
+
+.sr-marca-icono-sm {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--sr-verde-claro);
+    color: var(--sr-verde);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.sr-stat-icono {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background-color: var(--sr-verde-claro);
+    color: var(--sr-verde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+}
+
+.sr-stat-icono.sr-stat-alerta {
+    background-color: #fdecea;
+    color: #b3261e;
+}
+
+a.sr-stat {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.sr-stat.card { transition: transform .2s ease, box-shadow .2s ease; }
+.sr-stat.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .10) !important;
+}
+
+a.sr-modulo {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.sr-modulo-tarjeta {
+    border: 1px solid #e9ecef !important;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+a.sr-modulo:hover .sr-modulo-tarjeta {
+    transform: translateY(-3px);
+    box-shadow: 0 .75rem 1.25rem rgba(0, 0, 0, .10) !important;
+    border-color: var(--sr-verde) !important;
+}
+
+.sr-modulo-icono {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background-color: var(--sr-verde-claro);
+    color: var(--sr-verde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .sr-tarjeta { transition: none; }
     .sr-tarjeta:hover { transform: none; }
+    .sr-stat.card { transition: none; }
+    .sr-stat.card:hover { transform: none; }
+    .sr-modulo-tarjeta { transition: none; }
+    a.sr-modulo:hover .sr-modulo-tarjeta { transform: none; }
 }

@@ -17,91 +17,108 @@
     Perfil miPerfil    = usuarioSesion.getPerfil();
 %>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-    <div>
+<div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+    <span class="sr-marca-icono-sm"><i class="bi bi-person-check"></i></span>
+    <div class="flex-grow-1">
         <h1 class="h3 mb-1">Mi cuenta</h1>
         <p class="text-secondary mb-0">Hola, <strong><%= Html.esc(usuarioSesion.nombreVisible()) %></strong>.</p>
     </div>
     <span class="badge text-bg-success fs-6"><i class="bi bi-person-check me-1"></i>CLIENTE</span>
 </div>
 
+<%-- ============ Cifras: tambien son el acceso rapido a cada seccion ============ --%>
 <div class="row g-3 mb-4">
-    <div class="col-4">
-        <a class="text-decoration-none text-reset" href="<%= ctx %>/panel/cliente/citas">
-        <div class="card border-0 shadow-sm h-100 text-center">
-            <div class="card-body">
-                <div class="text-secondary small text-uppercase">Citas</div>
-                <div class="display-6 fw-bold"><%= misCitas %></div>
+    <div class="col-sm-4">
+        <a class="sr-stat" href="<%= ctx %>/panel/cliente/citas">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="sr-stat-icono"><i class="bi bi-calendar-check"></i></span>
+                    <div>
+                        <div class="text-secondary small text-uppercase">Citas</div>
+                        <div class="h3 fw-bold mb-0"><%= misCitas %></div>
+                    </div>
+                </div>
             </div>
-        </div>
         </a>
     </div>
-    <div class="col-4">
-        <a class="text-decoration-none text-reset" href="<%= ctx %>/panel/cliente/favoritos">
-        <div class="card border-0 shadow-sm h-100 text-center">
-            <div class="card-body">
-                <div class="text-secondary small text-uppercase">Favoritos</div>
-                <div class="display-6 fw-bold"><%= misFavoritos %></div>
+    <div class="col-sm-4">
+        <a class="sr-stat" href="<%= ctx %>/panel/cliente/favoritos">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="sr-stat-icono"><i class="bi bi-heart"></i></span>
+                    <div>
+                        <div class="text-secondary small text-uppercase">Favoritos</div>
+                        <div class="h3 fw-bold mb-0"><%= misFavoritos %></div>
+                    </div>
+                </div>
             </div>
-        </div>
         </a>
     </div>
-    <div class="col-4">
-        <a class="text-decoration-none text-reset" href="<%= ctx %>/panel/cliente/solicitudes">
-        <div class="card border-0 shadow-sm h-100 text-center">
-            <div class="card-body">
-                <div class="text-secondary small text-uppercase">Solicitudes</div>
-                <div class="display-6 fw-bold"><%= misSolicitudes %></div>
+    <div class="col-sm-4">
+        <a class="sr-stat" href="<%= ctx %>/panel/cliente/solicitudes">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="sr-stat-icono"><i class="bi bi-send-check"></i></span>
+                    <div>
+                        <div class="text-secondary small text-uppercase">Solicitudes</div>
+                        <div class="h3 fw-bold mb-0"><%= misSolicitudes %></div>
+                    </div>
+                </div>
             </div>
-        </div>
         </a>
     </div>
 </div>
 
-<div class="card border-0 shadow-sm">
-    <div class="card-header bg-white fw-semibold">
-        Mis datos
-        <span class="text-secondary fw-normal small">(relacion 1:1 usuario &harr; perfil)</span>
-    </div>
-    <div class="card-body">
+<div class="row g-3">
+    <%-- ============ Mis datos (relacion 1:1 usuario <-> perfil) ============ --%>
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white fw-semibold">
+                Mis datos
+                <span class="text-secondary fw-normal small">(relacion 1:1 usuario &harr; perfil)</span>
+            </div>
+            <div class="card-body">
 <%  if (miPerfil == null) { %>
-        <p class="text-secondary mb-0">Aun no ha completado su perfil.</p>
+                <p class="text-secondary mb-0">Aun no ha completado su perfil.</p>
 <%  } else { %>
-        <dl class="row mb-0">
-            <dt class="col-sm-3">Nombre</dt>
-            <dd class="col-sm-9"><%= Html.esc(miPerfil.nombreCompleto()) %></dd>
+                <dl class="row mb-0">
+                    <dt class="col-sm-3">Nombre</dt>
+                    <dd class="col-sm-9"><%= Html.esc(miPerfil.nombreCompleto()) %></dd>
 
-            <dt class="col-sm-3">Documento</dt>
-            <dd class="col-sm-9"><%= Html.esc(miPerfil.getDocumento()) %></dd>
+                    <dt class="col-sm-3">Documento</dt>
+                    <dd class="col-sm-9"><%= Html.esc(miPerfil.getDocumento()) %></dd>
 
-            <dt class="col-sm-3">Correo</dt>
-            <dd class="col-sm-9"><%= Html.esc(usuarioSesion.getCorreo()) %></dd>
+                    <dt class="col-sm-3">Correo</dt>
+                    <dd class="col-sm-9"><%= Html.esc(usuarioSesion.getCorreo()) %></dd>
 
-            <dt class="col-sm-3">Telefono</dt>
-            <dd class="col-sm-9"><%= Html.esc((miPerfil.getTelefono() == null) ? "-" : miPerfil.getTelefono()) %></dd>
+                    <dt class="col-sm-3">Telefono</dt>
+                    <dd class="col-sm-9"><%= Html.esc((miPerfil.getTelefono() == null) ? "-" : miPerfil.getTelefono()) %></dd>
 
-            <dt class="col-sm-3">Direccion</dt>
-            <dd class="col-sm-9"><%= Html.esc((miPerfil.getDireccion() == null) ? "-" : miPerfil.getDireccion()) %></dd>
-        </dl>
+                    <dt class="col-sm-3">Direccion</dt>
+                    <dd class="col-sm-9"><%= Html.esc((miPerfil.getDireccion() == null) ? "-" : miPerfil.getDireccion()) %></dd>
+                </dl>
 <%  } %>
-        <hr>
-        <div class="d-grid gap-2 d-md-flex">
-            <a class="btn btn-primary" href="<%= ctx %>/panel/perfil">
-                <i class="bi bi-person-gear me-1"></i>Editar mi perfil
-            </a>
-            <a class="btn btn-outline-primary" href="<%= ctx %>/catalogo">
-                <i class="bi bi-search me-1"></i>Buscar propiedades
-            </a>
-            <a class="btn btn-outline-primary" href="<%= ctx %>/panel/cliente/citas">
-                <i class="bi bi-calendar-check me-1"></i>Mis citas
-            </a>
-            <a class="btn btn-outline-primary" href="<%= ctx %>/panel/cliente/favoritos">
-                <i class="bi bi-heart me-1"></i>Mis favoritos
-            </a>
-            <a class="btn btn-outline-primary" href="<%= ctx %>/panel/cliente/solicitudes">
-                <i class="bi bi-send-check me-1"></i>Mis solicitudes
-            </a>
+                <hr>
+                <a class="btn btn-primary" href="<%= ctx %>/panel/perfil">
+                    <i class="bi bi-person-gear me-1"></i>Editar mi perfil
+                </a>
+            </div>
         </div>
+    </div>
+
+    <%-- ============ Buscar propiedades ============ --%>
+    <div class="col-lg-4">
+        <a class="sr-modulo" href="<%= ctx %>/catalogo">
+            <div class="sr-modulo-tarjeta card border-0 shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <span class="sr-modulo-icono mb-3"><i class="bi bi-search"></i></span>
+                    <div class="fw-semibold mb-1">Buscar propiedades</div>
+                    <p class="text-secondary small mb-0">
+                        Explore el catalogo y filtre por tipo, ciudad y precio.
+                    </p>
+                </div>
+            </div>
+        </a>
     </div>
 </div>
 
