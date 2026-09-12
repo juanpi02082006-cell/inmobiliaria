@@ -147,7 +147,7 @@
                             <td class="text-end">
 <%      if (usos > 0) { %>
                                 <button class="btn btn-sm btn-outline-secondary" disabled
-                                        title="Tiene inmuebles publicados: la llave foranea lo impide">
+                                        title="Tiene inmuebles publicados: no se puede eliminar">
                                     <i class="bi bi-lock"></i>
                                 </button>
 <%      } else { %>
@@ -169,9 +169,7 @@
 
             <div class="card-footer bg-white small text-secondary">
                 <i class="bi bi-shield-check me-1"></i>
-                Las ciudades con inmuebles no se pueden eliminar:
-                <code>propiedad.id_ciudad</code> es <code>ON DELETE RESTRICT</code>
-                y el motor rechaza el borrado.
+                Las ciudades con inmuebles publicados no se pueden eliminar.
             </div>
         </div>
     </div>
@@ -268,9 +266,8 @@
 
             <div class="card-footer bg-white small text-secondary">
                 <i class="bi bi-exclamation-triangle me-1"></i>
-                Aqui la llave foranea es <code>ON DELETE CASCADE</code>: el motor
-                <strong>si</strong> permite el borrado y retira la caracteristica de
-                los inmuebles que la tuvieran. Por eso el aviso lo da esta pantalla.
+                Al eliminar una caracteristica, se retira tambien de los inmuebles
+                que la tenian asignada.
             </div>
         </div>
     </div>
