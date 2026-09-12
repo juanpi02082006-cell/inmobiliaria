@@ -106,10 +106,10 @@
             </div>
 <%      } else { %>
             <div class="d-flex align-items-center gap-3">
-                <div class="d-none d-lg-flex align-items-center gap-2">
+                <div class="d-none d-lg-flex align-items-center gap-2 sr-navbar-usuario">
                     <span class="sr-navbar-avatar"><i class="bi bi-person-fill"></i></span>
                     <div class="lh-sm">
-                        <div class="text-white small fw-semibold"><%= Html.esc(usuarioSesion.nombreVisible()) %></div>
+                        <div class="text-white small fw-semibold mb-1"><%= Html.esc(usuarioSesion.nombreVisible()) %></div>
                         <span class="sr-badge-rol sr-badge-rol-sm <%=
                                 usuarioSesion.tieneRol("ADMIN") ? "rol-admin"
                               : usuarioSesion.tieneRol("INMOBILIARIA") ? "rol-inmobiliaria"

@@ -124,11 +124,20 @@ a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
     color: #fff !important;
 }
 
+/* Agrupa avatar + nombre + rol como una sola pieza, en vez de tres
+   elementos sueltos flotando en la barra. */
+.sr-navbar-usuario {
+    background-color: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 999px;
+    padding: .3rem 1rem .3rem .3rem;
+}
+
 .sr-navbar-avatar {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, .1);
+    background-color: rgba(0, 107, 43, .55);
     color: #fff;
     display: inline-flex;
     align-items: center;
