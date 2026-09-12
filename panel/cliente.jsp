@@ -23,7 +23,9 @@
         <h1 class="h3 mb-1">Mi cuenta</h1>
         <p class="text-secondary mb-0">Hola, <strong><%= Html.esc(usuarioSesion.nombreVisible()) %></strong>.</p>
     </div>
-    <span class="badge text-bg-success fs-6"><i class="bi bi-person-check me-1"></i>CLIENTE</span>
+    <span class="sr-badge-rol rol-cliente">
+        <span class="sr-punto"></span>CLIENTE
+    </span>
 </div>
 
 <%-- ============ Cifras: tambien son el acceso rapido a cada seccion ============ --%>
@@ -31,12 +33,12 @@
     <div class="col-sm-4">
         <a class="sr-stat" href="<%= ctx %>/panel/cliente/citas">
             <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <span class="sr-stat-icono"><i class="bi bi-calendar-check"></i></span>
-                    <div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
                         <div class="text-secondary small text-uppercase">Citas</div>
-                        <div class="h3 fw-bold mb-0"><%= misCitas %></div>
+                        <span class="sr-stat-icono sr-icono-ambar"><i class="bi bi-calendar-check"></i></span>
                     </div>
+                    <div class="h3 fw-bold mb-0 mt-2"><%= misCitas %></div>
                 </div>
             </div>
         </a>
@@ -44,12 +46,12 @@
     <div class="col-sm-4">
         <a class="sr-stat" href="<%= ctx %>/panel/cliente/favoritos">
             <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <span class="sr-stat-icono"><i class="bi bi-heart"></i></span>
-                    <div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
                         <div class="text-secondary small text-uppercase">Favoritos</div>
-                        <div class="h3 fw-bold mb-0"><%= misFavoritos %></div>
+                        <span class="sr-stat-icono sr-icono-rosa"><i class="bi bi-heart"></i></span>
                     </div>
+                    <div class="h3 fw-bold mb-0 mt-2"><%= misFavoritos %></div>
                 </div>
             </div>
         </a>
@@ -57,12 +59,12 @@
     <div class="col-sm-4">
         <a class="sr-stat" href="<%= ctx %>/panel/cliente/solicitudes">
             <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex align-items-center gap-3">
-                    <span class="sr-stat-icono"><i class="bi bi-send-check"></i></span>
-                    <div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
                         <div class="text-secondary small text-uppercase">Solicitudes</div>
-                        <div class="h3 fw-bold mb-0"><%= misSolicitudes %></div>
+                        <span class="sr-stat-icono sr-icono-azul"><i class="bi bi-send-check"></i></span>
                     </div>
+                    <div class="h3 fw-bold mb-0 mt-2"><%= misSolicitudes %></div>
                 </div>
             </div>
         </a>
@@ -70,31 +72,32 @@
 </div>
 
 <div class="row g-3">
-    <%-- ============ Mis datos (relacion 1:1 usuario <-> perfil) ============ --%>
+    <%-- ============ Mis datos ============ --%>
     <div class="col-lg-8">
         <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white fw-semibold">
-                Mis datos
-            </div>
             <div class="card-body">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="sr-stat-icono sr-icono-azul"><i class="bi bi-person"></i></span>
+                    <div class="fw-semibold">Mis datos</div>
+                </div>
 <%  if (miPerfil == null) { %>
                 <p class="text-secondary mb-0">Aun no ha completado su perfil.</p>
 <%  } else { %>
                 <dl class="row mb-0">
-                    <dt class="col-sm-3">Nombre</dt>
-                    <dd class="col-sm-9"><%= Html.esc(miPerfil.nombreCompleto()) %></dd>
+                    <dt class="col-sm-3 text-secondary fw-normal">Nombre</dt>
+                    <dd class="col-sm-9 fw-semibold"><%= Html.esc(miPerfil.nombreCompleto()) %></dd>
 
-                    <dt class="col-sm-3">Documento</dt>
-                    <dd class="col-sm-9"><%= Html.esc(miPerfil.getDocumento()) %></dd>
+                    <dt class="col-sm-3 text-secondary fw-normal">Documento</dt>
+                    <dd class="col-sm-9 fw-semibold"><%= Html.esc(miPerfil.getDocumento()) %></dd>
 
-                    <dt class="col-sm-3">Correo</dt>
-                    <dd class="col-sm-9"><%= Html.esc(usuarioSesion.getCorreo()) %></dd>
+                    <dt class="col-sm-3 text-secondary fw-normal">Correo</dt>
+                    <dd class="col-sm-9 fw-semibold"><%= Html.esc(usuarioSesion.getCorreo()) %></dd>
 
-                    <dt class="col-sm-3">Telefono</dt>
-                    <dd class="col-sm-9"><%= Html.esc((miPerfil.getTelefono() == null) ? "-" : miPerfil.getTelefono()) %></dd>
+                    <dt class="col-sm-3 text-secondary fw-normal">Telefono</dt>
+                    <dd class="col-sm-9 fw-semibold"><%= Html.esc((miPerfil.getTelefono() == null) ? "-" : miPerfil.getTelefono()) %></dd>
 
-                    <dt class="col-sm-3">Direccion</dt>
-                    <dd class="col-sm-9"><%= Html.esc((miPerfil.getDireccion() == null) ? "-" : miPerfil.getDireccion()) %></dd>
+                    <dt class="col-sm-3 text-secondary fw-normal">Direccion</dt>
+                    <dd class="col-sm-9 fw-semibold"><%= Html.esc((miPerfil.getDireccion() == null) ? "-" : miPerfil.getDireccion()) %></dd>
                 </dl>
 <%  } %>
                 <hr>
@@ -110,7 +113,10 @@
         <a class="sr-modulo" href="<%= ctx %>/catalogo">
             <div class="sr-modulo-tarjeta card border-0 shadow-sm h-100">
                 <div class="card-body d-flex flex-column">
-                    <span class="sr-modulo-icono mb-3"><i class="bi bi-search"></i></span>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="sr-modulo-icono sr-icono-verde"><i class="bi bi-search"></i></span>
+                        <i class="bi bi-chevron-right sr-modulo-flecha"></i>
+                    </div>
                     <div class="fw-semibold mb-1">Buscar propiedades</div>
                     <p class="text-secondary small mb-0">
                         Explore el catalogo y filtre por tipo, ciudad y precio.

@@ -164,32 +164,29 @@ a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: var(--sr-verde-claro);
+    background-color: #fff;
     color: var(--sr-verde);
+    border: 1px solid #e5e9e7;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     flex-shrink: 0;
 }
 
-.sr-stat-icono {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    background-color: var(--sr-verde-claro);
-    color: var(--sr-verde);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.35rem;
-    flex-shrink: 0;
-}
+/* --- Iconos por categoria -----------------------------------------------
+   Cada tipo de cifra o modulo tiene su propio color (personas, tiempo,
+   documentos...), en vez de repetir el verde de la marca en todos lados.
+   Un vistazo a la fila de cifras ya distingue de que se trata cada una. */
 
-.sr-stat-icono.sr-stat-alerta {
-    background-color: #fdecea;
-    color: #b3261e;
-}
+.sr-icono-verde   { background-color: var(--sr-verde-claro); color: var(--sr-verde); }
+.sr-icono-violeta { background-color: #f3e8ff; color: #7c3aed; }
+.sr-icono-ambar   { background-color: #fef3e2; color: #b45309; }
+.sr-icono-azul    { background-color: #e0edff; color: #1d4ed8; }
+.sr-icono-rosa    { background-color: #fde7ef; color: #db2777; }
+.sr-icono-gris    { background-color: #eef1f4; color: #52606d; }
+
+/* --- Cifras (tarjetas de resumen) ------------------------------------- */
 
 a.sr-stat {
     text-decoration: none;
@@ -202,6 +199,36 @@ a.sr-stat {
     transform: translateY(-2px);
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .10) !important;
 }
+
+.sr-stat-icono {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+/* Cuando la cifra pide atencion (citas o solicitudes pendientes) se fuerza
+   el color de alerta encima del que le toque por categoria. */
+.sr-stat-icono.sr-stat-alerta {
+    background-color: #fdecea !important;
+    color: #b3261e !important;
+}
+
+/* --- Etiqueta pequena antes de una grilla de modulos ------------------- */
+
+.sr-eyebrow {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #8a94a6;
+}
+
+/* --- Modulos (tarjetas clicables con flecha) ---------------------------- */
 
 a.sr-modulo {
     text-decoration: none;
@@ -225,12 +252,55 @@ a.sr-modulo:hover .sr-modulo-tarjeta {
     width: 44px;
     height: 44px;
     border-radius: 10px;
-    background-color: var(--sr-verde-claro);
-    color: var(--sr-verde);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+}
+
+.sr-modulo-flecha {
+    color: #c1c9d2;
+    transition: transform .2s ease, color .2s ease;
+}
+
+a.sr-modulo:hover .sr-modulo-flecha {
+    transform: translateX(3px);
+    color: var(--sr-verde);
+}
+
+/* --- Insignia de rol (punto de color + texto, en vez del badge solido) - */
+
+.sr-badge-rol {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .3rem .7rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 600;
+}
+
+.sr-badge-rol .sr-punto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: currentColor;
+    flex-shrink: 0;
+}
+
+.sr-badge-rol.rol-admin         { background-color: #fde2e2; color: #dc2626; }
+.sr-badge-rol.rol-inmobiliaria  { background-color: #dbeafe; color: #2563eb; }
+.sr-badge-rol.rol-cliente       { background-color: #dcfce7; color: #16a34a; }
+.sr-badge-rol.rol-visitante     { background-color: #eef1f4; color: #52606d; }
+
+/* --- Lista "por rol", con el mismo punto de color ----------------------- */
+
+.sr-punto-rol {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: .5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -240,4 +310,6 @@ a.sr-modulo:hover .sr-modulo-tarjeta {
     .sr-stat.card:hover { transform: none; }
     .sr-modulo-tarjeta { transition: none; }
     a.sr-modulo:hover .sr-modulo-tarjeta { transform: none; }
+    .sr-modulo-flecha { transition: none; }
+    a.sr-modulo:hover .sr-modulo-flecha { transform: none; }
 }
