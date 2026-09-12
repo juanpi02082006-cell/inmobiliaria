@@ -179,15 +179,26 @@
                     Cree una cuenta para agendar visitas, guardar favoritos y
                     ver los datos de contacto.
                 </p>
-<%      } else { %>
-                <button class="btn btn-primary w-100 mb-2" disabled>
+<%      } else if (usuarioSesion.tieneRol("CLIENTE")) { %>
+<%          if ("DISPONIBLE".equals(p.getEstado()) || "RESERVADA".equals(p.getEstado())) { %>
+                <a class="btn btn-primary w-100 mb-2"
+                   href="<%= ctx %>/panel/cliente/citas?accion=nueva&idPropiedad=<%= p.getId() %>">
                     <i class="bi bi-calendar-check me-1"></i>Agendar visita
-                    <span class="badge text-bg-light ms-1">Sprint 3</span>
+                </a>
+<%          } else { %>
+                <button class="btn btn-primary w-100 mb-2" disabled>
+                    <i class="bi bi-calendar-check me-1"></i>Ya no se puede visitar
                 </button>
+<%          } %>
                 <button class="btn btn-outline-primary w-100" disabled>
                     <i class="bi bi-heart me-1"></i>Guardar en favoritos
                     <span class="badge text-bg-light ms-1">Sprint 3</span>
                 </button>
+<%      } else { %>
+                <p class="text-secondary small text-center mb-0">
+                    Las acciones sobre el inmueble (agendar visita, favoritos) son
+                    para cuentas con rol CLIENTE.
+                </p>
 <%      } %>
             </div>
         </div>

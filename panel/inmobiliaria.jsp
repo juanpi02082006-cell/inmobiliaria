@@ -37,6 +37,7 @@
         </div>
     </div>
     <div class="col-sm-6">
+        <a class="text-decoration-none text-reset" href="<%= ctx %>/panel/inmobiliaria/citas">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
                 <div class="text-secondary small text-uppercase">Citas pendientes</div>
@@ -44,6 +45,7 @@
                 <div class="text-secondary small">Visitas por confirmar</div>
             </div>
         </div>
+        </a>
     </div>
 </div>
 
@@ -57,11 +59,14 @@
             <a class="btn btn-outline-primary" href="<%= ctx %>/panel/inmobiliaria/propiedades?accion=nueva">
                 <i class="bi bi-plus-lg me-1"></i>Publicar una nueva
             </a>
+            <a class="btn btn-outline-primary" href="<%= ctx %>/panel/inmobiliaria/citas">
+                <i class="bi bi-calendar-check me-1"></i>Gestionar citas
+            </a>
         </div>
         <p class="text-secondary small mb-0 mt-3">
             Desde ahi administra tambien la galeria de imagenes (1:N) y las
-            caracteristicas del inmueble (N:M). La atencion de citas y
-            solicitudes llega en el Sprint 3.
+            caracteristicas del inmueble (N:M). La atencion de solicitudes
+            llega mas adelante en el Sprint 3.
         </p>
     </div>
 </div>

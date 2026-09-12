@@ -27,12 +27,14 @@
 
 <div class="row g-3 mb-4">
     <div class="col-4">
+        <a class="text-decoration-none text-reset" href="<%= ctx %>/panel/cliente/citas">
         <div class="card border-0 shadow-sm h-100 text-center">
             <div class="card-body">
                 <div class="text-secondary small text-uppercase">Citas</div>
                 <div class="display-6 fw-bold"><%= misCitas %></div>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-4">
         <div class="card border-0 shadow-sm h-100 text-center">
@@ -86,9 +88,9 @@
             <a class="btn btn-outline-primary" href="<%= ctx %>/catalogo">
                 <i class="bi bi-search me-1"></i>Buscar propiedades
             </a>
-            <button class="btn btn-outline-secondary" disabled>
-                Agendar cita <span class="badge text-bg-light">Sprint 3</span>
-            </button>
+            <a class="btn btn-outline-primary" href="<%= ctx %>/panel/cliente/citas">
+                <i class="bi bi-calendar-check me-1"></i>Mis citas
+            </a>
         </div>
     </div>
 </div>
