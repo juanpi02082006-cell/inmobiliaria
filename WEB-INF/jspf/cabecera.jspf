@@ -39,8 +39,16 @@
 
     <!-- Identidad de la marca. Va DESPUES de Bootstrap para poder redefinir
          sus variables de color. Al cargarse desde aqui, todas las paginas
-         comparten la misma paleta. -->
-    <link href="<%= ctx %>/css/santander-raiz.css" rel="stylesheet">
+         comparten la misma paleta.
+
+         El "?v=" al final es para romper el cache del navegador: Tomcat no
+         manda Cache-Control en los archivos estaticos, asi que un navegador
+         puede quedarse con la version vieja del CSS despues de editarlo. Se
+         usa la fecha de modificacion del propio archivo como version: cambia
+         sola cada vez que se edita el CSS, sin tocar este fragmento. -->
+    <link href="<%= ctx %>/css/santander-raiz.css?v=<%=
+        new java.io.File(application.getRealPath("/css/santander-raiz.css")).lastModified()
+    %>" rel="stylesheet">
 </head>
 <body class="bg-body-tertiary d-flex flex-column min-vh-100">
 
