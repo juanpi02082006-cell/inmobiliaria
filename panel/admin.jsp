@@ -100,9 +100,9 @@
                     <a class="btn btn-outline-primary" href="<%= ctx %>/panel/perfil">
                         <i class="bi bi-person-gear me-1"></i>Mi perfil
                     </a>
-                    <button class="btn btn-outline-secondary" disabled>
-                        Auditoria <span class="badge text-bg-light">Sprint 3</span>
-                    </button>
+                    <a class="btn btn-outline-primary" href="<%= ctx %>/panel/admin/auditoria">
+                        <i class="bi bi-clock-history me-1"></i>Auditoria
+                    </a>
                 </div>
                 <p class="text-secondary small mb-0 mt-3">
                     Desde usuarios y roles asigna permisos (relacion N:M) y activa

@@ -2,10 +2,14 @@ package com.inmobiliaria.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.inmobiliaria.config.ConexionBD;
+import com.inmobiliaria.modelo.RegistroAuditoria;
 
 /**
  * Registro de actividad en la tabla auditoria.
@@ -58,5 +62,79 @@ public class AuditoriaDAO {
             return null;
         }
         return (texto.length() <= max) ? texto : texto.substring(0, max);
+    }
+
+    // =========================================================================
+    //  Consulta (HU-13)
+    // =========================================================================
+
+    /**
+     * Bitacora con filtros opcionales, la mas reciente primero.
+     *
+     * @param accion código exacto de la accion (LOGIN_OK, CREAR_PROPIEDAD...);
+     *               null o vacio para todas.
+     * @param correo correo del usuario, con coincidencia parcial (LIKE);
+     *               null o vacio para todos, incluidos los intentos anonimos.
+     * @param limite maximo de filas a traer, para no cargar toda la tabla.
+     */
+    public List<RegistroAuditoria> listar(String accion, String correo, int limite) throws SQLException {
+        StringBuilder sql = new StringBuilder(
+            "SELECT a.id_auditoria, a.id_usuario, u.correo, a.accion, a.detalle, a.ip, a.fecha "
+          + "  FROM auditoria a "
+          + "  LEFT JOIN usuario u ON u.id_usuario = a.id_usuario "
+          + " WHERE 1 = 1 ");
+
+        List<Object> parametros = new ArrayList<Object>();
+
+        if (accion != null && !accion.trim().isEmpty()) {
+            sql.append(" AND a.accion = ? ");
+            parametros.add(accion.trim());
+        }
+        if (correo != null && !correo.trim().isEmpty()) {
+            sql.append(" AND u.correo LIKE ? ");
+            parametros.add("%" + correo.trim() + "%");
+        }
+
+        sql.append(" ORDER BY a.fecha DESC LIMIT ?");
+        parametros.add(Integer.valueOf(limite));
+
+        List<RegistroAuditoria> lista = new ArrayList<RegistroAuditoria>();
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < parametros.size(); i++) {
+                ps.setObject(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    RegistroAuditoria r = new RegistroAuditoria();
+                    r.setId(rs.getInt("id_auditoria"));
+                    int idUsuario = rs.getInt("id_usuario");
+                    r.setIdUsuario(rs.wasNull() ? null : Integer.valueOf(idUsuario));
+                    r.setCorreoUsuario(rs.getString("correo"));
+                    r.setAccion(rs.getString("accion"));
+                    r.setDetalle(rs.getString("detalle"));
+                    r.setIp(rs.getString("ip"));
+                    r.setFecha(rs.getTimestamp("fecha"));
+                    lista.add(r);
+                }
+            }
+        }
+        return lista;
+    }
+
+    /** Codigos de accion distintos que ya aparecen en la bitacora, para armar el filtro. */
+    public List<String> accionesDistintas() throws SQLException {
+        List<String> acciones = new ArrayList<String>();
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(
+                 "SELECT DISTINCT accion FROM auditoria ORDER BY accion");
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                acciones.add(rs.getString(1));
+            }
+        }
+        return acciones;
     }
 }
