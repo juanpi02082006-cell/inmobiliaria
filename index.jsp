@@ -206,4 +206,65 @@
 </section>
 <%  } %>
 
+<%-- ===================== Contacto ===================== --%>
+<section id="contacto" class="py-5 border-top">
+    <div class="text-center mb-4">
+        <p class="texto-sr text-uppercase fw-semibold small mb-1" style="letter-spacing:.18em">
+            Hablemos
+        </p>
+        <h2 class="fw-bold">Contacto</h2>
+        <p class="text-secondary mb-0">Escribanos, llamenos o visitenos; con gusto lo atendemos.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-sm-6 col-lg-3">
+            <a class="text-decoration-none text-reset" href="tel:+576076453200">
+                <div class="card sr-tarjeta border-0 shadow-sm h-100 text-center">
+                    <div class="card-body">
+                        <span class="sr-modulo-icono sr-icono-verde mx-auto mb-3"><i class="bi bi-telephone"></i></span>
+                        <div class="fw-semibold mb-1">Telefono</div>
+                        <p class="text-secondary small mb-0">(607) 645 3200</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <a class="text-decoration-none text-reset" href="mailto:contacto@santanderraiz.com">
+                <div class="card sr-tarjeta border-0 shadow-sm h-100 text-center">
+                    <div class="card-body">
+                        <span class="sr-modulo-icono sr-icono-azul mx-auto mb-3"><i class="bi bi-envelope"></i></span>
+                        <div class="fw-semibold mb-1">Correo</div>
+                        <p class="text-secondary small mb-0">contacto@santanderraiz.com</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <a class="text-decoration-none text-reset"
+               href="https://www.google.com/maps/search/?api=1&amp;query=Carrera+27+%2334-56+Cabecera+del+Llano+Bucaramanga"
+               target="_blank" rel="noopener">
+                <div class="card sr-tarjeta border-0 shadow-sm h-100 text-center">
+                    <div class="card-body">
+                        <span class="sr-modulo-icono sr-icono-ambar mx-auto mb-3"><i class="bi bi-geo-alt"></i></span>
+                        <div class="fw-semibold mb-1">Oficina</div>
+                        <p class="text-secondary small mb-0">Cra 27 #34-56, Cabecera del Llano, Bucaramanga</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100 text-center">
+                <div class="card-body">
+                    <span class="sr-modulo-icono sr-icono-violeta mx-auto mb-3"><i class="bi bi-clock"></i></span>
+                    <div class="fw-semibold mb-1">Horario</div>
+                    <p class="text-secondary small mb-0">
+                        Lun. a vie., 8:00 a. m. &ndash; 6:00 p. m.<br>
+                        S&aacute;b., 9:00 a. m. &ndash; 1:00 p. m.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <%@ include file="/WEB-INF/jspf/pie.jspf" %>

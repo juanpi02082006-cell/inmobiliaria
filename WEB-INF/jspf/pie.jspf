@@ -4,10 +4,24 @@
 --%>
 </main>
 
-<footer class="bg-dark text-white-50 py-3 mt-auto">
-    <div class="container d-flex flex-wrap justify-content-between align-items-center small">
-        <span>Santander Raiz &middot; Proyecto academico de Programacion Java</span>
-        <span>Unidades Tecnologicas de Santander</span>
+<footer class="sr-navbar text-white-50 pt-4 pb-3 mt-auto">
+    <div class="container">
+        <div class="d-flex flex-wrap gap-3 mb-3">
+            <a class="text-white-50 text-decoration-none small" href="tel:+576076453200">
+                <i class="bi bi-telephone me-1"></i>(607) 645 3200
+            </a>
+            <a class="text-white-50 text-decoration-none small" href="mailto:contacto@santanderraiz.com">
+                <i class="bi bi-envelope me-1"></i>contacto@santanderraiz.com
+            </a>
+            <a class="text-white-50 text-decoration-none small" href="<%= ctx %>/index.jsp#contacto">
+                <i class="bi bi-geo-alt me-1"></i>Cabecera del Llano, Bucaramanga
+            </a>
+        </div>
+        <hr class="border-secondary opacity-25 my-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center small">
+            <span>Santander Raiz &middot; Proyecto academico de Programacion Java</span>
+            <span>Unidades Tecnologicas de Santander</span>
+        </div>
     </div>
 </footer>
 
