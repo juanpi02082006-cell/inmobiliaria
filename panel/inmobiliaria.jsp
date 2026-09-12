@@ -84,7 +84,7 @@
                     <span class="sr-modulo-icono mb-3"><i class="bi bi-houses"></i></span>
                     <div class="fw-semibold mb-1">Mis propiedades</div>
                     <p class="text-secondary small mb-0">
-                        Galeria de fotos (1:N) y caracteristicas (N:M) de cada inmueble.
+                        Fotos y caracteristicas de cada inmueble.
                     </p>
                 </div>
             </div>

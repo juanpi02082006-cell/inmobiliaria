@@ -90,7 +90,7 @@
                     <span class="sr-modulo-icono mb-3"><i class="bi bi-people"></i></span>
                     <div class="fw-semibold mb-1">Usuarios y roles</div>
                     <p class="text-secondary small mb-0">
-                        Asignar permisos (relacion N:M) y activar o inactivar cuentas.
+                        Asignar permisos y activar o inactivar cuentas.
                     </p>
                 </div>
             </div>
@@ -154,7 +154,6 @@
 <div class="card border-0 shadow-sm">
     <div class="card-header bg-white fw-semibold">
         Usuarios por rol
-        <span class="text-secondary fw-normal small">(relacion N:M usuario_rol)</span>
     </div>
     <div class="table-responsive">
         <table class="table align-middle mb-0">

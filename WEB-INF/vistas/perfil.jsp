@@ -89,9 +89,6 @@
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-header bg-white fw-semibold">
                 Datos personales
-                <span class="text-secondary fw-normal small d-block">
-                    Tabla <code>perfil</code> &middot; relacion 1:1 con la cuenta
-                </span>
             </div>
             <div class="card-body">
                 <form method="post" action="<%= ctx %>/panel/perfil" novalidate>

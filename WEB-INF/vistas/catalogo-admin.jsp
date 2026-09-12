@@ -69,7 +69,7 @@
             <div class="card-header bg-white fw-semibold">
                 Ciudades
                 <span class="text-secondary fw-normal small d-block">
-                    <%= ciudades.size() %> registradas &middot; UNIQUE (nombre, departamento)
+                    <%= ciudades.size() %> registradas
                 </span>
             </div>
 
@@ -180,7 +180,7 @@
             <div class="card-header bg-white fw-semibold">
                 Caracteristicas
                 <span class="text-secondary fw-normal small d-block">
-                    <%= caracteristicas.size() %> registradas &middot; UNIQUE (nombre)
+                    <%= caracteristicas.size() %> registradas
                 </span>
             </div>
 

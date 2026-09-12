@@ -59,7 +59,7 @@
             <thead class="table-light">
                 <tr>
                     <th>Usuario</th>
-                    <th>Roles <span class="text-secondary fw-normal">(N:M)</span></th>
+                    <th>Roles</th>
                     <th class="text-end">Cuenta</th>
                 </tr>
             </thead>

@@ -64,9 +64,6 @@
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white fw-semibold">
                 Documentos radicados
-                <span class="text-secondary fw-normal small d-block">
-                    Relacion 1:N solicitud &rarr; documento
-                </span>
             </div>
             <div class="card-body">
 

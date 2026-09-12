@@ -211,7 +211,7 @@
                 <div class="card-header bg-white fw-semibold">
                     Caracteristicas
                     <span class="text-secondary fw-normal small d-block">
-                        Relacion N:M con cantidad propia
+                        Marque las que aplican y ajuste la cantidad
                     </span>
                 </div>
                 <div class="card-body">
@@ -238,8 +238,7 @@
                     </div>
 <%  } %>
                     <p class="text-secondary small mb-0 mt-3">
-                        La cantidad se guarda en la tabla puente
-                        <code>propiedad_caracteristica</code>.
+                        Indique cuantas unidades tiene de cada caracteristica marcada.
                     </p>
                 </div>
             </div>
@@ -260,7 +259,7 @@
     <div class="card-header bg-white fw-semibold">
         Galeria de imagenes
         <span class="text-secondary fw-normal small d-block">
-            Relacion 1:N &middot; <%= p.totalImagenes() %> foto(s)
+            <%= p.totalImagenes() %> foto(s)
         </span>
     </div>
     <div class="card-body">

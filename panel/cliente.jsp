@@ -75,7 +75,6 @@
         <div class="card border-0 shadow-sm h-100">
             <div class="card-header bg-white fw-semibold">
                 Mis datos
-                <span class="text-secondary fw-normal small">(relacion 1:1 usuario &harr; perfil)</span>
             </div>
             <div class="card-body">
 <%  if (miPerfil == null) { %>
