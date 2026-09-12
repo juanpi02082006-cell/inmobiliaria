@@ -94,6 +94,9 @@
                     <a class="btn btn-outline-primary" href="<%= ctx %>/panel/admin/catalogos">
                         <i class="bi bi-tags me-1"></i>Catalogos
                     </a>
+                    <a class="btn btn-outline-primary" href="<%= ctx %>/panel/admin/reportes">
+                        <i class="bi bi-bar-chart me-1"></i>Reportes
+                    </a>
                     <a class="btn btn-outline-primary" href="<%= ctx %>/panel/perfil">
                         <i class="bi bi-person-gear me-1"></i>Mi perfil
                     </a>
