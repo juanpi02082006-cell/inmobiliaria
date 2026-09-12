@@ -194,10 +194,17 @@
 </section>
 
 <%-- ===================== Por que elegirnos ===================== --%>
-<section id="elegirnos" class="sr-promo rounded-4 text-white text-center p-4 p-md-5 my-5 overflow-hidden">
-    <div class="bg-white rounded-4 shadow d-inline-block px-4 px-md-5 pt-3 pb-4 mb-4">
+<%-- La tarjeta del logo va FUERA de la seccion verde (no adentro, que tiene
+     overflow:hidden para recortar el patron de fondo) y con margen negativo,
+     para que sobresalga por arriba del recuadro en vez de quedar embebida.
+     Mismo truco que ya usa el buscador rapido sobre el hero, mas abajo. --%>
+<div class="text-center position-relative mt-5" style="margin-bottom:-3.5rem;z-index:2">
+    <div class="bg-white rounded-4 shadow d-inline-block px-4 px-md-5 pt-3 pb-4">
         <img class="sr-promo-logo img-fluid" src="<%= ctx %>/img/logo.jpg" alt="Santander Raiz Inmobiliaria">
     </div>
+</div>
+<section id="elegirnos" class="sr-promo rounded-4 text-white text-center p-4 p-md-5 mb-5 overflow-hidden"
+         style="padding-top:6rem">
 
     <h2 class="fw-bold text-uppercase mb-4" style="letter-spacing:.03em">
         &iexcl;Estamos aqu&iacute; para ayudarle a crecer!
