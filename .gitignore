@@ -1,6 +1,8 @@
 # --- Salida de compilacion -------------------------------------------------
-# Las clases se generan con compilar.bat; no tiene sentido versionarlas.
+# Las clases se generan con compilar.bat / compilar-pruebas.bat; no tiene
+# sentido versionarlas.
 WEB-INF/classes/
+build/
 *.class
 
 # --- Librerias ---------------------------------------------------------------

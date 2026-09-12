@@ -92,6 +92,39 @@ Espere unos segundos y vuelva a abrir la aplicación.
 
 ---
 
+## Pruebas unitarias
+
+El proyecto no usa Maven ni Gradle, así que las pruebas corren con
+[JUnit 5](https://junit.org/junit5/) en su presentación *console standalone*:
+un solo `.jar` en [`lib/`](lib/) que trae el motor y el lanzador, sin que haga
+falta descargar nada más ni cambiar cómo se compila o se despliega la
+aplicación.
+
+```bat
+compilar.bat
+compilar-pruebas.bat
+ejecutar-pruebas.bat
+```
+
+- `compilar-pruebas.bat` compila lo que hay en [`test/`](test/) contra las
+  clases ya compiladas en `WEB-INF/classes` (por eso hace falta correr
+  `compilar.bat` primero). A diferencia de `compilar.bat`, no baja el
+  bytecode a `--release 8`: las pruebas nunca las traduce el `ecj` de Tomcat
+  porque nunca se despliegan.
+- `ejecutar-pruebas.bat` corre toda la suite y muestra el árbol de resultados
+  en la consola.
+
+Las pruebas de `com.inmobiliaria.util` (escape de HTML, cifrado de
+contraseñas) no tocan la base de datos. Las de `com.inmobiliaria.dao` sí:
+necesitan MySQL de XAMPP levantado con la base `inmobiliaria` ya cargada
+(sección [1](#1-cargar-la-base-de-datos) de esta misma guía), porque usan la
+misma `ConexionBD` y el mismo `db.properties` que la aplicación. Las que
+modifican datos (favoritos, intentos fallidos de login) restauran el estado
+original en un `@AfterEach`, así que correr la suite varias veces seguidas no
+deja el catálogo de prueba distinto de como estaba.
+
+---
+
 ## Usuarios de prueba
 
 Todos usan la contraseña **`password`**.
