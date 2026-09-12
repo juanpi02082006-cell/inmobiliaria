@@ -191,6 +191,12 @@
                     <i class="bi bi-calendar-check me-1"></i>Ya no se puede visitar
                 </button>
 <%          } %>
+<%          if ("DISPONIBLE".equals(p.getEstado()) || "RESERVADA".equals(p.getEstado())) { %>
+                <a class="btn btn-outline-primary w-100 mb-2"
+                   href="<%= ctx %>/panel/cliente/solicitudes?accion=nueva&idPropiedad=<%= p.getId() %>">
+                    <i class="bi bi-send-check me-1"></i>Radicar <%= "ARRIENDO".equals(p.getOperacion()) ? "arriendo" : "compra" %>
+                </a>
+<%          } %>
                 <form method="post" action="<%= ctx %>/panel/cliente/favoritos">
                     <input type="hidden" name="accion" value="<%= esFavorito ? "quitar" : "agregar" %>">
                     <input type="hidden" name="idPropiedad" value="<%= p.getId() %>">
