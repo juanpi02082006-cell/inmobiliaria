@@ -193,6 +193,68 @@
     </div>
 </section>
 
+<%-- ===================== Por que elegirnos ===================== --%>
+<section id="elegirnos" class="py-5 border-top">
+    <div class="text-center mb-4">
+        <p class="texto-sr text-uppercase fw-semibold small mb-1" style="letter-spacing:.18em">
+            Por que elegirnos
+        </p>
+        <h2 class="fw-bold">Buscar casa no deberia ser complicado</h2>
+        <p class="text-secondary mb-0">Lo que nos diferencia de una busqueda por su cuenta.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <span class="sr-modulo-icono sr-icono-verde mb-3"><i class="bi bi-search"></i></span>
+                    <div class="fw-semibold mb-1">Catalogo amplio y filtrable</div>
+                    <p class="text-secondary small mb-0">
+                        Cientos de opciones en Santander, filtradas por ciudad, tipo y
+                        presupuesto en segundos.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <span class="sr-modulo-icono sr-icono-ambar mb-3"><i class="bi bi-calendar-check"></i></span>
+                    <div class="fw-semibold mb-1">Visitas sin cruces de horario</div>
+                    <p class="text-secondary small mb-0">
+                        Agende cuando le convenga: el sistema no deja que dos personas
+                        coincidan a la misma hora.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <span class="sr-modulo-icono sr-icono-azul mb-3"><i class="bi bi-send-check"></i></span>
+                    <div class="fw-semibold mb-1">Seguimiento de su solicitud</div>
+                    <p class="text-secondary small mb-0">
+                        Consulte en linea el estado de su compra o arriendo, sin tener
+                        que llamar a preguntar.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <span class="sr-modulo-icono sr-icono-violeta mb-3"><i class="bi bi-shield-check"></i></span>
+                    <div class="fw-semibold mb-1">Respaldo de agencias locales</div>
+                    <p class="text-secondary small mb-0">
+                        Cada inmueble lo publica una inmobiliaria de la region, no un
+                        anuncio anonimo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <%-- ===================== Contacto ===================== --%>
 <section id="contacto" class="py-5 border-top">
     <div class="text-center mb-4">
