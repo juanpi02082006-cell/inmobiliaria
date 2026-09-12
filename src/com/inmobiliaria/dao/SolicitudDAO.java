@@ -105,6 +105,48 @@ public class SolicitudDAO {
         return lista;
     }
 
+    /**
+     * Solicitudes sobre las propiedades de las agencias que administra este
+     * usuario (agente), las que siguen a la espera de una decision primero.
+     */
+    public List<Solicitud> listarPorAgente(int idUsuarioAgente) throws SQLException {
+        String sql =
+            "SELECT s.id_solicitud, s.id_propiedad, s.id_cliente, s.tipo, s.estado, "
+          + "       s.oferta, s.comentario, s.fecha_radicacion, s.fecha_resolucion, "
+          + "       p.titulo AS propiedad_titulo, p.direccion AS propiedad_direccion, "
+          + "       p.matricula_inmobiliaria AS propiedad_matricula, "
+          + "       ciu.nombre AS propiedad_ciudad, "
+          + "       pf.nombres AS cliente_nombres, pf.apellidos AS cliente_apellidos, "
+          + "       u.correo AS cliente_correo "
+          + "  FROM solicitud s "
+          + "  JOIN propiedad p    ON p.id_propiedad = s.id_propiedad "
+          + "  JOIN ciudad ciu     ON ciu.id_ciudad = p.id_ciudad "
+          + "  JOIN inmobiliaria i ON i.id_inmobiliaria = p.id_inmobiliaria "
+          + "  JOIN usuario u      ON u.id_usuario = s.id_cliente "
+          + " LEFT JOIN perfil pf  ON pf.id_usuario = u.id_usuario "
+          + " WHERE i.id_usuario = ? "
+          + " ORDER BY (s.estado IN ('RADICADA','EN_REVISION')) DESC, s.fecha_radicacion DESC";
+
+        List<Solicitud> lista = new ArrayList<Solicitud>();
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuarioAgente);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Solicitud s = mapear(rs);
+                    String nombres = rs.getString("cliente_nombres");
+                    String apellidos = rs.getString("cliente_apellidos");
+                    s.setClienteNombre((nombres == null)
+                            ? rs.getString("cliente_correo")
+                            : (nombres + " " + apellidos).trim());
+                    s.setClienteCorreo(rs.getString("cliente_correo"));
+                    lista.add(s);
+                }
+            }
+        }
+        return lista;
+    }
+
     /** Una solicitud con sus documentos cargados, o null si no existe. */
     public Solicitud buscarPorId(int idSolicitud) throws SQLException {
         String sql = SQL_BASE_CLIENTE + " WHERE s.id_solicitud = ?";
@@ -158,6 +200,72 @@ public class SolicitudDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
             }
+        }
+    }
+
+    /**
+     * ¿Esta solicitud todavia esta a la espera de una decision?
+     *
+     * La comprueba el propio DAO, en la base de datos, para que un POST
+     * directo al servlet no pueda reabrir una solicitud ya resuelta aunque
+     * la vista ya no muestre los botones para hacerlo.
+     */
+    public boolean esGestionable(int idSolicitud) throws SQLException {
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(
+                 "SELECT 1 FROM solicitud WHERE id_solicitud = ? AND estado IN ('RADICADA','EN_REVISION')")) {
+            ps.setInt(1, idSolicitud);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    /** ¿Esta solicitud cae sobre una propiedad de una agencia que administra este usuario (agente)? */
+    public boolean perteneceAlAgente(int idSolicitud, int idUsuarioAgente) throws SQLException {
+        String sql = "SELECT 1 FROM solicitud s "
+                   + "  JOIN propiedad p    ON p.id_propiedad = s.id_propiedad "
+                   + "  JOIN inmobiliaria i ON i.id_inmobiliaria = p.id_inmobiliaria "
+                   + " WHERE s.id_solicitud = ? AND i.id_usuario = ?";
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, idSolicitud);
+            ps.setInt(2, idUsuarioAgente);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    /**
+     * Cambia el estado de la solicitud (HU-11: el agente la revisa, aprueba
+     * o rechaza). Al llegar a un estado final (APROBADA o RECHAZADA) queda
+     * registrada tambien la fecha de resolucion.
+     */
+    public void cambiarEstado(int idSolicitud, String nuevoEstado) throws SQLException {
+        boolean esFinal = "APROBADA".equals(nuevoEstado) || "RECHAZADA".equals(nuevoEstado);
+        String sql = esFinal
+                ? "UPDATE solicitud SET estado = ?, fecha_resolucion = NOW() WHERE id_solicitud = ?"
+                : "UPDATE solicitud SET estado = ? WHERE id_solicitud = ?";
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, nuevoEstado);
+            ps.setInt(2, idSolicitud);
+            ps.executeUpdate();
+        }
+    }
+
+    /** Acepta o rechaza un documento radicado (HU-11). */
+    public void cambiarEstadoDocumento(int idDocumento, int idSolicitud, String nuevoEstado)
+            throws SQLException {
+        String sql = "UPDATE documento_solicitud SET estado = ? "
+                   + " WHERE id_documento = ? AND id_solicitud = ?";
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, nuevoEstado);
+            ps.setInt(2, idDocumento);
+            ps.setInt(3, idSolicitud);
+            ps.executeUpdate();
         }
     }
 

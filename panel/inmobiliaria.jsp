@@ -10,9 +10,10 @@
 <%@ include file="/WEB-INF/jspf/cabecera.jspf" %>
 <%
     ResumenDAO resumenAgente = new ResumenDAO();
-    int misPropiedades  = resumenAgente.propiedadesDelAgente(usuarioSesion.getId());
-    int citasPendientes = resumenAgente.citasPendientesDelAgente(usuarioSesion.getId());
-    String agencia      = resumenAgente.nombreAgencia(usuarioSesion.getId());
+    int misPropiedades       = resumenAgente.propiedadesDelAgente(usuarioSesion.getId());
+    int citasPendientes      = resumenAgente.citasPendientesDelAgente(usuarioSesion.getId());
+    int solicitudesPendientes = resumenAgente.solicitudesPendientesDelAgente(usuarioSesion.getId());
+    String agencia            = resumenAgente.nombreAgencia(usuarioSesion.getId());
 %>
 
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
@@ -27,7 +28,7 @@
 </div>
 
 <div class="row g-3 mb-4">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
                 <div class="text-secondary small text-uppercase">Mis propiedades activas</div>
@@ -36,13 +37,24 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <a class="text-decoration-none text-reset" href="<%= ctx %>/panel/inmobiliaria/citas">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
                 <div class="text-secondary small text-uppercase">Citas pendientes</div>
                 <div class="display-6 fw-bold"><%= citasPendientes %></div>
                 <div class="text-secondary small">Visitas por confirmar</div>
+            </div>
+        </div>
+        </a>
+    </div>
+    <div class="col-sm-4">
+        <a class="text-decoration-none text-reset" href="<%= ctx %>/panel/inmobiliaria/solicitudes">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-secondary small text-uppercase">Solicitudes por resolver</div>
+                <div class="display-6 fw-bold"><%= solicitudesPendientes %></div>
+                <div class="text-secondary small">Compra o arriendo</div>
             </div>
         </div>
         </a>
@@ -62,11 +74,13 @@
             <a class="btn btn-outline-primary" href="<%= ctx %>/panel/inmobiliaria/citas">
                 <i class="bi bi-calendar-check me-1"></i>Gestionar citas
             </a>
+            <a class="btn btn-outline-primary" href="<%= ctx %>/panel/inmobiliaria/solicitudes">
+                <i class="bi bi-file-earmark-check me-1"></i>Resolver solicitudes
+            </a>
         </div>
         <p class="text-secondary small mb-0 mt-3">
             Desde ahi administra tambien la galeria de imagenes (1:N) y las
-            caracteristicas del inmueble (N:M). La atencion de solicitudes
-            llega mas adelante en el Sprint 3.
+            caracteristicas del inmueble (N:M).
         </p>
     </div>
 </div>

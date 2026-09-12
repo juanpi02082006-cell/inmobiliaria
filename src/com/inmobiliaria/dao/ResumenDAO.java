@@ -99,6 +99,16 @@ public class ResumenDAO {
           + " WHERE i.id_usuario = ? AND c.estado = 'PENDIENTE'", idUsuario);
     }
 
+    /** Solicitudes de compra o arriendo por resolver sobre las propiedades de ese agente. */
+    public int solicitudesPendientesDelAgente(int idUsuario) throws SQLException {
+        return contar(
+            "SELECT COUNT(*) "
+          + "  FROM solicitud s "
+          + "  JOIN propiedad p    ON p.id_propiedad = s.id_propiedad "
+          + "  JOIN inmobiliaria i ON i.id_inmobiliaria = p.id_inmobiliaria "
+          + " WHERE i.id_usuario = ? AND s.estado IN ('RADICADA','EN_REVISION')", idUsuario);
+    }
+
     /** Nombre de la agencia que administra el usuario, o null si no tiene. */
     public String nombreAgencia(int idUsuario) throws SQLException {
         try (Connection cn = ConexionBD.obtener();
