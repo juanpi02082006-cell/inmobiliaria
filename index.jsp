@@ -194,65 +194,60 @@
 </section>
 
 <%-- ===================== Por que elegirnos ===================== --%>
-<section id="elegirnos" class="py-5 border-top">
-    <div class="text-center mb-4">
-        <p class="texto-sr text-uppercase fw-semibold small mb-1" style="letter-spacing:.18em">
-            Por que elegirnos
-        </p>
-        <h2 class="fw-bold">Buscar casa no deberia ser complicado</h2>
-        <p class="text-secondary mb-0">Lo que nos diferencia de una busqueda por su cuenta.</p>
+<section id="elegirnos" class="sr-promo rounded-4 text-white text-center p-4 p-md-5 my-5 overflow-hidden">
+    <div class="bg-white rounded-4 shadow d-inline-block px-4 px-md-5 pt-3 pb-4 mb-4">
+        <img class="sr-promo-logo img-fluid" src="<%= ctx %>/img/logo.jpg" alt="Santander Raiz Inmobiliaria">
     </div>
 
-    <div class="row g-4">
-        <div class="col-sm-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <span class="sr-modulo-icono sr-icono-verde mb-3"><i class="bi bi-search"></i></span>
-                    <div class="fw-semibold mb-1">Catalogo amplio y filtrable</div>
-                    <p class="text-secondary small mb-0">
-                        Cientos de opciones en Santander, filtradas por ciudad, tipo y
-                        presupuesto en segundos.
-                    </p>
+    <h2 class="fw-bold text-uppercase mb-4" style="letter-spacing:.03em">
+        &iexcl;Estamos aqu&iacute; para ayudarle a crecer!
+    </h2>
+
+    <div class="row g-3 justify-content-center mb-4">
+        <div class="col-sm-4">
+            <div class="sr-promo-caja p-4 h-100">
+                <span class="sr-dorado-icono mb-3"><i class="bi bi-key-fill"></i></span>
+                <div class="fw-bold text-uppercase small mb-2" style="letter-spacing:.05em">
+                    Confianza total
                 </div>
+                <p class="text-white-50 small mb-0">
+                    Acompañamiento &eacute;tico y transparente en cada paso, protegiendo
+                    su patrimonio.
+                </p>
             </div>
         </div>
-        <div class="col-sm-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <span class="sr-modulo-icono sr-icono-ambar mb-3"><i class="bi bi-calendar-check"></i></span>
-                    <div class="fw-semibold mb-1">Visitas sin cruces de horario</div>
-                    <p class="text-secondary small mb-0">
-                        Agende cuando le convenga: el sistema no deja que dos personas
-                        coincidan a la misma hora.
-                    </p>
+        <div class="col-sm-4">
+            <div class="sr-promo-caja p-4 h-100">
+                <span class="sr-dorado-icono mb-3"><i class="bi bi-people-fill"></i></span>
+                <div class="fw-bold text-uppercase small mb-2" style="letter-spacing:.05em">
+                    Solidez regional
                 </div>
+                <p class="text-white-50 small mb-0">
+                    Conocimiento profundo del mercado en Santander, para inversiones
+                    seguras.
+                </p>
             </div>
         </div>
-        <div class="col-sm-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <span class="sr-modulo-icono sr-icono-azul mb-3"><i class="bi bi-send-check"></i></span>
-                    <div class="fw-semibold mb-1">Seguimiento de su solicitud</div>
-                    <p class="text-secondary small mb-0">
-                        Consulte en linea el estado de su compra o arriendo, sin tener
-                        que llamar a preguntar.
-                    </p>
+        <div class="col-sm-4">
+            <div class="sr-promo-caja p-4 h-100">
+                <span class="sr-dorado-icono mb-3"><i class="bi bi-tree-fill"></i></span>
+                <div class="fw-bold text-uppercase small mb-2" style="letter-spacing:.05em">
+                    Ra&iacute;ces fuertes
                 </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <span class="sr-modulo-icono sr-icono-violeta mb-3"><i class="bi bi-shield-check"></i></span>
-                    <div class="fw-semibold mb-1">Respaldo de agencias locales</div>
-                    <p class="text-secondary small mb-0">
-                        Cada inmueble lo publica una inmobiliaria de la region, no un
-                        anuncio anonimo.
-                    </p>
-                </div>
+                <p class="text-white-50 small mb-0">
+                    Arraigo y compromiso local que garantizan soluciones a largo plazo.
+                </p>
             </div>
         </div>
     </div>
+
+    <a class="btn btn-dorado btn-lg rounded-pill px-4 mb-3" href="#contacto">
+        Agendar una consulta
+    </a>
+
+    <p class="text-white-50 small mb-0">
+        contacto@santanderraiz.com &middot; (607) 645 3200 &middot; Cabecera del Llano, Bucaramanga
+    </p>
 </section>
 
 <%-- ===================== Contacto ===================== --%>
