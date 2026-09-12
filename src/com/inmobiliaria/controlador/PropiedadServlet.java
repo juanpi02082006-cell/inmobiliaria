@@ -5,11 +5,13 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import com.inmobiliaria.dao.AuditoriaDAO;
 import com.inmobiliaria.dao.CatalogoDAO;
@@ -18,6 +20,8 @@ import com.inmobiliaria.dao.ImagenDAO;
 import com.inmobiliaria.dao.PropiedadDAO;
 import com.inmobiliaria.modelo.Propiedad;
 import com.inmobiliaria.modelo.Usuario;
+import com.inmobiliaria.util.ArchivoUtil;
+import com.inmobiliaria.util.ArchivoUtil.ArchivoInvalidoException;
 
 /**
  * Gestion de propiedades del agente inmobiliario: alta, edicion, baja logica,
@@ -35,7 +39,11 @@ import com.inmobiliaria.modelo.Usuario;
  * directamente: solo se alcanzan por forward desde este servlet.
  */
 @WebServlet(name = "PropiedadServlet", urlPatterns = {"/panel/inmobiliaria/propiedades"})
+@MultipartConfig(maxFileSize = 5L * 1024 * 1024, maxRequestSize = 6L * 1024 * 1024)
 public class PropiedadServlet extends HttpServlet {
+
+    /** Carpeta, relativa al contexto web, donde se guardan las fotos subidas. */
+    private static final String CARPETA_IMAGENES = "img/propiedades";
 
     private static final long serialVersionUID = 1L;
 
@@ -117,11 +125,7 @@ public class PropiedadServlet extends HttpServlet {
                 respuesta.sendRedirect(base + "?ok=reactivada");
 
             } else if ("imagen-agregar".equals(accion)) {
-                String url = valor(peticion.getParameter("url"));
-                if (!url.isEmpty()) {
-                    imagenDAO.agregar(p.getId(), url);
-                }
-                respuesta.sendRedirect(base + "?accion=editar&id=" + p.getId() + "&ok=imagen");
+                agregarImagen(peticion, respuesta, p, base);
 
             } else if ("imagen-eliminar".equals(accion)) {
                 imagenDAO.eliminar(entero(peticion.getParameter("idImagen"), 0), p.getId());
@@ -223,6 +227,34 @@ public class PropiedadServlet extends HttpServlet {
             // Aqui aterriza la violacion del UNIQUE de matricula_inmobiliaria,
             // ya traducida a castellano.
             volverAlFormulario(peticion, respuesta, p, e.getMessage());
+        }
+    }
+
+    /**
+     * Sube una foto a la galeria del inmueble.
+     *
+     * El archivo se valida y se guarda en disco con {@link ArchivoUtil}, que
+     * genera un nombre nuevo (UUID): nunca se confia en el nombre que trae el
+     * navegador. Solo se guarda la ruta en la base de datos si el archivo ya
+     * quedo escrito en {@code img/propiedades}.
+     */
+    private void agregarImagen(HttpServletRequest peticion, HttpServletResponse respuesta,
+                               Propiedad p, String base)
+            throws ServletException, IOException, SQLException {
+
+        String destino = base + "?accion=editar&id=" + p.getId();
+
+        try {
+            Part parte = peticion.getPart("archivo");
+            String carpetaDestino = getServletContext().getRealPath("/" + CARPETA_IMAGENES);
+            String rutaGuardada = ArchivoUtil.guardarImagen(parte, carpetaDestino, CARPETA_IMAGENES);
+
+            imagenDAO.agregar(p.getId(), rutaGuardada);
+            respuesta.sendRedirect(destino + "&ok=imagen");
+
+        } catch (ArchivoInvalidoException e) {
+            respuesta.sendRedirect(destino + "&error="
+                    + java.net.URLEncoder.encode(e.getMessage(), "UTF-8"));
         }
     }
 

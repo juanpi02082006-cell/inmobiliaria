@@ -25,6 +25,10 @@
             ? "" : request.getAttribute("error").toString();
     String ok = (request.getParameter("ok") == null) ? "" : request.getParameter("ok");
 
+    // La subida de fotos falla con un redirect (no con un forward), asi que
+    // su error viaja por la URL en vez de por un atributo de la peticion.
+    String errorImagen = (request.getParameter("error") == null) ? "" : request.getParameter("error");
+
     String rutaGestion = ctx + "/panel/inmobiliaria/propiedades";
 %>
 <%!
@@ -261,25 +265,24 @@
     </div>
     <div class="card-body">
 
-        <form class="row g-2 align-items-end mb-4" method="post" action="<%= rutaGestion %>">
+<%      if (!errorImagen.isEmpty()) { %>
+        <div class="alert alert-danger py-2">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><%= Html.esc(errorImagen) %>
+        </div>
+<%      } %>
+        <form class="row g-2 align-items-end mb-4" method="post" action="<%= rutaGestion %>"
+              enctype="multipart/form-data">
             <input type="hidden" name="accion" value="imagen-agregar">
             <input type="hidden" name="id" value="<%= p.getId() %>">
             <div class="col-sm">
-                <label class="form-label small fw-semibold" for="url">Ruta de la imagen</label>
-                <select class="form-select" id="url" name="url" required>
-                    <option value="img/casa-barrio.jpg">img/casa-barrio.jpg</option>
-                    <option value="img/apartamento-cabecera.jpg">img/apartamento-cabecera.jpg</option>
-                    <option value="img/apartamento-cacique.jpg">img/apartamento-cacique.jpg</option>
-                    <option value="img/bucaramanga.jpg">img/bucaramanga.jpg</option>
-                </select>
-                <div class="form-text">
-                    La subida de archivos llega en el Sprint 3; por ahora se elige
-                    entre las imagenes del proyecto.
-                </div>
+                <label class="form-label small fw-semibold" for="archivo">Examinar imagen</label>
+                <input class="form-control" id="archivo" name="archivo" type="file"
+                       accept="image/png,image/jpeg,image/webp,image/gif" required>
+                <div class="form-text">JPG, PNG, WEBP o GIF, hasta 5 MB.</div>
             </div>
             <div class="col-sm-auto">
                 <button class="btn btn-outline-primary" type="submit">
-                    <i class="bi bi-plus-lg me-1"></i>Agregar foto
+                    <i class="bi bi-upload me-1"></i>Subir foto
                 </button>
             </div>
         </form>

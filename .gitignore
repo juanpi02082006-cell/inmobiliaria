@@ -9,6 +9,13 @@ build/
 # El conector de MySQL ya viene en C:\xampp\tomcat\lib
 WEB-INF/lib/*.jar
 
+# --- Fotos subidas por los usuarios ------------------------------------------
+# ArchivoUtil las guarda aqui con un nombre generado (UUID); no son fuente del
+# proyecto y no tiene sentido versionarlas. La carpeta se conserva con
+# .gitkeep para que exista al clonar, aunque este vacia.
+img/propiedades/*
+!img/propiedades/.gitkeep
+
 # --- Sobrante de una version anterior ----------------------------------------
 # Copia vieja del sitio en HTML plano (index.html, login.html y duplicados de
 # css/img/js) dentro de un proyecto que ya se llama "inmobiliaria".
