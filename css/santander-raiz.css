@@ -89,6 +89,59 @@ a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
     outline-offset: 2px;
 }
 
+/* --- Barra de navegacion ---------------------------------------------------
+   El logo real (img/logo-icono.png) es el arbol de la marca sin fondo ni
+   texto: el nombre "Santander Raiz" se pone aparte, en HTML, para que siga
+   siendo texto real (buscable, accesible) en vez de quedar quemado dentro de
+   la imagen. El fondo de la barra usa el carbon de la marca en vez del gris
+   generico de Bootstrap, y los enlaces tienen su propia forma de pastilla en
+   vez del subrayado por defecto. */
+
+.sr-navbar {
+    background-color: var(--sr-carbon) !important;
+}
+
+.sr-navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.sr-navbar .navbar-brand img {
+    height: 34px;
+    width: auto;
+}
+
+.sr-navbar .nav-link {
+    border-radius: 999px;
+    padding: .45rem 1rem !important;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.sr-navbar .nav-link:hover,
+.sr-navbar .nav-link:focus {
+    background-color: rgba(255, 255, 255, .08);
+    color: #fff !important;
+}
+
+.sr-navbar-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, .1);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.sr-badge-rol-sm {
+    padding: .15rem .55rem;
+    font-size: .68rem;
+}
+
 /* --- Portada -------------------------------------------------------------- */
 
 .sr-hero {
