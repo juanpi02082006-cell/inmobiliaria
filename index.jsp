@@ -193,19 +193,6 @@
     </div>
 </section>
 
-<%-- ===================== Llamado a la accion ===================== --%>
-<%  if (usuarioSesion == null) { %>
-<section class="fondo-sr text-white text-center rounded-4 p-5 mb-4">
-    <h2 class="fw-bold mb-3">Encuentre su proximo hogar</h2>
-    <p class="text-white-50 mx-auto mb-4" style="max-width:38rem">
-        Registrese para guardar favoritos, agendar visitas y seguir sus solicitudes.
-    </p>
-    <a class="btn btn-light btn-lg px-4 fw-semibold" href="<%= ctx %>/registro.jsp">
-        Crear cuenta
-    </a>
-</section>
-<%  } %>
-
 <%-- ===================== Contacto ===================== --%>
 <section id="contacto" class="py-5 border-top">
     <div class="text-center mb-4">
