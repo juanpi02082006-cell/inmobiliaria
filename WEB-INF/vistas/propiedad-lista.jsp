@@ -25,8 +25,9 @@
     String rutaGestion = ctx + "/panel/inmobiliaria/propiedades";
 %>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-    <div>
+<div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+    <span class="sr-marca-icono-sm"><i class="bi bi-houses"></i></span>
+    <div class="flex-grow-1">
         <h1 class="h3 mb-1">Mis propiedades</h1>
         <p class="text-secondary mb-0">
             <%= activas %> publicadas &middot; <%= mias.size() - activas %> dadas de baja

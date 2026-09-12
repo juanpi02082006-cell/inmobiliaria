@@ -23,8 +23,9 @@
     String rutaGestion = ctx + "/panel/inmobiliaria/citas";
 %>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-    <div>
+<div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+    <span class="sr-marca-icono-sm"><i class="bi bi-calendar-check"></i></span>
+    <div class="flex-grow-1">
         <h1 class="h3 mb-1">Citas agendadas</h1>
         <p class="text-secondary mb-0">
             <%= pendientes %> por confirmar &middot; <%= citas.size() %> en total

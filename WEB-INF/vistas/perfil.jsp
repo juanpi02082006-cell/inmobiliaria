@@ -22,6 +22,10 @@
     String vDocumento = campo(request, "documento", mi == null ? "" : mi.getDocumento());
     String vTelefono  = campo(request, "telefono",  mi == null ? "" : mi.getTelefono());
     String vDireccion = campo(request, "direccion", mi == null ? "" : mi.getDireccion());
+
+    String rutaPanel = usuarioSesion.tieneRol("ADMIN") ? ctx + "/panel/admin.jsp"
+                      : usuarioSesion.tieneRol("INMOBILIARIA") ? ctx + "/panel/inmobiliaria.jsp"
+                      : ctx + "/panel/cliente.jsp";
 %>
 <%!
     private String campo(javax.servlet.http.HttpServletRequest req, String nombre, String actual) {
@@ -30,15 +34,29 @@
         return v.replace("&", "&amp;").replace("\"", "&quot;")
                 .replace("<", "&lt;").replace(">", "&gt;");
     }
+
+    /** Clase de color del badge de rol, igual que en los paneles. */
+    private String claseRol(String rol) {
+        if ("ADMIN".equals(rol)) return "rol-admin";
+        if ("INMOBILIARIA".equals(rol)) return "rol-inmobiliaria";
+        if ("CLIENTE".equals(rol)) return "rol-cliente";
+        return "rol-visitante";
+    }
 %>
 
 <div class="row justify-content-center">
     <div class="col-lg-9 col-xl-8">
 
-        <h1 class="h3 mb-1">Mi perfil</h1>
-        <p class="text-secondary mb-4">
-            Sus datos personales y su contrasena.
-        </p>
+        <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+            <span class="sr-marca-icono-sm"><i class="bi bi-person-gear"></i></span>
+            <div class="flex-grow-1">
+                <h1 class="h3 mb-1">Mi perfil</h1>
+                <p class="text-secondary mb-0">Sus datos personales y su contrasena.</p>
+            </div>
+            <a class="btn btn-outline-secondary btn-sm" href="<%= rutaPanel %>">
+                <i class="bi bi-arrow-left me-1"></i>Volver al panel
+            </a>
+        </div>
 
 <%  if (!errorPerfil.isEmpty() && !"null".equals(errorPerfil)) { %>
         <div class="alert alert-danger">
@@ -53,29 +71,27 @@
         </div>
 <%  } %>
 
-        <%-- ============ La cuenta (tabla usuario) ============ --%>
+        <%-- ============ La cuenta ============ --%>
         <div class="card border-0 shadow-sm mb-4">
-            <div class="card-header bg-white fw-semibold">
-                Cuenta
-                <span class="text-secondary fw-normal small d-block">
-                    Tabla <code>usuario</code> &middot; credenciales y estado
-                </span>
-            </div>
             <div class="card-body">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="sr-stat-icono sr-icono-azul"><i class="bi bi-shield-check"></i></span>
+                    <div class="fw-semibold">Cuenta</div>
+                </div>
                 <dl class="row mb-0 small">
                     <dt class="col-sm-3 text-secondary">Correo</dt>
                     <dd class="col-sm-9"><%= Html.esc(usuarioSesion.getCorreo()) %></dd>
 
                     <dt class="col-sm-3 text-secondary">Roles</dt>
-                    <dd class="col-sm-9">
+                    <dd class="col-sm-9 d-flex flex-wrap gap-2">
 <%  for (String r : usuarioSesion.getRoles()) { %>
-                        <span class="badge text-bg-secondary"><%= r %></span>
+                        <span class="sr-badge-rol <%= claseRol(r) %>"><span class="sr-punto"></span><%= r %></span>
 <%  } %>
                     </dd>
 
                     <dt class="col-sm-3 text-secondary">Estado</dt>
                     <dd class="col-sm-9 mb-0">
-                        <span class="badge text-bg-success">ACTIVA</span>
+                        <span class="sr-badge-rol rol-cliente"><span class="sr-punto"></span>ACTIVA</span>
                     </dd>
                 </dl>
                 <p class="text-secondary small mb-0 mt-3">
@@ -85,12 +101,13 @@
             </div>
         </div>
 
-        <%-- ============ Datos personales (tabla perfil, 1:1) ============ --%>
+        <%-- ============ Datos personales ============ --%>
         <div class="card border-0 shadow-sm mb-4">
-            <div class="card-header bg-white fw-semibold">
-                Datos personales
-            </div>
             <div class="card-body">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="sr-stat-icono sr-icono-violeta"><i class="bi bi-person"></i></span>
+                    <div class="fw-semibold">Datos personales</div>
+                </div>
                 <form method="post" action="<%= ctx %>/panel/perfil" novalidate>
                     <input type="hidden" name="accion" value="datos">
 
@@ -137,8 +154,11 @@
 
         <%-- ============ Contrasena ============ --%>
         <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white fw-semibold">Cambiar contrasena</div>
             <div class="card-body">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="sr-stat-icono sr-icono-ambar"><i class="bi bi-key"></i></span>
+                    <div class="fw-semibold">Cambiar contrasena</div>
+                </div>
                 <form method="post" action="<%= ctx %>/panel/perfil" novalidate>
                     <input type="hidden" name="accion" value="password">
 

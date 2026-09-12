@@ -42,8 +42,9 @@
     private String chk(boolean condicion) { return condicion ? " checked" : ""; }
 %>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-    <div>
+<div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+    <span class="sr-marca-icono-sm"><i class="bi bi-house-gear"></i></span>
+    <div class="flex-grow-1">
         <h1 class="h3 mb-1"><%= esEdicion ? "Editar propiedad" : "Publicar propiedad" %></h1>
         <p class="text-secondary mb-0">
 <%  if (esEdicion) { %>

@@ -23,8 +23,9 @@
     for (Usuario u : usuarios) { if (u.isActivo()) activos++; }
 %>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-    <div>
+<div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+    <span class="sr-marca-icono-sm"><i class="bi bi-people"></i></span>
+    <div class="flex-grow-1">
         <h1 class="h3 mb-1">Usuarios y roles</h1>
         <p class="text-secondary mb-0">
             <%= usuarios.size() %> cuentas &middot; <%= activos %> activas
@@ -73,7 +74,7 @@
                         <div class="fw-semibold">
                             <%= Html.esc((u.getPerfil() == null) ? u.getCorreo() : u.getPerfil().nombreCompleto()) %>
 <%      if (esYo) { %>
-                            <span class="badge text-bg-info ms-1">usted</span>
+                            <span class="sr-badge-rol rol-inmobiliaria ms-1"><span class="sr-punto"></span>usted</span>
 <%      } %>
                         </div>
                         <div class="text-secondary small"><%= Html.esc(u.getCorreo()) %></div>
@@ -107,7 +108,7 @@
                     <%-- ---- Estado de la cuenta ---- --%>
                     <td class="text-end text-nowrap">
 <%      if (u.isActivo()) { %>
-                        <span class="badge text-bg-success me-1">ACTIVA</span>
+                        <span class="sr-badge-rol rol-cliente me-1"><span class="sr-punto"></span>ACTIVA</span>
                         <form class="d-inline" method="post" action="<%= base %>"
                               onsubmit="return confirm('Inactivar la cuenta de <%= Html.esc(u.getCorreo()) %>? No podra iniciar sesion.')">
                             <input type="hidden" name="accion" value="inactivar">
@@ -118,7 +119,7 @@
                             </button>
                         </form>
 <%      } else { %>
-                        <span class="badge text-bg-secondary me-1">INACTIVA</span>
+                        <span class="sr-badge-rol rol-visitante me-1"><span class="sr-punto"></span>INACTIVA</span>
                         <form class="d-inline" method="post" action="<%= base %>">
                             <input type="hidden" name="accion" value="activar">
                             <input type="hidden" name="id" value="<%= u.getId() %>">
