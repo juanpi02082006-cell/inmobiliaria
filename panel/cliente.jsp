@@ -29,42 +29,42 @@
 </div>
 
 <%-- ============ Cifras: tambien son el acceso rapido a cada seccion ============ --%>
-<div class="row g-3 mb-4">
+<div class="row g-3 mb-4 sr-client-stats">
     <div class="col-sm-4">
         <a class="sr-stat" href="<%= ctx %>/panel/cliente/citas">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 sr-client-stat-card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
+                    <div class="sr-client-stat-content">
                         <div class="text-secondary small text-uppercase">Citas</div>
-                        <span class="sr-stat-icono sr-icono-ambar"><i class="bi bi-calendar-check"></i></span>
+                        <div class="h3 fw-bold mb-0 mt-2"><%= misCitas %></div>
                     </div>
-                    <div class="h3 fw-bold mb-0 mt-2"><%= misCitas %></div>
+                    <span class="sr-stat-icono sr-icono-ambar"><i class="bi bi-calendar-check"></i></span>
                 </div>
             </div>
         </a>
     </div>
     <div class="col-sm-4">
         <a class="sr-stat" href="<%= ctx %>/panel/cliente/favoritos">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 sr-client-stat-card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
+                    <div class="sr-client-stat-content">
                         <div class="text-secondary small text-uppercase">Favoritos</div>
-                        <span class="sr-stat-icono sr-icono-rosa"><i class="bi bi-heart"></i></span>
+                        <div class="h3 fw-bold mb-0 mt-2"><%= misFavoritos %></div>
                     </div>
-                    <div class="h3 fw-bold mb-0 mt-2"><%= misFavoritos %></div>
+                    <span class="sr-stat-icono sr-icono-rosa"><i class="bi bi-heart"></i></span>
                 </div>
             </div>
         </a>
     </div>
     <div class="col-sm-4">
         <a class="sr-stat" href="<%= ctx %>/panel/cliente/solicitudes">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 sr-client-stat-card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
+                    <div class="sr-client-stat-content">
                         <div class="text-secondary small text-uppercase">Solicitudes</div>
-                        <span class="sr-stat-icono sr-icono-azul"><i class="bi bi-send-check"></i></span>
+                        <div class="h3 fw-bold mb-0 mt-2"><%= misSolicitudes %></div>
                     </div>
-                    <div class="h3 fw-bold mb-0 mt-2"><%= misSolicitudes %></div>
+                    <span class="sr-stat-icono sr-icono-azul"><i class="bi bi-send-check"></i></span>
                 </div>
             </div>
         </a>
@@ -74,7 +74,7 @@
 <div class="row g-3">
     <%-- ============ Mis datos ============ --%>
     <div class="col-lg-8">
-        <div class="card border-0 shadow-sm h-100">
+        <div class="card border-0 shadow-sm h-100 sr-client-profile-card">
             <div class="card-body">
                 <div class="d-flex align-items-center gap-2 mb-3">
                     <span class="sr-stat-icono sr-icono-azul"><i class="bi bi-person"></i></span>
@@ -111,7 +111,7 @@
     <%-- ============ Buscar propiedades ============ --%>
     <div class="col-lg-4">
         <a class="sr-modulo" href="<%= ctx %>/catalogo">
-            <div class="sr-modulo-tarjeta card border-0 shadow-sm h-100">
+            <div class="sr-modulo-tarjeta card border-0 shadow-sm h-100 sr-client-search-card">
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <span class="sr-modulo-icono sr-icono-verde"><i class="bi bi-search"></i></span>

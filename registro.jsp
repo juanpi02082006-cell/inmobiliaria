@@ -34,7 +34,14 @@
 %>
 <%@ include file="/WEB-INF/jspf/cabecera.jspf" %>
 
-<div class="row justify-content-center">
+<div class="sr-auth-shell">
+    <aside class="sr-auth-visual" aria-label="Inspiracion inmobiliaria">
+        <span class="sr-auth-kicker">Encuentre su lugar</span>
+        <blockquote>“Una buena propiedad también es una forma de pertenecer.”</blockquote>
+        <span class="sr-auth-location"><i class="bi bi-geo-alt me-1"></i>Historias que echan raices</span>
+    </aside>
+
+<div class="row justify-content-center py-lg-4 sr-auth-form-column">
     <div class="col-md-9 col-lg-7">
         <div class="card border-0 shadow-sm sr-acceso">
             <div class="card-body p-4 p-sm-5">
@@ -119,6 +126,8 @@
             </div>
         </div>
     </div>
+</div>
+
 </div>
 
 <%@ include file="/WEB-INF/jspf/pie.jspf" %>

@@ -27,7 +27,14 @@
 %>
 <%@ include file="/WEB-INF/jspf/cabecera.jspf" %>
 
-<div class="row justify-content-center py-lg-4">
+<div class="sr-auth-shell">
+    <aside class="sr-auth-visual" aria-label="Inspiracion inmobiliaria">
+        <span class="sr-auth-kicker">Santander Raiz</span>
+        <blockquote>“El lugar donde comienza una nueva historia.”</blockquote>
+        <span class="sr-auth-location"><i class="bi bi-geo-alt me-1"></i>Bucaramanga, Santander</span>
+    </aside>
+
+<div class="row justify-content-center py-lg-4 sr-auth-form-column">
     <div class="col-md-8 col-lg-5 col-xl-4">
 
         <div class="card border-0 shadow-sm sr-acceso">
@@ -119,6 +126,8 @@
             </a>
         </p>
     </div>
+</div>
+
 </div>
 
 <%@ include file="/WEB-INF/jspf/pie.jspf" %>

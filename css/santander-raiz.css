@@ -1,440 +1,185 @@
-/* ============================================================================
-   Santander Raiz - identidad visual sobre Bootstrap 5
-   ----------------------------------------------------------------------------
-   Se carga desde WEB-INF/jspf/cabecera.jspf, asi que TODAS las paginas del
-   sitio reciben los mismos colores. Antes estos estilos vivian dentro de
-   index.jsp y por eso el login se veia azul (el primary por defecto de
-   Bootstrap) mientras la portada se veia verde.
-
-   Aqui no se reescriben las reglas de Bootstrap: se redefinen las variables
-   CSS que el propio framework usa. Asi cualquier componente nuevo que se
-   agregue en los Sprints 2 y 3 sale ya con el color de la marca sin tocar
-   nada mas.
-
-   Las rutas de imagen son relativas a este archivo (css/ -> ../img/).
-   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
 :root {
-    /* Paleta de la marca */
-    --sr-verde:        #006b2b;
-    --sr-verde-oscuro: #005320;
-    --sr-verde-claro:  #e7f1ea;
-    --sr-carbon:       #18231e;
-    --sr-dorado:        #c9a668;
-    --sr-dorado-oscuro: #a8854c;
+    --sr-ink: #17232b;
+    --sr-ink-soft: #42515a;
+    --sr-cream: #f7f4ee;
+    --sr-paper: #fffdf9;
+    --sr-line: rgba(23, 35, 43, .13);
+    --sr-line-dark: rgba(255, 255, 255, .16);
+    --sr-accent: #c66b4d;
+    --sr-accent-dark: #a85138;
+    --sr-accent-soft: #f4e4dc;
+    --sr-shadow: 0 18px 50px rgba(27, 38, 43, .08);
+    --sr-radius: 10px;
 
-    /* Bootstrap toma su color primario de estas variables */
-    --bs-primary:             #006b2b;
-    --bs-primary-rgb:         0, 107, 43;
-    --bs-link-color:          #006b2b;
-    --bs-link-color-rgb:      0, 107, 43;
-    --bs-link-hover-color:    #005320;
-    --bs-link-hover-color-rgb: 0, 83, 32;
+    --bs-primary: var(--sr-accent);
+    --bs-primary-rgb: 198, 107, 77;
+    --bs-link-color: var(--sr-accent-dark);
+    --bs-link-color-rgb: 168, 81, 56;
+    --bs-link-hover-color: #86412f;
+    --bs-body-bg: var(--sr-cream);
+    --bs-body-color: var(--sr-ink);
+    --bs-border-color: var(--sr-line);
+    --bs-border-radius: var(--sr-radius);
+    --bs-border-radius-lg: 12px;
 }
 
-/* --- Botones -------------------------------------------------------------- */
-
-.btn-primary {
-    --bs-btn-bg:                   var(--sr-verde);
-    --bs-btn-border-color:         var(--sr-verde);
-    --bs-btn-hover-bg:             var(--sr-verde-oscuro);
-    --bs-btn-hover-border-color:   var(--sr-verde-oscuro);
-    --bs-btn-active-bg:            var(--sr-verde-oscuro);
-    --bs-btn-active-border-color:  var(--sr-verde-oscuro);
-    --bs-btn-disabled-bg:          var(--sr-verde);
-    --bs-btn-disabled-border-color: var(--sr-verde);
-    --bs-btn-focus-shadow-rgb:     0, 107, 43;
+html { scroll-behavior: smooth; }
+body {
+    color: var(--sr-ink);
+    background: var(--sr-cream) !important;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    letter-spacing: 0;
 }
-
-.btn-outline-primary {
-    --bs-btn-color:               var(--sr-verde);
-    --bs-btn-border-color:        var(--sr-verde);
-    --bs-btn-hover-bg:            var(--sr-verde);
-    --bs-btn-hover-border-color:  var(--sr-verde);
-    --bs-btn-active-bg:           var(--sr-verde-oscuro);
-    --bs-btn-active-border-color: var(--sr-verde-oscuro);
-    --bs-btn-focus-shadow-rgb:    0, 107, 43;
+h1, h2, h3, h4, h5, h6, .display-5 {
+    color: var(--sr-ink);
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: 0;
 }
+a { color: var(--sr-accent-dark); text-underline-offset: 3px; }
+img { max-width: 100%; }
+.container { max-width: 1180px; }
 
-/* Alias usados en la portada; se conservan por compatibilidad. */
-.btn-sr { background-color: var(--sr-verde); border-color: var(--sr-verde); color: #fff; }
-.btn-sr:hover, .btn-sr:focus { background-color: var(--sr-verde-oscuro); border-color: var(--sr-verde-oscuro); color: #fff; }
-.texto-sr { color: var(--sr-verde) !important; }
-.fondo-sr { background-color: var(--sr-verde) !important; }
-
-/* --- Formularios ---------------------------------------------------------- */
-/* Bootstrap trae el foco azul con el color escrito a mano, no como variable,
-   asi que hay que redefinir la regla completa. */
-
-.form-control:focus,
-.form-select:focus {
-    border-color: #61a37f;
-    box-shadow: 0 0 0 .25rem rgba(0, 107, 43, .18);
-}
-
-.form-check-input:checked {
-    background-color: var(--sr-verde);
-    border-color: var(--sr-verde);
-}
-
-.form-check-input:focus {
-    border-color: #61a37f;
-    box-shadow: 0 0 0 .25rem rgba(0, 107, 43, .18);
-}
-
-/* --- Enlaces y foco visible ----------------------------------------------- */
-
-a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
-
-:focus-visible {
-    outline: 2px solid var(--sr-verde);
-    outline-offset: 2px;
-}
-
-/* --- Barra de navegacion ---------------------------------------------------
-   El logo real (img/logo-icono.png) es el arbol de la marca sin fondo ni
-   texto: el nombre "Santander Raiz" se pone aparte, en HTML, para que siga
-   siendo texto real (buscable, accesible) en vez de quedar quemado dentro de
-   la imagen. El fondo de la barra usa el carbon de la marca en vez del gris
-   generico de Bootstrap, y los enlaces tienen su propia forma de pastilla en
-   vez del subrayado por defecto. */
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: var(--sr-cream); }
+::-webkit-scrollbar-thumb { background: #a9aaa1; border-radius: 5px; }
+:focus-visible { outline: 2px solid var(--sr-accent); outline-offset: 3px; }
 
 .sr-navbar {
-    background-color: var(--sr-carbon) !important;
+    background: rgba(23, 35, 43, .97) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    box-shadow: 0 10px 30px rgba(23, 35, 43, .12) !important;
 }
-
+.sr-navbar .container { min-height: 76px; }
 .sr-navbar .navbar-brand {
-    display: flex;
-    align-items: center;
-    gap: .55rem;
+    display: flex; align-items: center; gap: .65rem; color: #fff;
+    font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem;
 }
-
-.sr-navbar .navbar-brand img {
-    height: 34px;
-    width: auto;
-}
-
+.sr-navbar .navbar-brand img { width: 35px; height: 35px; object-fit: contain; }
 .sr-navbar .nav-link {
-    border-radius: 999px;
-    padding: .45rem 1rem !important;
-    transition: background-color .15s ease, color .15s ease;
+    color: rgba(255, 255, 255, .7) !important; border-radius: 8px;
+    padding: .55rem .8rem !important; font-size: .86rem; font-weight: 600;
+    transition: color .2s ease, background-color .2s ease;
 }
+.sr-navbar .nav-link:hover, .sr-navbar .nav-link:focus { color: #fff !important; background: rgba(255, 255, 255, .08); }
+.sr-navbar .btn-outline-light { border-color: rgba(255, 255, 255, .3); }
+.sr-navbar .btn-primary, .sr-navbar .btn-outline-light { border-radius: 8px !important; }
+.sr-navbar-usuario { border: 1px solid var(--sr-line-dark); border-radius: 8px; padding: .3rem .75rem .3rem .35rem; }
+.sr-navbar-avatar { width: 31px; height: 31px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff; background: var(--sr-accent); }
 
-.sr-navbar .nav-link:hover,
-.sr-navbar .nav-link:focus {
-    background-color: rgba(255, 255, 255, .08);
-    color: #fff !important;
+.card { background: var(--sr-paper); border: 1px solid var(--sr-line) !important; border-radius: var(--sr-radius) !important; box-shadow: none; }
+.card.shadow-sm, .card.shadow-lg, .shadow-sm, .shadow-lg { box-shadow: var(--sr-shadow) !important; }
+.card-header, .card-footer { background: transparent !important; border-color: var(--sr-line); }
+.form-control, .form-select { min-height: 48px; color: var(--sr-ink); background-color: var(--sr-paper); border: 1px solid var(--sr-line); border-radius: 8px; font-size: .9rem; }
+.form-control::placeholder { color: #9a9f9d; }
+.form-control:focus, .form-select:focus { border-color: var(--sr-accent); box-shadow: 0 0 0 .22rem rgba(198, 107, 77, .14); }
+.input-group-text { border-color: var(--sr-line); color: var(--sr-ink-soft) !important; background: #f2efe9 !important; }
+.form-label { color: var(--sr-ink-soft); font-size: .78rem; letter-spacing: .02em; }
+.btn { border-radius: 8px; font-weight: 600; transition: transform .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn-primary, .btn-sr { color: #fff; background: var(--sr-accent); border-color: var(--sr-accent); box-shadow: 0 8px 18px rgba(198, 107, 77, .18); }
+.btn-primary:hover, .btn-primary:focus, .btn-sr:hover, .btn-sr:focus { color: #fff; background: var(--sr-accent-dark); border-color: var(--sr-accent-dark); }
+.btn-outline-primary { color: var(--sr-accent-dark); border-color: rgba(168, 81, 56, .4); }
+.btn-outline-primary:hover { color: #fff; background: var(--sr-accent); border-color: var(--sr-accent); }
+.btn-outline-secondary { color: var(--sr-ink-soft); border-color: var(--sr-line); }
+.btn-outline-secondary:hover { color: var(--sr-ink); background: #ece8e0; border-color: #c9c5bd; }
+.badge { font-family: 'DM Sans', sans-serif; font-weight: 600; letter-spacing: .03em; }
+.fondo-sr { color: #fff; background: var(--sr-accent) !important; }
+.texto-sr { color: var(--sr-accent-dark) !important; }
+.fondo-sr, .sr-badge-rol { border-radius: 5px; }
+
+.sr-hero { min-height: 510px; border-radius: 0 !important; margin: 0 -12px; padding: 2rem max(2rem, calc((100vw - 1156px) / 2)); background-image: linear-gradient(90deg, rgba(23, 35, 43, .83), rgba(23, 35, 43, .25)), url('../img/bucaramanga.jpg'); background-size: cover; background-position: center; }
+.sr-hero h1, .sr-hero .display-5 { color: #fff; font-size: clamp(2.6rem, 5vw, 4.8rem); line-height: 1.02; max-width: 650px; }
+.sr-hero p { color: rgba(255, 255, 255, .78) !important; }
+.sr-hero .btn-sr { background: var(--sr-accent); }
+.sr-portada { height: 225px; object-fit: cover; border-radius: 9px 9px 0 0; }
+.sr-tarjeta { overflow: hidden; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.sr-tarjeta:hover { transform: translateY(-4px); border-color: rgba(198, 107, 77, .5) !important; box-shadow: 0 20px 40px rgba(23, 35, 43, .12) !important; }
+.sr-tarjeta .card-body { padding: 1.35rem; }
+.sr-tarjeta .fs-5 { color: var(--sr-ink); font-family: 'DM Sans', sans-serif; }
+.sr-tarjeta .list-inline { border-color: var(--sr-line) !important; }
+.sr-tarjeta .list-inline i, .sr-modulo-icono { color: var(--sr-accent-dark); }
+.sr-tarjeta .card-footer { padding: 0 1.35rem 1.35rem; }
+.sr-promo { background: var(--sr-ink); border-radius: 12px !important; box-shadow: var(--sr-shadow); }
+.sr-promo-caja { border: 1px solid rgba(255, 255, 255, .15); border-radius: 8px; background: rgba(255, 255, 255, .045); }
+.sr-promo-logo { max-width: 220px; }
+.sr-dorado-icono { width: 52px; height: 52px; border: 1px solid #d6ac75; border-radius: 50%; color: #d6ac75; display: inline-flex; align-items: center; justify-content: center; }
+.btn-dorado { color: var(--sr-ink); background: #d6ac75; border-color: #d6ac75; }
+
+.sr-marca-icono, .sr-marca-icono-sm { background: var(--sr-accent-soft); color: var(--sr-accent-dark); border: 1px solid rgba(198, 107, 77, .18); }
+.sr-marca-icono { width: 56px; height: 56px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1.6rem; }
+.sr-marca-icono-sm { width: 48px; height: 48px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.sr-stat.card, .sr-modulo-tarjeta { border-color: var(--sr-line) !important; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.sr-stat.card:hover, a.sr-modulo:hover .sr-modulo-tarjeta { transform: translateY(-3px); border-color: rgba(198, 107, 77, .42) !important; box-shadow: var(--sr-shadow) !important; }
+.sr-stat-icono, .sr-modulo-icono { width: 42px; height: 42px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.sr-icono-verde { background: #e7eee8; color: #526c59; }
+.sr-icono-violeta { background: #eee9f1; color: #755a7d; }
+.sr-icono-ambar { background: #f5eddf; color: #a2743f; }
+.sr-icono-azul { background: #e5edf0; color: #4f7180; }
+.sr-icono-rosa { background: #f5e7e6; color: #a45e5b; }
+.sr-icono-gris { background: #ecebe7; color: #68716f; }
+.sr-stat-icono.sr-stat-alerta { background: #f5e2dc !important; color: var(--sr-accent-dark) !important; }
+.sr-eyebrow { color: var(--sr-accent-dark); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.sr-modulo { color: inherit; display: block; height: 100%; text-decoration: none; }
+.sr-modulo-flecha { color: #a6aaa6; transition: transform .2s ease, color .2s ease; }
+.sr-modulo:hover .sr-modulo-flecha { color: var(--sr-accent); transform: translateX(3px); }
+.sr-badge-rol { display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .7rem; font-size: .74rem; font-weight: 700; }
+.sr-badge-rol .sr-punto { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.sr-badge-rol.rol-admin { color: #a44d4d; background: #f5e4e1; }
+.sr-badge-rol.rol-inmobiliaria { color: #4c6e79; background: #e3edf0; }
+.sr-badge-rol.rol-cliente { color: #55705a; background: #e4ede5; }
+.sr-badge-rol.rol-visitante { color: #68716f; background: #ecebe7; }
+.table { --bs-table-bg: transparent; --bs-table-hover-bg: #faf7f1; color: var(--sr-ink); }
+.table thead th { background: #f0ede6; border-bottom: 1px solid var(--sr-line); color: var(--sr-ink-soft); font-size: .73rem; letter-spacing: .06em; text-transform: uppercase; }
+.table td, .table th { border-color: var(--sr-line); padding: .9rem .85rem; }
+
+.sr-acceso { border-top: 3px solid var(--sr-accent) !important; }
+.sr-demo { color: var(--sr-ink-soft); background: var(--sr-accent-soft); border: 1px solid rgba(198, 107, 77, .18); border-radius: 8px !important; }
+.sr-demo code { color: var(--sr-accent-dark); background: rgba(255, 255, 255, .62); padding: .1rem .35rem; border-radius: 4px; }
+.sr-separador { display: flex; align-items: center; gap: .75rem; color: #8b918d; font-size: .78rem; }
+.sr-separador::before, .sr-separador::after { content: ''; flex: 1; height: 1px; background: var(--sr-line); }
+.sr-auth-shell { display: grid; grid-template-columns: minmax(280px, .85fr) minmax(380px, 1.15fr); max-width: 980px; min-height: 620px; margin: 1.5rem auto; overflow: hidden; border: 1px solid var(--sr-line); border-radius: 12px; background: var(--sr-paper); box-shadow: var(--sr-shadow); }
+.sr-auth-shell > .row { align-items: center; width: 100%; margin: 0; padding: 2rem 1.5rem; }
+.sr-auth-form-column > [class*='col-'] { width: 100%; max-width: 520px; padding-right: 0; padding-left: 0; }
+.sr-auth-form-column .card { border-top-width: 0 !important; box-shadow: 0 10px 30px rgba(23, 35, 43, .06) !important; }
+.sr-auth-visual { display: flex; min-height: 100%; flex-direction: column; justify-content: flex-end; padding: 2.5rem; color: #fff; background-image: linear-gradient(180deg, rgba(23, 35, 43, .08), rgba(23, 35, 43, .86)), url('../img/bucaramanga.jpg'); background-size: cover; background-position: center; }
+.sr-auth-kicker { color: #e2b58c; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.sr-auth-visual blockquote { max-width: 320px; margin: .9rem 0 1.5rem; color: #fff; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.15; }
+.sr-auth-location { color: rgba(255, 255, 255, .76); font-size: .82rem; }
+
+.sr-client-stats .col-sm-4 { display: flex; }
+.sr-client-stat-card { width: 100%; min-height: 118px; }
+.sr-client-stat-card .card-body { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.35rem; }
+.sr-client-stat-content { min-width: 0; }
+.sr-client-stat-content .text-uppercase { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sr-client-stat-content .h3 { color: var(--sr-ink); font-family: 'DM Sans', sans-serif; font-size: 1.85rem; }
+.sr-client-stat-card .sr-stat-icono { width: 48px; height: 48px; border-radius: 12px; font-size: 1.2rem; }
+.sr-client-profile-card .card-body { padding: 1.5rem; }
+.sr-client-profile-card dl { margin-top: 1.25rem; }
+.sr-client-profile-card dt, .sr-client-profile-card dd { padding-top: .65rem; padding-bottom: .65rem; border-bottom: 1px solid var(--sr-line); }
+.sr-client-profile-card dd { margin-bottom: 0; }
+.sr-client-search-card { background: var(--sr-ink); color: #fff; border-color: var(--sr-ink) !important; }
+.sr-client-search-card .sr-modulo-icono { background: rgba(255, 255, 255, .1); color: #e2b58c; }
+.sr-client-search-card .sr-modulo-flecha { color: rgba(255, 255, 255, .55); }
+.sr-client-search-card .fw-semibold { color: #fff; font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem; }
+.sr-client-search-card p { color: rgba(255, 255, 255, .68) !important; }
+
+@media (max-width: 767.98px) {
+    .sr-navbar .container { min-height: 68px; }
+    .sr-hero { min-height: 580px; margin: 0 -12px; padding: 1.5rem; }
+    .sr-hero h1 { font-size: 2.75rem; }
+    .sr-portada { height: 200px; }
+    main.container { padding-top: 2rem !important; }
+    .sr-auth-shell { display: block; min-height: auto; margin: 0 auto; }
+    .sr-auth-visual { min-height: 240px; padding: 1.75rem; }
+    .sr-auth-visual blockquote { margin-bottom: .75rem; font-size: 1.8rem; }
+    .sr-auth-shell > .row { padding: 1rem .75rem; }
+    .sr-client-stats .col-sm-4 { width: 100%; }
+    .sr-client-stat-card { min-height: 96px; }
 }
-
-/* Agrupa avatar + nombre + rol como una sola pieza, en vez de tres
-   elementos sueltos flotando en la barra. */
-.sr-navbar-usuario {
-    background-color: rgba(255, 255, 255, .06);
-    border: 1px solid rgba(255, 255, 255, .1);
-    border-radius: 999px;
-    padding: .3rem 1rem .3rem .3rem;
-}
-
-.sr-navbar-avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background-color: rgba(0, 107, 43, .55);
-    color: #fff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    flex-shrink: 0;
-}
-
-.sr-badge-rol-sm {
-    padding: .15rem .55rem;
-    font-size: .68rem;
-}
-
-/* --- Bloque promocional "Por que elegirnos" --------------------------------
-   Es la unica seccion del sitio con esta identidad (fondo oscuro, dorado):
-   se usa a proposito para que destaque como una pieza de campana dentro de
-   la landing, en vez de mezclarse con el resto de tarjetas claras. */
-
-.sr-promo {
-    position: relative;
-    background-color: var(--sr-verde-oscuro);
-    background-image:
-        linear-gradient(180deg, rgba(0, 0, 0, .12), rgba(0, 0, 0, .32)),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='130' viewBox='0 0 400 130'%3E%3Cg fill='none' stroke='white' stroke-opacity='0.09' stroke-width='2'%3E%3Crect x='8' y='50' width='38' height='80'/%3E%3Crect x='56' y='68' width='28' height='62'/%3E%3Crect x='96' y='30' width='34' height='100'/%3E%3Crect x='140' y='62' width='26' height='68'/%3E%3Crect x='178' y='42' width='44' height='88'/%3E%3Crect x='234' y='72' width='28' height='58'/%3E%3Crect x='274' y='24' width='36' height='106'/%3E%3Crect x='322' y='56' width='30' height='74'/%3E%3Crect x='364' y='38' width='28' height='92'/%3E%3C/g%3E%3C/svg%3E");
-    background-repeat: repeat-x;
-    background-position: bottom center;
-}
-
-.sr-promo-logo {
-    max-width: 240px;
-}
-
-.sr-promo-caja {
-    border: 1px solid rgba(201, 166, 104, .45);
-    border-radius: .75rem;
-    background-color: rgba(255, 255, 255, .04);
-}
-
-.sr-dorado-icono {
-    width: 60px;
-    height: 60px;
-    border: 2px solid var(--sr-dorado);
-    border-radius: 50%;
-    color: var(--sr-dorado);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin: 0 auto;
-}
-
-.btn-dorado {
-    background-color: var(--sr-dorado);
-    border-color: var(--sr-dorado);
-    color: var(--sr-carbon);
-    font-weight: 600;
-}
-
-.btn-dorado:hover,
-.btn-dorado:focus {
-    background-color: var(--sr-dorado-oscuro);
-    border-color: var(--sr-dorado-oscuro);
-    color: var(--sr-carbon);
-}
-
-/* Anclas como #contacto saltan con una transicion suave en vez de un salto seco. */
-html {
-    scroll-behavior: smooth;
-}
-
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-}
-
-/* --- Portada -------------------------------------------------------------- */
-
-.sr-hero {
-    position: relative;
-    min-height: 460px;
-    background-image: linear-gradient(90deg, rgba(0, 0, 0, .72), rgba(0, 0, 0, .30)),
-                      url('../img/bucaramanga.jpg');
-    background-size: cover;
-    background-position: center;
-}
-
-.sr-portada { height: 220px; object-fit: cover; }
-
-.sr-tarjeta { transition: transform .25s ease, box-shadow .25s ease; }
-.sr-tarjeta:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .12) !important;
-}
-
-/* --- Paginas de acceso (login y registro) --------------------------------- */
-
-.sr-acceso {
-    /* Franja verde superior: identifica la tarjeta como zona de la marca. */
-    border-top: 4px solid var(--sr-verde) !important;
-}
-
-.sr-marca-icono {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background-color: var(--sr-verde-claro);
-    color: var(--sr-verde);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.75rem;
-}
-
-.sr-demo {
-    background-color: var(--sr-verde-claro);
-    border: 1px solid rgba(0, 107, 43, .18);
-}
-
-.sr-demo code {
-    color: var(--sr-verde-oscuro);
-    background-color: rgba(255, 255, 255, .65);
-    padding: .05em .35em;
-    border-radius: 3px;
-}
-
-.sr-separador {
-    display: flex;
-    align-items: center;
-    gap: .75rem;
-    color: #8a9a91;
-    font-size: .8rem;
-}
-.sr-separador::before,
-.sr-separador::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background-color: #dde5e0;
-}
-
-/* --- Paneles (admin, agente, cliente) --------------------------------------
-   Los tres paneles comparten el mismo lenguaje visual: un encabezado con
-   icono de marca, tarjetas de cifras con icono (en rojo cuando el numero
-   pide atencion, como "citas pendientes"), y los modulos como tarjetas
-   clicables en vez de una fila de botones que se amontona en el celular. */
-
-.sr-marca-icono-sm {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: #fff;
-    color: var(--sr-verde);
-    border: 1px solid #e5e9e7;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    flex-shrink: 0;
-}
-
-/* --- Iconos por categoria -----------------------------------------------
-   Cada tipo de cifra o modulo tiene su propio color (personas, tiempo,
-   documentos...), en vez de repetir el verde de la marca en todos lados.
-   Un vistazo a la fila de cifras ya distingue de que se trata cada una. */
-
-.sr-icono-verde   { background-color: var(--sr-verde-claro); color: var(--sr-verde); }
-.sr-icono-violeta { background-color: #f3e8ff; color: #7c3aed; }
-.sr-icono-ambar   { background-color: #fef3e2; color: #b45309; }
-.sr-icono-azul    { background-color: #e0edff; color: #1d4ed8; }
-.sr-icono-rosa    { background-color: #fde7ef; color: #db2777; }
-.sr-icono-gris    { background-color: #eef1f4; color: #52606d; }
-
-/* --- Cifras (tarjetas de resumen) ------------------------------------- */
-
-a.sr-stat {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.sr-stat.card { transition: transform .2s ease, box-shadow .2s ease; }
-.sr-stat.card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .10) !important;
-}
-
-.sr-stat-icono {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-}
-
-/* Cuando la cifra pide atencion (citas o solicitudes pendientes) se fuerza
-   el color de alerta encima del que le toque por categoria. */
-.sr-stat-icono.sr-stat-alerta {
-    background-color: #fdecea !important;
-    color: #b3261e !important;
-}
-
-/* --- Etiqueta pequena antes de una grilla de modulos ------------------- */
-
-.sr-eyebrow {
-    font-size: .72rem;
-    font-weight: 600;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    color: #8a94a6;
-}
-
-/* --- Modulos (tarjetas clicables con flecha) ---------------------------- */
-
-a.sr-modulo {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    height: 100%;
-}
-
-.sr-modulo-tarjeta {
-    border: 1px solid #e9ecef !important;
-    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-}
-
-a.sr-modulo:hover .sr-modulo-tarjeta {
-    transform: translateY(-3px);
-    box-shadow: 0 .75rem 1.25rem rgba(0, 0, 0, .10) !important;
-    border-color: var(--sr-verde) !important;
-}
-
-.sr-modulo-icono {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-}
-
-.sr-modulo-flecha {
-    color: #c1c9d2;
-    transition: transform .2s ease, color .2s ease;
-}
-
-a.sr-modulo:hover .sr-modulo-flecha {
-    transform: translateX(3px);
-    color: var(--sr-verde);
-}
-
-/* --- Insignia de rol (punto de color + texto, en vez del badge solido) - */
-
-.sr-badge-rol {
-    display: inline-flex;
-    align-items: center;
-    gap: .4rem;
-    padding: .3rem .7rem;
-    border-radius: 999px;
-    font-size: .78rem;
-    font-weight: 600;
-}
-
-.sr-badge-rol .sr-punto {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: currentColor;
-    flex-shrink: 0;
-}
-
-.sr-badge-rol.rol-admin         { background-color: #fde2e2; color: #dc2626; }
-.sr-badge-rol.rol-inmobiliaria  { background-color: #dbeafe; color: #2563eb; }
-.sr-badge-rol.rol-cliente       { background-color: #dcfce7; color: #16a34a; }
-.sr-badge-rol.rol-visitante     { background-color: #eef1f4; color: #52606d; }
-
-/* --- Lista "por rol", con el mismo punto de color ----------------------- */
-
-.sr-punto-rol {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: .5rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .sr-tarjeta { transition: none; }
-    .sr-tarjeta:hover { transform: none; }
-    .sr-stat.card { transition: none; }
-    .sr-stat.card:hover { transform: none; }
-    .sr-modulo-tarjeta { transition: none; }
-    a.sr-modulo:hover .sr-modulo-tarjeta { transform: none; }
-    .sr-modulo-flecha { transition: none; }
-    a.sr-modulo:hover .sr-modulo-flecha { transform: none; }
+    .btn, .sr-tarjeta, .sr-stat.card, .sr-modulo-tarjeta, .sr-modulo-flecha { transition: none; }
 }
