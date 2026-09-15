@@ -129,6 +129,11 @@ modifican filas las restauran al terminar.
 - **Subida real de fotos.** La galería deja de escoger entre cuatro imágenes
   fijas y sube archivos de verdad. El archivo se guarda con un nombre generado
   (UUID), nunca con el que envía el navegador.
+- **Subida real de documentos.** El cliente sube el PDF, JPG o PNG de cada
+  documento en vez de escribir dónde encontrarlo. Como son datos personales, no
+  van a una carpeta pública: se guardan en `WEB-INF/documentos` y solo los
+  entrega el servlet al cliente dueño o al agente de la agencia. Antes de
+  guardarlos se revisan los primeros bytes del archivo, no solo la extensión.
 - **Diagrama de casos de uso** (`bd/casos-de-uso.png`) y **tablero Padlet**
   (`docs/padlet.md`), los dos entregables pendientes del enunciado.
 - **Interfaz.** Sistema de diseño común para los tres paneles, navbar con el
@@ -148,6 +153,12 @@ modifican filas las restauran al terminar.
 | Agente de otra agencia sube una foto a un inmueble ajeno | **403** |
 | Reportes y auditoría como cliente o agente | **403** |
 | Suite de pruebas, tres veces seguidas | 33/33 cada vez, y la base queda igual |
+| Subir un PDF a una solicitud y abrirlo | Se descarga con el contenido idéntico |
+| Abrir el archivo por su ruta directa en `WEB-INF` | **404** |
+| Otro cliente o un agente de otra agencia abre el documento | **403** |
+| Subir un `.exe` renombrado a `.pdf` | Rechazado: el contenido no corresponde a un PDF |
+| Subir o retirar documentos de una solicitud ya aprobada | Bloqueado |
+| Retirar un documento que la agencia ya aceptó | Bloqueado; el archivo y la fila se conservan |
 
 ---
 
@@ -173,7 +184,9 @@ modifican filas las restauran al terminar.
   ocultaba los botones de una solicitud resuelta, pero el servlet no lo
   comprobaba: cambiando un parámetro, una solicitud aprobada se podía rechazar.
   Se detectó y corrigió antes del commit, pero es el mismo tipo de error que el
-  filtro por rol ya había enseñado en el Sprint 2.
+  filtro por rol ya había enseñado en el Sprint 2. Y **volvió a aparecer** del
+  lado del cliente: agregar o retirar documentos de una solicitud resuelta solo
+  lo impedía la vista. Se encontró al implementar la subida de documentos.
 - **Un defecto de datos que venía del Sprint 2.** El parseo de números trataba
   el punto siempre como separador de miles, y un `input type="number"` lo envía
   como decimal: un área de 120,5 m² se guardaba como 1 205.
@@ -198,7 +211,6 @@ modifican filas las restauran al terminar.
 | Asunto | Impacto | Prioridad |
 |--------|---------|-----------|
 | HU-21: despliegue en línea | Puntos adicionales del enunciado | Alta |
-| Subida real de documentos en las solicitudes | Hoy se indica el nombre y la ubicación del documento, no se sube el archivo | Media |
 | Pruebas de `CitaDAO` y `SolicitudDAO` | Las reglas de agenda y de estados finales solo están probadas a mano | Media |
 | Carpeta `inmobiliaria/` duplicada | Sigue en el disco, excluida del control de versiones | Baja |
 

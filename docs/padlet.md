@@ -70,6 +70,7 @@ Empezar vacía. Aquí van las historias terminadas pero sin probar del todo.
 | **HU-13 · Consultar auditoría** | Bitácora de accesos y cambios con filtro por acción y por correo, limitada a 200 filas. Solo administrador. Sprint 3 · 3 pts ✅ |
 | **HU-20 · Pruebas unitarias** | 33 pruebas con JUnit 5: escape anti-XSS, cifrado PBKDF2 y la capa de datos contra la base real. La suite deja la base igual a como estaba. Sprint 3 · 5 pts ✅ |
 | **Deuda técnica · Subida real de fotos** | La galería sube archivos de verdad (máx. 5 MB, solo imágenes) con nombre generado por UUID, nunca el que trae el navegador. Sprint 3 ✅ |
+| **Deuda técnica · Subida real de documentos** | El cliente sube el PDF, JPG o PNG de cada documento. Quedan fuera del alcance de una URL directa: solo los abren el cliente dueño y el agente de la agencia. Sprint 3 ✅ |
 
 ---
 

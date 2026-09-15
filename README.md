@@ -1,7 +1,8 @@
 # Santander Raíz — Sistema web de inmobiliaria
 
 Aplicación web para la administración de una inmobiliaria: catálogo de
-propiedades, usuarios con roles diferenciados, citas y solicitudes.
+propiedades, usuarios con roles diferenciados, visitas, solicitudes de compra o
+arriendo con sus documentos, favoritos, reportes y auditoría.
 
 Proyecto académico de **Programación Java** — Unidades Tecnológicas de Santander.
 
@@ -13,9 +14,20 @@ Proyecto académico de **Programación Java** — Unidades Tecnológicas de Sant
 |--------|---------|--------|
 | **1 — Cimientos y acceso** | Modelo de datos, conexión JDBC, landing, registro, login y control de acceso por rol | ✅ Completo |
 | **2 — Núcleo del negocio** | CRUD de propiedades con imágenes (1:N) y características (N:M), ficha de detalle, buscador, perfil (1:1), usuarios y roles | ✅ Completo |
-| **3 — Operación y cierre** | Citas, solicitudes, documentos, favoritos, reportes, pruebas y despliegue | ⬜ Pendiente |
+| **3 — Operación y cierre** | Citas, solicitudes con subida de documentos, favoritos, reportes con agregación, auditoría y pruebas unitarias | ✅ Completo |
+| | Despliegue en línea (puntos adicionales) | ⬜ Pendiente |
 
-Documentación Scrum en [docs/](docs/).
+Planning, review y retrospectiva de cada sprint en [docs/](docs/); ver
+[Documentación del proyecto](#documentación-del-proyecto).
+
+## Qué puede hacer cada rol
+
+| Rol | Funciones |
+|-----|-----------|
+| **Visitante** | Ver la portada, buscar en el catálogo con filtros y abrir la ficha de cada inmueble. Registrarse. |
+| **Cliente** | Todo lo anterior, más: guardar favoritos, agendar visitas, radicar solicitudes de compra o arriendo, subir sus documentos y seguir el estado. Editar su perfil. |
+| **Inmobiliaria** (agente) | Publicar, editar y dar de baja los inmuebles de su agencia, con fotos y características. Confirmar o cancelar visitas. Revisar documentos y aprobar o rechazar solicitudes. |
+| **Administrador** | Asignar roles, activar e inactivar cuentas, administrar ciudades y características, consultar reportes y la auditoría. |
 
 ---
 
@@ -29,6 +41,7 @@ Documentación Scrum en [docs/](docs/).
 | Datos | JDBC sobre MySQL 8 / MariaDB |
 | Frontend | Bootstrap 5, HTML5, CSS3, JavaScript |
 | Cifrado | PBKDF2-HMAC-SHA256 (incluido en el JDK) |
+| Pruebas | JUnit 5 (*console standalone*, sin Maven ni Gradle) |
 
 ---
 
@@ -136,6 +149,13 @@ Todos usan la contraseña **`password`**.
 | `carlos.perez@gmail.com` | CLIENTE | `/panel/cliente.jsp` |
 | `visitante@correo.com` | VISITANTE | `/index.jsp` |
 
+Hay dos agencias más (`agente.sur@sraiz.com`, `agente.metro@sraiz.com`) y seis
+clientes más (`diana.gomez`, `jorge.ruiz`, `laura.mora`, `andres.silva`,
+`paola.leon`, `mateo.castro`, todos `@gmail.com`). Sirven para comprobar que un
+agente no ve lo de otra agencia y que un cliente no ve lo de otro.
+
+Tras cinco intentos fallidos seguidos, la cuenta se bloquea 15 minutos.
+
 ---
 
 ## Configuración de la base de datos
@@ -157,40 +177,59 @@ No hay que recompilar ni tocar código.
 
 ## Estructura
 
+Patrón **MVC**: los servlets reciben la petición y consultan los DAO; las
+vistas solo pintan lo que el servlet les entrega y nunca abren una conexión.
+
 ```
 inmobiliaria/
 ├── src/com/inmobiliaria/
-│   ├── config/      ConexionBD .......... única clase que conoce la URL
-│   ├── util/        PasswordUtil ........ cifrado PBKDF2 con salt
-│   ├── modelo/      Usuario, Perfil, Propiedad, Imagen, Caracteristica
-│   ├── dao/         UsuarioDAO, PropiedadDAO, ImagenDAO, CatalogoDAO,
-│   │                ResumenDAO, AuditoriaDAO
-│   ├── controlador/ Login, Registro, Logout, Catalogo, Propiedad,
-│   │                Perfil, Usuario ..... un controlador por entidad
-│   └── filtro/      AutenticacionFilter . control de acceso por rol
+│   ├── config/      ConexionBD ............ única clase que conoce la URL
+│   ├── util/        PasswordUtil .......... cifrado PBKDF2 con salt
+│   │                Html .................. escape anti-XSS para HTML y JavaScript
+│   │                ArchivoUtil ........... validación y guardado de fotos y documentos
+│   ├── modelo/      Usuario, Perfil, Propiedad, Imagen, Caracteristica, Cita,
+│   │                Solicitud, DocumentoSolicitud, ResumenCiudad, RegistroAuditoria
+│   ├── dao/         UsuarioDAO, PropiedadDAO, ImagenDAO, CatalogoDAO, CitaDAO,
+│   │                FavoritoDAO, SolicitudDAO, ReporteDAO, ResumenDAO, AuditoriaDAO
+│   ├── controlador/ 15 servlets ........... ver la tabla de rutas
+│   └── filtro/      AutenticacionFilter ... control de acceso por rol
+├── test/            pruebas JUnit 5 de util/ y dao/
 ├── WEB-INF/
 │   ├── web.xml
 │   ├── jspf/        cabecera.jspf, pie.jspf
-│   └── vistas/      vistas MVC, no accesibles por URL directa
+│   ├── vistas/      18 vistas MVC, no accesibles por URL directa
+│   └── documentos/  archivos de las solicitudes (se crea sola, no se versiona)
 ├── panel/           admin.jsp, inmobiliaria.jsp, cliente.jsp
-├── css/             santander-raiz.css ... identidad de la marca
-├── sql/             esquema, datos, consultas y diccionario
-├── bd/              MER y modelo relacional
-└── docs/            documentación Scrum
+├── img/propiedades/ fotos subidas por los agentes (no se versionan)
+├── css/             santander-raiz.css ..... identidad de la marca
+├── lib/             JUnit 5 console standalone
+├── sql/             esquema, datos, consultas y diccionario de datos
+├── bd/              MER, modelo relacional y casos de uso
+└── docs/            documentación Scrum y tablero Padlet
 ```
 
 ## Rutas
 
 | Ruta | Quién entra | Qué hace |
 |------|-------------|----------|
-| `/index.jsp` | Todos | Portada con buscador y destacadas |
-| `/catalogo` | Todos | Listado con filtros |
-| `/catalogo?id=N` | Todos | Ficha de detalle con galería y características |
+| `/index.jsp` | Todos | Portada con buscador, destacadas y contacto |
+| `/catalogo` | Todos | Listado con filtros por ciudad, tipo y precio |
+| `/catalogo?id=N` | Todos | Ficha de detalle con galería, características y similares |
 | `/login`, `/registro`, `/logout` | Todos | Autenticación |
-| `/panel/perfil` | Autenticados | Datos personales y contraseña (1:1) |
+| `/panel/perfil` | Autenticados | Datos personales (1:1) y contraseña |
 | `/panel/cliente.jsp` | CLIENTE | Su panel |
+| `/panel/cliente/favoritos` | CLIENTE | Favoritos guardados (N:M) |
+| `/panel/cliente/citas` | CLIENTE | Agendar y consultar visitas |
+| `/panel/cliente/solicitudes` | CLIENTE | Radicar solicitudes, subir documentos y seguir el estado |
+| `/panel/inmobiliaria.jsp` | INMOBILIARIA | Su panel |
 | `/panel/inmobiliaria/propiedades` | INMOBILIARIA | CRUD, galería (1:N) y características (N:M) |
+| `/panel/inmobiliaria/citas` | INMOBILIARIA | Confirmar, cancelar o marcar como realizadas las visitas |
+| `/panel/inmobiliaria/solicitudes` | INMOBILIARIA | Evaluar documentos y aprobar o rechazar solicitudes |
+| `/panel/admin.jsp` | ADMIN | Su panel |
 | `/panel/admin/usuarios` | ADMIN | Roles (N:M) y estado de las cuentas |
+| `/panel/admin/catalogos` | ADMIN | Ciudades y características |
+| `/panel/admin/reportes` | ADMIN | Propiedades por ciudad, por estado y cruce de ambos |
+| `/panel/admin/auditoria` | ADMIN | Bitácora de accesos y cambios con filtros |
 
 Cualquier otra combinación de rol y ruta responde **403** desde el servidor.
 
@@ -203,13 +242,18 @@ Cualquier otra combinación de rol y ruta responde **403** desde el servidor.
 | Tipo | Dónde se materializa | Cómo se garantiza |
 |------|----------------------|-------------------|
 | **1:1** | `usuario` ↔ `perfil` | `UNIQUE (perfil.id_usuario)` — sin ese UNIQUE sería 1:N |
-| **1:N** | `inmobiliaria` → `propiedad`, `propiedad` → `imagen_propiedad`, `usuario` → `cita` | La llave foránea vive en el lado "muchos", con `ON DELETE`/`ON UPDATE` justificados |
-| **N:M** | `usuario_rol`, `propiedad_caracteristica` | Tabla intermedia con llave primaria compuesta y atributo propio |
+| **1:N** | `inmobiliaria` → `propiedad`, `propiedad` → `imagen_propiedad`, `usuario` → `cita`, `solicitud` → `documento_solicitud` | La llave foránea vive en el lado "muchos", con `ON DELETE`/`ON UPDATE` justificados |
+| **N:M** | `usuario_rol`, `propiedad_caracteristica`, `favorito` | Tabla intermedia con llave primaria compuesta y atributo propio |
 
-Restricciones `UNIQUE` (el enunciado pide 3, el modelo tiene 7): `usuario.correo`,
+Restricciones `UNIQUE` (el enunciado pide 3, el modelo tiene 10): `usuario.correo`,
 `propiedad.matricula_inmobiliaria`, `perfil.id_usuario`, `perfil.documento`,
-`usuario_rol(id_usuario, id_rol)`, `cita(id_propiedad, fecha_hora)`,
-`inmobiliaria.nit`.
+`cita(id_propiedad, fecha_hora)`, `inmobiliaria.nit`, `ciudad(nombre, departamento)`,
+`tipo_propiedad.nombre`, `caracteristica.nombre` y `rol.nombre`. Las tablas
+puente evitan duplicados con su llave primaria compuesta.
+
+El detalle de cada tabla está en el
+[diccionario de datos](sql/04_diccionario_datos.md), y hay consultas de
+ejemplo con `JOIN` y agregación en [`sql/03_consultas.sql`](sql/03_consultas.sql).
 
 ---
 
@@ -221,9 +265,66 @@ Restricciones `UNIQUE` (el enunciado pide 3, el modelo tiene 7): `usuario.correo
 - **Control de acceso.** `AutenticacionFilter` intercepta todas las peticiones.
   Escribir una URL privada a mano no sirve: la petición pasa por el filtro
   igual. Ocultar un botón en la vista no se considera control de acceso.
+- **Control sobre cada registro.** El filtro protege secciones; los servlets
+  protegen registros. Antes de leer o modificar un inmueble, una cita, una
+  solicitud o un documento se comprueba que sea del usuario en sesión (o de su
+  agencia). Cambiar el id en la URL devuelve **403**.
+- **Reglas de negocio en el servidor.** Una solicitud aprobada o rechazada no
+  se reabre, y un documento ya evaluado no se retira, aunque la petición se
+  arme a mano sin pasar por la vista.
+- **XSS.** Todo texto escrito por una persona se imprime con `Html.esc()` (o
+  `Html.js()` dentro de JavaScript). `PreparedStatement` protege la base de
+  datos, pero no la página.
+- **Archivos subidos.** Se guardan con un nombre generado (UUID), nunca con el
+  que envía el navegador, y con límite de 5 MB. Las fotos son públicas. Los
+  documentos de las solicitudes van a `WEB-INF/documentos`, que Tomcat no sirve
+  por URL. Solo los entrega el servlet al cliente dueño o al agente de la
+  agencia, y antes de guardarlos se revisan los primeros bytes: un ejecutable
+  renombrado a `.pdf` se rechaza.
 - **Inyección SQL.** Toda la capa de datos usa `PreparedStatement` con
   parámetros; nunca se concatena lo que escribe el usuario dentro del SQL.
+- **Auditoría.** Inicios de sesión (exitosos y fallidos) y cambios relevantes
+  quedan en la tabla `auditoria`, que el administrador consulta desde la
+  aplicación.
 - **Sesiones.** Se invalida la sesión previa al autenticar (evita fijación de
   sesión), la cookie es `HttpOnly` y la sesión expira a los 30 minutos.
 - **Errores.** Las violaciones de `UNIQUE` se traducen a mensajes en castellano;
   el usuario final nunca ve una traza de Java.
+
+---
+
+## Documentación del proyecto
+
+### Scrum
+
+El proyecto se desarrolló en tres sprints de siete días. El Product Owner es el
+docente; cada sprint tiene su Sprint Planning (historias y estimación), su
+Sprint Review (con demostración funcional) y su Sprint Retrospective.
+
+| Documento | Contenido |
+|-----------|-----------|
+| [docs/sprint1.md](docs/sprint1.md) | Cimientos y acceso: 32/32 puntos |
+| [docs/sprint2.md](docs/sprint2.md) | Núcleo del negocio: 39/44 puntos |
+| [docs/sprint3.md](docs/sprint3.md) | Operación y cierre: 37/45 puntos (el despliegue queda pendiente) |
+| [docs/padlet.md](docs/padlet.md) | Contenido y enlace del tablero de seguimiento en Padlet |
+
+El historial de Git acompaña al tablero: cada historia de usuario tiene su
+propio commit, con el número de la HU en el mensaje.
+
+### Modelado
+
+| Archivo | Contenido |
+|---------|-----------|
+| [bd/mer.png](bd/mer.png) | Modelo entidad-relación |
+| [bd/modelo-relacional.png](bd/modelo-relacional.png) | Modelo relacional |
+| [bd/casos-de-uso.png](bd/casos-de-uso.png) | Diagrama de casos de uso |
+| [sql/01_esquema.sql](sql/01_esquema.sql) | Creación de las 16 tablas con sus restricciones |
+| [sql/02_datos.sql](sql/02_datos.sql) | Datos de prueba |
+| [sql/04_diccionario_datos.md](sql/04_diccionario_datos.md) | Diccionario de datos |
+
+### Despliegue
+
+Pendiente. La aplicación ya está preparada para él: la conexión a la base en
+línea se configura en [`src/db.properties`](src/db.properties) (perfil
+`online`) sin tocar código. Ver
+[Configuración de la base de datos](#configuración-de-la-base-de-datos).
