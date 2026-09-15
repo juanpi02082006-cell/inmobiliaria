@@ -30,20 +30,13 @@ Historias que aún no se han empezado.
 
 | Tarjeta | Cuerpo |
 |---|---|
-| **HU-08 · Marcar favoritos** | Como cliente quiero marcar propiedades como favoritas para consultarlas después. Prioridad Media · 3 pts · Sprint 3 |
-| **HU-09 · Agendar cita** | Como cliente quiero solicitar una cita en un horario disponible sin que se crucen las agendas. Prioridad Media · 8 pts · Sprint 3 |
-| **HU-10 · Radicar solicitud** | Como cliente quiero radicar los documentos de compra o arriendo y consultar el estado de mi solicitud. Prioridad Media · 8 pts · Sprint 3 |
-| **HU-11 · Resolver solicitudes** | Como agente quiero aprobar o rechazar las solicitudes y sus documentos. Prioridad Media · 5 pts · Sprint 3 |
-| **HU-12 · Reportes con agregación** | Como administrador quiero un reporte de propiedades por ciudad y estado generado con consultas de agregación. Prioridad Media · 5 pts · Sprint 3 |
-| **HU-13 · Consultar auditoría** | Como administrador quiero consultar la auditoría de accesos y cambios. Prioridad Baja · 3 pts · Sprint 3 |
-| **HU-20 · Pruebas unitarias** | Como equipo queremos pruebas unitarias de la capa de datos y de seguridad. Prioridad Alta · 5 pts · Sprint 3 |
 | **HU-21 · Despliegue en línea** | Como equipo queremos la base de datos y la aplicación en la nube (puntos adicionales). Prioridad Baja · 8 pts · Sprint 3 |
 
 ---
 
 ## Columna 2 — En curso (Sprint 3)
 
-Empezar vacía. A medida que se trabaje, arrastrar aquí la tarjeta correspondiente.
+Vacía por ahora. Cuando se empiece el despliegue, arrastrar aquí la tarjeta HU-21.
 
 ---
 
@@ -69,6 +62,14 @@ Empezar vacía. Aquí van las historias terminadas pero sin probar del todo.
 | **HU-04 · Roles de usuario** | El administrador asigna y revoca roles sobre la tabla puente `usuario_rol`. Sprint 2 · 8 pts ✅ |
 | **HU-18 · Activar e inactivar cuentas** | Una cuenta inactiva no puede iniciar sesión. Tres salvaguardas impiden dejar el sistema sin administrador. Sprint 2 · 3 pts ✅ |
 | **HU-19 · Parametrizar catálogos** | Ciudades y características administrables. Los tipos quedan fijos en los cinco del enunciado. Sprint 2 · 5 pts ✅ |
+| **HU-09 · Agendar cita** | El cliente agenda la visita desde la ficha; la restricción UNIQUE (propiedad, fecha y hora) impide que se crucen las agendas. El agente confirma, cancela o marca como realizada. Sprint 3 · 8 pts ✅ |
+| **HU-08 · Marcar favoritos** | Guardar y quitar favoritos desde la ficha (N:M usuario ↔ propiedad, con fecha como atributo de la tabla puente) y consultarlos en un listado propio. Sprint 3 · 3 pts ✅ |
+| **HU-10 · Radicar solicitud** | El cliente radica una compra o arriendo con sus documentos y consulta el estado. El tipo se deriva de la operación del inmueble: no se puede comprar uno que solo está en arriendo. Sprint 3 · 8 pts ✅ |
+| **HU-11 · Resolver solicitudes** | El agente evalúa cada documento y aprueba o rechaza la solicitud. Una solicitud resuelta queda cerrada: el servidor impide reabrirla con una petición armada a mano. Sprint 3 · 5 pts ✅ |
+| **HU-12 · Reportes con agregación** | Propiedades por ciudad (con precio mínimo, máximo y promedio), por estado y el cruce de ambas, con COUNT, AVG, MIN y MAX y GROUP BY. Solo administrador. Sprint 3 · 5 pts ✅ |
+| **HU-13 · Consultar auditoría** | Bitácora de accesos y cambios con filtro por acción y por correo, limitada a 200 filas. Solo administrador. Sprint 3 · 3 pts ✅ |
+| **HU-20 · Pruebas unitarias** | 33 pruebas con JUnit 5: escape anti-XSS, cifrado PBKDF2 y la capa de datos contra la base real. La suite deja la base igual a como estaba. Sprint 3 · 5 pts ✅ |
+| **Deuda técnica · Subida real de fotos** | La galería sube archivos de verdad (máx. 5 MB, solo imágenes) con nombre generado por UUID, nunca el que trae el navegador. Sprint 3 ✅ |
 
 ---
 
@@ -85,6 +86,7 @@ Son las que evidencian que se siguió el marco de trabajo, no solo que se progra
 | **Sprint 2 — Planning** | 44 puntos comprometidos en 7 historias. Objetivo: núcleo del negocio. |
 | **Sprint 2 — Review** | 39/44 completados. HU-19 no alcanzó y pasó al Sprint 3. |
 | **Sprint 2 — Retrospective** | Las cantidades de características se leían por posición y una casilla sin marcar desalineaba las listas. Acción: diseñar pruebas para el caso torcido, no solo el feliz. |
+| **Sprint 3 — Planning** | 45 puntos comprometidos en 8 historias. Objetivo: visitas, solicitudes, reportes y pruebas unitarias. HU-21 (despliegue) da puntos adicionales. |
 
 ---
 
