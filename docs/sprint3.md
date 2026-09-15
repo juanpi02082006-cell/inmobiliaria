@@ -30,9 +30,13 @@ Al cierre del sprint, los dos módulos que el enunciado dejaba pendientes
 | HU-12 | Como administrador, quiero un reporte de propiedades por ciudad y estado generado con consultas de agregación. | Media | 5 pts | Hecha |
 | HU-13 | Como administrador, quiero consultar la auditoría de accesos y cambios. | Baja | 3 pts | Hecha |
 | HU-20 | Como equipo, queremos pruebas unitarias de la capa de datos y de seguridad. | Alta | 5 pts | Hecha |
-| HU-21 | Como equipo, queremos la base de datos y la aplicación en la nube (puntos adicionales). | Baja | 8 pts | **Pendiente** |
+| HU-21 | Como equipo, queremos la base de datos y la aplicación en la nube (puntos adicionales). | Baja | 8 pts | **Descartada** |
 
-**Comprometido:** 45 puntos. **Completado:** 37. **Pendiente:** 8 (HU-21).
+**Comprometido:** 45 puntos. **Completado:** 37. **Descartado:** 8 (HU-21).
+
+Al cierre del sprint se decidió entregar el proyecto en local con XAMPP y
+retirar HU-21 del alcance: solo daba puntos adicionales y no forma parte de
+ningún módulo obligatorio del enunciado.
 
 Además se cerró **HU-19** (parametrizar ciudades y características, 5 pts),
 arrastrada del Sprint 2, al arrancar el sprint.
@@ -202,7 +206,6 @@ modifican filas las restauran al terminar.
    una historia comprometida sin empezar.
 3. **Extender las pruebas a `CitaDAO` y `SolicitudDAO`**, que concentran las
    reglas más delicadas y hoy no tienen cobertura.
-4. Hacer el despliegue en línea (HU-21).
 
 ---
 
@@ -210,7 +213,6 @@ modifican filas las restauran al terminar.
 
 | Asunto | Impacto | Prioridad |
 |--------|---------|-----------|
-| HU-21: despliegue en línea | Puntos adicionales del enunciado | Alta |
 | Pruebas de `CitaDAO` y `SolicitudDAO` | Las reglas de agenda y de estados finales solo están probadas a mano | Media |
 | Carpeta `inmobiliaria/` duplicada | Sigue en el disco, excluida del control de versiones | Baja |
 
@@ -227,4 +229,4 @@ modifican filas las restauran al terminar.
 | Gestión de visitas y solicitudes | Completo |
 | Reportes | Completo |
 | Pruebas unitarias | Completo |
-| Despliegue en línea | Pendiente |
+| Despliegue en línea | Descartado: se entrega en local con XAMPP |

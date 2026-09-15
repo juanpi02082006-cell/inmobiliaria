@@ -15,7 +15,7 @@ Proyecto académico de **Programación Java** — Unidades Tecnológicas de Sant
 | **1 — Cimientos y acceso** | Modelo de datos, conexión JDBC, landing, registro, login y control de acceso por rol | ✅ Completo |
 | **2 — Núcleo del negocio** | CRUD de propiedades con imágenes (1:N) y características (N:M), ficha de detalle, buscador, perfil (1:1), usuarios y roles | ✅ Completo |
 | **3 — Operación y cierre** | Citas, solicitudes con subida de documentos, favoritos, reportes con agregación, auditoría y pruebas unitarias | ✅ Completo |
-| | Despliegue en línea (puntos adicionales) | ⬜ Pendiente |
+| | Despliegue en línea (puntos adicionales) | ➖ Descartado: se entrega en local con XAMPP |
 
 Planning, review y retrospectiva de cada sprint en [docs/](docs/); ver
 [Documentación del proyecto](#documentación-del-proyecto).
@@ -305,7 +305,7 @@ Sprint Review (con demostración funcional) y su Sprint Retrospective.
 |-----------|-----------|
 | [docs/sprint1.md](docs/sprint1.md) | Cimientos y acceso: 32/32 puntos |
 | [docs/sprint2.md](docs/sprint2.md) | Núcleo del negocio: 39/44 puntos |
-| [docs/sprint3.md](docs/sprint3.md) | Operación y cierre: 37/45 puntos (el despliegue queda pendiente) |
+| [docs/sprint3.md](docs/sprint3.md) | Operación y cierre: 37 puntos completados; HU-21 (despliegue, 8 pts) descartada |
 | [docs/padlet.md](docs/padlet.md) | Contenido y enlace del tablero de seguimiento en Padlet |
 
 El historial de Git acompaña al tablero: cada historia de usuario tiene su
@@ -322,9 +322,12 @@ propio commit, con el número de la HU en el mensaje.
 | [sql/02_datos.sql](sql/02_datos.sql) | Datos de prueba |
 | [sql/04_diccionario_datos.md](sql/04_diccionario_datos.md) | Diccionario de datos |
 
-### Despliegue
+### Entorno de entrega
 
-Pendiente. La aplicación ya está preparada para él: la conexión a la base en
-línea se configura en [`src/db.properties`](src/db.properties) (perfil
-`online`) sin tocar código. Ver
-[Configuración de la base de datos](#configuración-de-la-base-de-datos).
+El proyecto se entrega y se ejecuta **en local con XAMPP** (Tomcat y MySQL);
+no se despliega en ningún servicio en línea. Los pasos están en
+[Puesta en marcha](#puesta-en-marcha).
+
+La historia HU-21 (despliegue en línea), que solo daba puntos adicionales, se
+descartó al cierre del Sprint 3. La conexión sigue siendo configurable desde
+[`src/db.properties`](src/db.properties), como pide el enunciado.

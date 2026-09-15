@@ -30,13 +30,13 @@ Historias que aún no se han empezado.
 
 | Tarjeta | Cuerpo |
 |---|---|
-| **HU-21 · Despliegue en línea** | Como equipo queremos la base de datos y la aplicación en la nube (puntos adicionales). Prioridad Baja · 8 pts · Sprint 3 |
+| **HU-21 · Despliegue en línea** | Como equipo queremos la base de datos y la aplicación en la nube (puntos adicionales). Prioridad Baja · 8 pts · Sprint 3 · ❌ Descartada: el proyecto se entrega en local con XAMPP |
 
 ---
 
 ## Columna 2 — En curso (Sprint 3)
 
-Vacía por ahora. Cuando se empiece el despliegue, arrastrar aquí la tarjeta HU-21.
+Vacía: todas las historias del Sprint 3 quedaron hechas o descartadas.
 
 ---
 
@@ -88,6 +88,7 @@ Son las que evidencian que se siguió el marco de trabajo, no solo que se progra
 | **Sprint 2 — Review** | 39/44 completados. HU-19 no alcanzó y pasó al Sprint 3. |
 | **Sprint 2 — Retrospective** | Las cantidades de características se leían por posición y una casilla sin marcar desalineaba las listas. Acción: diseñar pruebas para el caso torcido, no solo el feliz. |
 | **Sprint 3 — Planning** | 45 puntos comprometidos en 8 historias. Objetivo: visitas, solicitudes, reportes y pruebas unitarias. HU-21 (despliegue) da puntos adicionales. |
+| **Sprint 3 — Ajuste de alcance** | HU-21 (despliegue en línea, 8 pts) se descarta: el proyecto se entrega en local con XAMPP. Resultado: 37 puntos completados, 8 descartados. |
 
 ---
 
