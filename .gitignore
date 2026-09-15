@@ -16,6 +16,12 @@ WEB-INF/lib/*.jar
 img/propiedades/*
 !img/propiedades/.gitkeep
 
+# --- Documentos de las solicitudes -------------------------------------------
+# Cedulas, extractos y certificados que suben los clientes: son datos
+# personales y nunca deben llegar al repositorio. La carpeta la crea
+# ArchivoUtil la primera vez que se sube un documento.
+WEB-INF/documentos/
+
 # --- Sobrante de una version anterior ----------------------------------------
 # Copia vieja del sitio en HTML plano (index.html, login.html y duplicados de
 # css/img/js) dentro de un proyecto que ya se llama "inmobiliaria".

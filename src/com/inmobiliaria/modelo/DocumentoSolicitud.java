@@ -3,14 +3,16 @@ package com.inmobiliaria.modelo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import com.inmobiliaria.util.ArchivoUtil;
+
 /**
  * Documento radicado junto con una solicitud de compra o arriendo (tabla
  * documento_solicitud). Relacion 1:N: una solicitud puede traer varios
  * documentos (cedula, carta laboral, certificado de ingresos...).
  *
- * La subida real de archivos es deuda tecnica pendiente (igual que la
- * galeria de imagenes): por ahora el cliente indica el nombre y la
- * ubicacion del documento en lugar de subir el archivo.
+ * {@code url} es la ruta del archivo subido dentro de
+ * {@link ArchivoUtil#CARPETA_DOCUMENTOS}. Los documentos de los datos de
+ * prueba traen una ruta ficticia y no tienen archivo.
  */
 public class DocumentoSolicitud implements Serializable {
 
@@ -56,6 +58,11 @@ public class DocumentoSolicitud implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    /** ¿Tiene un archivo subido que se pueda abrir? */
+    public boolean tieneArchivo() {
+        return ArchivoUtil.esDocumentoSubido(url);
     }
 
     public String getEstado() {

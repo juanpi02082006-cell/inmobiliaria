@@ -12,8 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import com.inmobiliaria.dao.AuditoriaDAO;
 import com.inmobiliaria.dao.SolicitudDAO;
+import com.inmobiliaria.modelo.DocumentoSolicitud;
 import com.inmobiliaria.modelo.Solicitud;
 import com.inmobiliaria.modelo.Usuario;
+import com.inmobiliaria.util.ArchivoUtil;
 
 /**
  * HU-11: resolver solicitudes (lado del agente).
@@ -43,8 +45,12 @@ public class SolicitudAgenteServlet extends HttpServlet {
         int idSolicitud = entero(peticion.getParameter("id"), 0);
 
         try {
-            if ("ver".equals(valor(peticion.getParameter("accion"))) && idSolicitud > 0) {
+            String accion = valor(peticion.getParameter("accion"));
+            if ("ver".equals(accion) && idSolicitud > 0) {
                 mostrarDetalle(peticion, respuesta, agente, idSolicitud);
+            } else if ("documento".equals(accion) && idSolicitud > 0) {
+                abrirDocumento(peticion, respuesta, agente, idSolicitud,
+                        entero(peticion.getParameter("idDocumento"), 0));
             } else {
                 listar(peticion, respuesta, agente);
             }
@@ -141,6 +147,23 @@ public class SolicitudAgenteServlet extends HttpServlet {
         peticion.setAttribute("solicitud", solicitudDAO.buscarPorId(idSolicitud));
         peticion.setAttribute("titulo", "Solicitud #" + idSolicitud);
         peticion.getRequestDispatcher(VISTA_DETALLE).forward(peticion, respuesta);
+    }
+
+    /** Abre un documento radicado, solo si la solicitud cae sobre una propiedad de su agencia. */
+    private void abrirDocumento(HttpServletRequest peticion, HttpServletResponse respuesta,
+                                Usuario agente, int idSolicitud, int idDocumento)
+            throws ServletException, IOException, SQLException {
+
+        if (!solicitudDAO.perteneceAlAgente(idSolicitud, agente.getId())) {
+            denegar(peticion, respuesta);
+            return;
+        }
+
+        DocumentoSolicitud d = solicitudDAO.buscarDocumento(idDocumento, idSolicitud);
+        if (d == null || !ArchivoUtil.enviarDocumento(getServletContext(), respuesta, d.getUrl(), d.getNombre())) {
+            respuesta.sendRedirect(peticion.getContextPath()
+                    + "/panel/inmobiliaria/solicitudes?accion=ver&id=" + idSolicitud + "&error=sin-archivo");
+        }
     }
 
     private void denegar(HttpServletRequest peticion, HttpServletResponse respuesta)

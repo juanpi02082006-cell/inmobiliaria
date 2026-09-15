@@ -42,7 +42,7 @@
 
 <%  if (!ok.isEmpty()) {
         String texto = "radicada".equals(ok)      ? "Solicitud radicada. Ya puede agregar sus documentos."
-                     : "documento".equals(ok)      ? "Documento agregado."
+                     : "documento".equals(ok)      ? "Documento subido."
                      : "documento-fuera".equals(ok) ? "Documento retirado."
                      : "Operacion realizada.";
 %>
@@ -53,11 +53,22 @@
 <%  } %>
 
 <%  if (!errorParam.isEmpty()) {
-        String texto = "documento".equals(errorParam)      ? "Indique el nombre y la ubicacion del documento."
-                     : "documento-largo".equals(errorParam) ? "El nombre o la ubicacion son demasiado largos."
+        String texto = "documento".equals(errorParam)          ? "Indique que documento esta subiendo."
+                     : "documento-largo".equals(errorParam)     ? "El nombre del documento es demasiado largo."
+                     : "archivo-grande".equals(errorParam)      ? "El documento no puede superar los 5 MB."
+                     : "documento-evaluado".equals(errorParam)  ? "Ese documento ya fue evaluado por la agencia y no se puede retirar."
+                     : "resuelta".equals(errorParam)            ? "La solicitud ya fue resuelta; no admite mas cambios en sus documentos."
+                     : "sin-archivo".equals(errorParam)         ? "Ese documento no tiene un archivo disponible."
                      : "No fue posible completar la operacion.";
 %>
 <div class="alert alert-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i><%= texto %></div>
+<%  } %>
+
+<%-- El motivo por el que se rechazo el archivo lo redacta ArchivoUtil; viaja por la URL, asi que se escapa. --%>
+<%  if (request.getParameter("errorArchivo") != null) { %>
+<div class="alert alert-danger">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i><%= Html.esc(request.getParameter("errorArchivo")) %>
+</div>
 <%  } %>
 
 <div class="row g-4">
@@ -69,26 +80,24 @@
             <div class="card-body">
 
 <%          if (s.esGestionable()) { %>
-                <form class="row g-2 align-items-end mb-4" method="post" action="<%= rutaGestion %>">
-                    <input type="hidden" name="accion" value="documento-agregar">
-                    <input type="hidden" name="idSolicitud" value="<%= s.getId() %>">
+                <%-- accion e idSolicitud van en la URL y no en campos ocultos: si el archivo
+                     pasa del limite, Tomcat descarta el cuerpo y solo la URL sigue llegando. --%>
+                <form class="row g-2 align-items-end mb-4" method="post" enctype="multipart/form-data"
+                      action="<%= rutaGestion %>?accion=documento-agregar&amp;idSolicitud=<%= s.getId() %>">
                     <div class="col-sm-5">
                         <label class="form-label small fw-semibold" for="nombre">Documento</label>
                         <input class="form-control" id="nombre" name="nombre" type="text"
                                maxlength="120" placeholder="Cedula, carta laboral..." required>
                     </div>
                     <div class="col-sm">
-                        <label class="form-label small fw-semibold" for="url">Ubicacion</label>
-                        <input class="form-control" id="url" name="url" type="text"
-                               maxlength="255" placeholder="Ruta o enlace del documento" required>
-                        <div class="form-text">
-                            La subida real de archivos llega mas adelante en el Sprint 3; por
-                            ahora se indica donde encontrar el documento.
-                        </div>
+                        <label class="form-label small fw-semibold" for="archivo">Archivo</label>
+                        <input class="form-control" id="archivo" name="archivo" type="file"
+                               accept="application/pdf,image/jpeg,image/png" required>
+                        <div class="form-text">PDF, JPG o PNG, hasta 5 MB. Solo usted y la agencia pueden verlo.</div>
                     </div>
                     <div class="col-sm-auto">
                         <button class="btn btn-outline-primary" type="submit">
-                            <i class="bi bi-plus-lg me-1"></i>Agregar
+                            <i class="bi bi-upload me-1"></i>Subir
                         </button>
                     </div>
                 </form>
@@ -111,7 +120,14 @@
                             <tr>
                                 <td>
                                     <div class="fw-semibold"><%= Html.esc(d.getNombre()) %></div>
-                                    <div class="text-secondary small"><%= Html.esc(d.getUrl()) %></div>
+<%                  if (d.tieneArchivo()) { %>
+                                    <a class="small" target="_blank" rel="noopener"
+                                       href="<%= rutaGestion %>?accion=documento&amp;id=<%= s.getId() %>&amp;idDocumento=<%= d.getId() %>">
+                                        <i class="bi bi-box-arrow-up-right me-1"></i>Ver archivo
+                                    </a>
+<%                  } else { %>
+                                    <div class="text-secondary small">Sin archivo adjunto</div>
+<%                  } %>
                                 </td>
                                 <td>
                                     <span class="badge <%= "ACEPTADO".equals(d.getEstado()) ? "text-bg-success"

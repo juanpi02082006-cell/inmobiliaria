@@ -56,6 +56,10 @@
 <div class="alert alert-warning">
     <i class="bi bi-exclamation-triangle-fill me-2"></i>Esta solicitud ya fue resuelta; no admite mas cambios.
 </div>
+<%  } else if ("sin-archivo".equals(errorParam)) { %>
+<div class="alert alert-warning">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>Ese documento no tiene un archivo disponible.
+</div>
 <%  } %>
 
 <div class="row g-4">
@@ -85,7 +89,14 @@
                             <tr>
                                 <td>
                                     <div class="fw-semibold"><%= Html.esc(d.getNombre()) %></div>
-                                    <div class="text-secondary small"><%= Html.esc(d.getUrl()) %></div>
+<%                  if (d.tieneArchivo()) { %>
+                                    <a class="small" target="_blank" rel="noopener"
+                                       href="<%= rutaGestion %>?accion=documento&amp;id=<%= s.getId() %>&amp;idDocumento=<%= d.getId() %>">
+                                        <i class="bi bi-box-arrow-up-right me-1"></i>Ver archivo
+                                    </a>
+<%                  } else { %>
+                                    <div class="text-secondary small">Sin archivo adjunto</div>
+<%                  } %>
                                 </td>
                                 <td>
                                     <span class="badge <%= "ACEPTADO".equals(d.getEstado()) ? "text-bg-success"

@@ -77,14 +77,37 @@ public class SolicitudDAO {
         }
     }
 
-    /** Quita un documento que todavia no ha sido evaluado por el agente. */
-    public void eliminarDocumento(int idDocumento, int idSolicitud) throws SQLException {
-        String sql = "DELETE FROM documento_solicitud WHERE id_documento = ? AND id_solicitud = ?";
+    /**
+     * Quita un documento que todavia no ha sido evaluado por el agente.
+     *
+     * La condicion sobre el estado va en el propio DELETE, no solo en la
+     * vista: un documento ya aceptado o rechazado no se retira aunque alguien
+     * arme la peticion a mano.
+     *
+     * @return true si el documento existia, era de esa solicitud y seguia PENDIENTE.
+     */
+    public boolean eliminarDocumento(int idDocumento, int idSolicitud) throws SQLException {
+        String sql = "DELETE FROM documento_solicitud "
+                   + " WHERE id_documento = ? AND id_solicitud = ? AND estado = 'PENDIENTE'";
         try (Connection cn = ConexionBD.obtener();
              PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, idDocumento);
             ps.setInt(2, idSolicitud);
-            ps.executeUpdate();
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    /** Un documento de esa solicitud, o null si no existe o es de otra. */
+    public DocumentoSolicitud buscarDocumento(int idDocumento, int idSolicitud) throws SQLException {
+        String sql = "SELECT id_documento, id_solicitud, nombre, url, estado, fecha_carga "
+                   + "  FROM documento_solicitud WHERE id_documento = ? AND id_solicitud = ?";
+        try (Connection cn = ConexionBD.obtener();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, idDocumento);
+            ps.setInt(2, idSolicitud);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? mapearDocumento(rs) : null;
+            }
         }
     }
 
@@ -176,18 +199,22 @@ public class SolicitudDAO {
             ps.setInt(1, idSolicitud);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    DocumentoSolicitud d = new DocumentoSolicitud();
-                    d.setId(rs.getInt("id_documento"));
-                    d.setIdSolicitud(rs.getInt("id_solicitud"));
-                    d.setNombre(rs.getString("nombre"));
-                    d.setUrl(rs.getString("url"));
-                    d.setEstado(rs.getString("estado"));
-                    d.setFechaCarga(rs.getTimestamp("fecha_carga"));
-                    lista.add(d);
+                    lista.add(mapearDocumento(rs));
                 }
             }
         }
         return lista;
+    }
+
+    private DocumentoSolicitud mapearDocumento(ResultSet rs) throws SQLException {
+        DocumentoSolicitud d = new DocumentoSolicitud();
+        d.setId(rs.getInt("id_documento"));
+        d.setIdSolicitud(rs.getInt("id_solicitud"));
+        d.setNombre(rs.getString("nombre"));
+        d.setUrl(rs.getString("url"));
+        d.setEstado(rs.getString("estado"));
+        d.setFechaCarga(rs.getTimestamp("fecha_carga"));
+        return d;
     }
 
     /** ¿Esta solicitud es de este cliente? Evita que consulte o edite la de otro cambiando el id. */
