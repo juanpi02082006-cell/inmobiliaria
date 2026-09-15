@@ -52,3 +52,5 @@ desktop.ini
 *.log
 *.bak
 *~
+# Archivo de bloqueo que crea Word mientras un .docx esta abierto
+~$*

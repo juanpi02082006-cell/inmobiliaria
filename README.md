@@ -321,6 +321,14 @@ propio commit, con el número de la HU en el mensaje.
 | [sql/01_esquema.sql](sql/01_esquema.sql) | Creación de las 16 tablas con sus restricciones |
 | [sql/02_datos.sql](sql/02_datos.sql) | Datos de prueba |
 | [sql/04_diccionario_datos.md](sql/04_diccionario_datos.md) | Diccionario de datos |
+| [sql/inmobiliaria.sql](sql/inmobiliaria.sql) | Exportación completa de la base desde phpMyAdmin (estructura y datos). Se importa sobre una base `inmobiliaria` ya creada |
+
+### Demostración funcional
+
+[bd/guion.docx](bd/guion.docx) es el guion de la demostración: 19 pasos por
+rol (agente, cliente, administrador y visitante), cada uno con el resultado
+que debe verse, incluidos los mensajes de las restricciones `UNIQUE` y los
+**403** del control de acceso.
 
 ### Entorno de entrega
 
